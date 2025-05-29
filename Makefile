@@ -10,7 +10,8 @@ INCLUDE = Makefile $(LIBFT_PATH)/libft.h src/minishell.h
 LIBFT = $(LIBFT_PATH)/libft.a
 
 # Source and object files
-SRC = src/minishell.c
+SRC = src/minishell.c \
+	commands/exit.c \
 
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
@@ -29,7 +30,7 @@ $(LIBFT):
 #	cc $(FLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(MINILIBX) -o $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(FLAGS) $(LIBFT) -o $(NAME)
+	$(CC) $(OBJ) $(FLAGS) $(LIBFT) -lreadline -o $(NAME)
 
 # Compile object files and generate .d files for dependencies
 %.o: %.c $(INCLUDE)

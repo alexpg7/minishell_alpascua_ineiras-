@@ -1,6 +1,9 @@
 # Program name
 minishell
 
+# vscode
+.vscode
+
 # Prerequisites
 *.d
 
