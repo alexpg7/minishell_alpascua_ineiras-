@@ -12,6 +12,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 # Source and object files
 SRC = src/minishell.c \
 	commands/exit.c \
+	commands/pwd.c \
 
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)

@@ -3,4 +3,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void    ft_exit(void);
+typedef struct s_vars
+{
+	char    *prompt;
+}	t_vars;
+
+// COMMANDS
+
+void    ft_exit(char *input, int ret, t_vars *vars);
+
+char    *ft_pwd(char **envp);
