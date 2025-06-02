@@ -3,8 +3,9 @@ FLAGS = -Wall -Wextra -Werror
 OPTION = -MMD -c -I.
 # Paths
 LIBFT_PATH = lib/Libft
+LIBMINI_PATH = lib/libminishell
 
-INCLUDE = Makefile $(LIBFT_PATH)/libft.h src/minishell.h
+INCLUDE = Makefile $(LIBFT_PATH)/libft.h $(LIBMINI_PATH)/libminishell.h src/minishell.h
 
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -13,6 +14,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 SRC = src/minishell.c \
 	commands/exit.c \
 	commands/pwd.c \
+	lib/libminishell/ft_splitmini.c \
 
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)

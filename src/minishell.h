@@ -1,7 +1,9 @@
 #include "../lib/Libft/libft.h"
+#include "../lib/libminishell/libminishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
 
 typedef struct s_vars
 {

@@ -8,11 +8,24 @@ void	do_stuff(char *str, t_vars *vars)
 	free(vars->prompt);
 }
 
+void	ft_sigint(int sig)
+{
+	sig = 0;
+	printf("^C\n");
+	ft_exit(NULL, 1, NULL);
+}
+
+void	ft_init_sig(void)
+{
+	signal(SIGINT, &ft_sigint);
+}
+
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
 	t_vars	vars;
 
+	ft_init_sig();
 	ft_printf("Welcome to minishell\n");
 	while (narg == 1 && argv[0])
 	{
