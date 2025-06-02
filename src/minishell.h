@@ -4,6 +4,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
+#include <stdbool.h>
 
 typedef struct s_vars
 {
