@@ -11,6 +11,8 @@ void	do_stuff(char *str, t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
+	if (ft_strncmp(comm[0], "export", 6) == 0)
+		ft_export(vars, comm[1]);
 }
 
 void	ft_sigint(int sig)

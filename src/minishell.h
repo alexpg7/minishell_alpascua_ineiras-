@@ -11,6 +11,7 @@ typedef struct s_vars
 	char	*prompt;
 	//t_lst	*trash;
 	t_list	*env;
+	t_list	*export;
 }	t_vars;
 
 // COMMANDS
@@ -20,6 +21,8 @@ void	ft_exit(char *input, int ret, t_vars *vars);
 char	*ft_pwd(char **envp);
 
 void	ft_env(t_vars *vars);
+
+void	ft_export(t_vars *vars, char *arg);
 
 // PROGRAMS
 

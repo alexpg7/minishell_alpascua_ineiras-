@@ -16,6 +16,7 @@ SRC = src/minishell.c \
 	commands/exit.c \
 	commands/pwd.c \
 	commands/ft_env.c \
+	commands/ft_export.c \
 	lib/libminishell/ft_splitmini.c \
 
 OBJ = $(SRC:.c=.o)
