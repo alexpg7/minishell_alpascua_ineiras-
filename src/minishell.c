@@ -2,16 +2,21 @@
 
 void	do_stuff(char *str, t_vars *vars)
 {
-	if (ft_strncmp(str, "exit", 4) == 0)
-		ft_exit(str, 0, vars);
+	char	**comm;
+
+	comm = ft_splitmini(str, ' ');
 	free(str);
 	free(vars->prompt);
+	if (!comm)
+		ft_exit(NULL, 1, vars);
+	if (ft_strncmp(comm[0], "env", 3) == 0)
+		ft_env(vars);
 }
 
 void	ft_sigint(int sig)
 {
 	sig = 0;
-	printf("^C\n");
+	ft_printf("^C\n");
 	ft_exit(NULL, 1, NULL);
 }
 
@@ -27,6 +32,8 @@ int	main(int narg, char **argv, char **envp)
 
 	ft_init_sig();
 	ft_printf("Welcome to minishell\n");
+	ft_init(&vars, envp);
+	//vars.trash = create first
 	while (narg == 1 && argv[0])
 	{
 		vars.prompt = ft_strjoin(ft_pwd(envp), "-> ");

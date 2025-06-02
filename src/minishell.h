@@ -8,11 +8,19 @@
 
 typedef struct s_vars
 {
-	char    *prompt;
+	char	*prompt;
+	//t_lst	*trash;
+	t_list	*env;
 }	t_vars;
 
 // COMMANDS
 
-void    ft_exit(char *input, int ret, t_vars *vars);
+void	ft_exit(char *input, int ret, t_vars *vars);
 
-char    *ft_pwd(char **envp);
+char	*ft_pwd(char **envp);
+
+void	ft_env(t_vars *vars);
+
+// PROGRAMS
+
+void	ft_init(t_vars *vars, char **envp);
