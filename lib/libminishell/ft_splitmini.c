@@ -14,8 +14,9 @@
 
 static int	ft_words(char const *s, char sep)
 {
-	int	i;
-	int	cont;
+	int		i;
+	int		cont;
+	char	c;
 
 	i = 0;
 	cont = 0;
@@ -26,13 +27,43 @@ static int	ft_words(char const *s, char sep)
 		if (s[i])
 			cont++;
 		while (s[i] && s[i] != sep)
+		{
+			if (s[i] == '\"' || s[i] == '\'')
+			{
+				c = s[i];
+				i++;
+				while (s[i] != c)
+					i++;
+			}
 			i++;
+		}
 	}
 	return (cont);
 }
 
+static int	ft_strlen2(const char *s, char com)
+{
+	int	i;
+
+	i = 1;
+	while (s[i])
+	{
+		if (s[i] == com)
+			return (i + 1);
+		i++;
+	}
+	return (i);
+}
+
 static int	ft_calclen(const char *s, char c)
 {
+	char	com;
+
+	if (*s == '\'' || *s == '\"')
+	{
+		com = *s;
+		return (ft_strlen2(s, com));
+	}
 	if (!ft_strchr(s, c))
 		return (ft_strlen(s));
 	return (ft_strchr(s, c) - s);
@@ -79,3 +110,19 @@ char	**ft_splitmini(char const *s, char c)
 	ptr[i] = NULL;
 	return (ptr);
 }
+/*int	main(int narg, char **argv)
+{
+	char **sp;
+	int	i = 0;
+
+	if (narg != 2)
+		return (0);
+	sp = ft_splitmini(argv[1], ' ');
+	while (sp[i])
+	{
+		printf("%s\n", sp[i]);
+		i++;
+	}
+	printf("%s\n", sp[i]);
+	return (0);
+}*/
