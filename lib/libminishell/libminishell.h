@@ -31,3 +31,6 @@ void	ft_free_lst(void **ptr);
 
 // Others:
 char	**ft_splitmini(char const *s, char c);
+void	ft_jumpcom(char const *s, int *i, char sep);
+int		ft_special(char c);
+void	ft_nextword(const char *s, int *i, char sep);

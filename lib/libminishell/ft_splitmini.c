@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../Libft/libft.h"
+#include "libminishell.h"
 #include <stdio.h>
 
 static int	ft_words(char const *s, char sep)
 {
-	int		i;
-	int		cont;
-	char	c;
+	int	i;
+	int	cont;
 
 	i = 0;
 	cont = 0;
@@ -24,49 +24,11 @@ static int	ft_words(char const *s, char sep)
 	{
 		while (s[i] == sep)
 			i++;
-		if (s[i])
+		if (s[i] != sep)
 			cont++;
-		while (s[i] && s[i] != sep)
-		{
-			if (s[i] == '\"' || s[i] == '\'')
-			{
-				c = s[i];
-				i++;
-				while (s[i] != c)
-					i++;
-			}
-			i++;
-		}
+		ft_nextword(s, &i, sep);
 	}
 	return (cont);
-}
-
-static int	ft_strlen2(const char *s, char com)
-{
-	int	i;
-
-	i = 1;
-	while (s[i])
-	{
-		if (s[i] == com)
-			return (i + 1);
-		i++;
-	}
-	return (i);
-}
-
-static int	ft_calclen(const char *s, char c)
-{
-	char	com;
-
-	if (*s == '\'' || *s == '\"')
-	{
-		com = *s;
-		return (ft_strlen2(s, com));
-	}
-	if (!ft_strchr(s, c))
-		return (ft_strlen(s));
-	return (ft_strchr(s, c) - s);
 }
 
 static void	ft_free(char **ptr, int i)
@@ -82,30 +44,39 @@ static void	ft_free(char **ptr, int i)
 	free(ptr);
 }
 
+static int	ft_wordlen(char const *s, char sep)
+{
+	int	i;
+
+	i = 0;
+	ft_nextword(s, &i, sep);
+	return (i);
+}
+
 char	**ft_splitmini(char const *s, char c)
 {
 	char	**ptr;
 	int		words;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	if (!s)
 		return (NULL);
 	words = ft_words(s, c);
 	ptr = (char **)malloc((words + 1) * sizeof(char *));
 	if (!ptr)
 		return (NULL);
-	while (*s)
+	while (s[j])
 	{
-		if (*s != c)
-		{
-			ptr[i] = ft_substr(s, 0, ft_calclen(s, c));
-			if (!ptr[i])
-				ft_free(ptr, i);
-			s = s + ft_calclen(s, c) - 1;
-			i++;
-		}
-		s++;
+		while (s[j] == c)
+			j++;
+		ptr[i] = ft_substr(s, j, ft_wordlen(&s[j], c));
+		if (!ptr[i])
+			ft_free(ptr, i);
+		ft_nextword(s, &j, c);
+		i++;
 	}
 	ptr[i] = NULL;
 	return (ptr);
@@ -122,7 +93,9 @@ char	**ft_splitmini(char const *s, char c)
 	{
 		printf("%s\n", sp[i]);
 		i++;
+		free(sp[i - 1]);
 	}
 	printf("%s\n", sp[i]);
+	free(sp);
 	return (0);
 }*/
