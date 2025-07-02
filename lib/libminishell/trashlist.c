@@ -1,5 +1,4 @@
-#include "libminishell.h"
-#include "../../lib/Libft/libft.h"
+#include "../../src/minishell.h"
 
 void	ft_free_lst(void **ptr)
 {
@@ -84,9 +83,9 @@ int main(void)
     int i = 0;
 
     char **lol;
-    
+
     lol = ft_split("Hola poma pometa.", ' ');
-   
+
 
     test = ft_lstnew_lst("Hola", NULL);
     test_1 = ft_lstnew_lst("Sec", NULL);

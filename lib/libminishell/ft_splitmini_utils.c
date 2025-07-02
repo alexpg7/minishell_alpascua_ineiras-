@@ -1,5 +1,4 @@
-#include "../Libft/libft.h"
-#include "libminishell.h"
+#include "../../src/minishell.h"
 #include <stdio.h>
 
 void	ft_jumpcom(char const *s, int *i, char sep)

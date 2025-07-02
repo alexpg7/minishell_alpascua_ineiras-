@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void	ft_promptinfo(char **comm, t_vars *vars)
+void	ft_promptinfo(t_vars *vars)
 {
-	int	i;
+	/*int	i;
 	int	npipe;
 
 	i = 0;
@@ -26,7 +26,7 @@ void	ft_promptinfo(char **comm, t_vars *vars)
 	else if (ft_strlen(comm[i]) == 2 && ft_strncmp(comm[i], ">>", 2) == 0)
 		vars->last = 'a';
 	else
-		vars->last = 'c';
+		vars->last = 'c';*/
 	ft_printf("\nmode: %c%c\nn_pipes: %i\n\n", vars->first, vars->last, vars->np);
 	//All these could be implemented inside the splitmini function
 }
@@ -35,12 +35,13 @@ void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
 
-	comm = ft_splitmini(str, ' ');
+	vars->np = 0;
+	comm = ft_splitmini(str, ' ', vars);
 	free(str);
 	free(vars->prompt);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	ft_promptinfo(comm, vars);
+	ft_promptinfo(vars);
 	/*if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)

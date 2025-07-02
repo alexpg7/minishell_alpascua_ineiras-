@@ -9,8 +9,7 @@
 /*   Updated: 2025/06/02 13:05:30 by alpascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../Libft/libft.h"
-#include "libminishell.h"
+#include "../../src/minishell.h"
 #include <stdio.h>
 
 static int	ft_words(char const *s, char sep)
@@ -53,7 +52,40 @@ static int	ft_wordlen(char const *s, char sep)
 	return (i);
 }
 
-char	**ft_splitmini(char const *s, char c)
+void	ft_assignvars(char **ptr, int i, int words, t_vars *vars)
+{
+	if (ft_strlen(ptr[i]) == 1)
+	{
+		if (i == 0 && ptr[i][0] == '<')
+			vars->first = 'i';
+		else
+			vars->first = 'c';
+		if (i == words - 2 && ptr[i][0] == '>')
+			vars->last = 'o';
+		else
+			vars->last = 'c';
+		if (ptr[i][0] == '|')
+			vars->np = vars->np + 1;
+	}
+	else if (ft_strlen(ptr[i]) == 2)
+	{
+		if (i == 0 && ft_strncmp(ptr[i], "<<", 2) == 0)
+			vars->first = 'h';
+		else
+			vars->first = 'c';
+		if (i == words - 2 && ft_strncmp(ptr[i], ">>", 2) == 0)
+			vars->last = 'a';
+		else
+			vars->last = 'c';
+	}
+	else
+	{
+		vars->first = 'c';
+		vars->last = 'c';
+	}
+}
+
+char	**ft_splitmini(char const *s, char c, t_vars *vars)
 {
 	char	**ptr;
 	int		words;
@@ -76,6 +108,7 @@ char	**ft_splitmini(char const *s, char c)
 		if (!ptr[i])
 			ft_free(ptr, i);
 		ft_nextword(s, &j, c);
+		ft_assignvars(ptr, i, words, vars);
 		i++;
 	}
 	ptr[i] = NULL;
