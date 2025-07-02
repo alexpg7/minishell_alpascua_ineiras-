@@ -1,5 +1,36 @@
 #include "minishell.h"
 
+void	ft_promptinfo(char **comm, t_vars *vars)
+{
+	int	i;
+	int	npipe;
+
+	i = 0;
+	npipe = 0;
+	if (ft_strlen(comm[0]) == 1 && ft_strncmp(comm[0], "<", 1) == 0)
+		vars->first = 'i';
+	else if (ft_strlen(comm[0]) == 2 && ft_strncmp(comm[0], "<<", 2) == 0)
+		vars->first = 'h';
+	else
+		vars->first = 'c';
+	while (comm[i])
+	{
+		if (ft_strlen(comm[i]) == 1 && ft_strncmp(comm[i], "|", 1) == 0)
+			npipe++;
+		i++;
+	}
+	vars->np = npipe;
+	i = (i - 2) * (i >= 2);
+	if (ft_strlen(comm[i]) == 1 && ft_strncmp(comm[i], ">", 1) == 0)
+		vars->last = 'o';
+	else if (ft_strlen(comm[i]) == 2 && ft_strncmp(comm[i], ">>", 2) == 0)
+		vars->last = 'a';
+	else
+		vars->last = 'c';
+	ft_printf("\nmode: %c%c\nn_pipes: %i\n\n", vars->first, vars->last, vars->np);
+	//All these could be implemented inside the splitmini function
+}
+
 void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
@@ -9,12 +40,13 @@ void	do_stuff(char *str, t_vars *vars)
 	free(vars->prompt);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	if (ft_strncmp(comm[0], "env", 3) == 0)
+	ft_promptinfo(comm, vars);
+	/*if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)
 		ft_export(vars, comm[1]);
 	if (ft_strncmp(comm[0], "pwd", 3) == 0)
-		ft_printf("%s\n", ft_pwd(vars));
+		ft_printf("%s\n", ft_pwd(vars));*/
 }
 
 void	ft_sigint(int sig)
