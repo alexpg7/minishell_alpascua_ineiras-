@@ -13,6 +13,8 @@ void	do_stuff(char *str, t_vars *vars)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)
 		ft_export(vars, comm[1]);
+	if (ft_strncmp(comm[0], "pwd", 3) == 0)
+		ft_printf("%s\n", ft_pwd(vars));
 }
 
 void	ft_sigint(int sig)
@@ -38,7 +40,7 @@ int	main(int narg, char **argv, char **envp)
 	//vars.trash = create first
 	while (narg == 1 && argv[0])
 	{
-		vars.prompt = ft_strjoin(ft_pwd(envp), "-> ");
+		vars.prompt = ft_strjoin(ft_pwd(&vars), "-> ");
 		if (!vars.prompt)
 		{
 			perror("malloc");

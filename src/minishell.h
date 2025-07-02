@@ -18,7 +18,7 @@ typedef struct s_vars
 
 void	ft_exit(char *input, int ret, t_vars *vars);
 
-char	*ft_pwd(char **envp);
+char	*ft_pwd(t_vars *vars);
 
 void	ft_env(t_vars *vars);
 

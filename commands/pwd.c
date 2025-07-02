@@ -1,13 +1,13 @@
 #include "../src/minishell.h"
 
-char    *ft_pwd(char **envp)
+char	*ft_pwd(t_vars *vars)
 {
-    int i;
+	t_list	*env;
 
-    i = 0;
-    while (envp[i] && ft_strncmp(envp[i], "PWD=", 4) != 0)
-    {
-        i++;
-    }
-    return (envp[i] + 4);
+	env = vars->env;
+	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
+	{
+		env = env->next;
+	}
+	return (env->content + 4);
 }
