@@ -5,8 +5,8 @@ void	ft_free_lst(void **ptr)
 	int	i;
 
 	i = 0;
-    if (!ptr)
-        return;
+	if (!ptr)
+		return;
 	while (ptr[i])
 	{
 		free(ptr[i]);
@@ -51,10 +51,10 @@ void	ft_lstdelone_lst(t_lst *lst)
 {
 	if (!lst)
 		return ;
-    if (!lst->content)
-    	free(lst->content);
-    if (!lst->content_p)
-    	ft_free_lst(lst->content_p);
+	if (!lst->content)
+		free(lst->content);
+	if (!lst->content_p)
+		ft_free_lst(lst->content_p);
 	free(lst);
 }
 

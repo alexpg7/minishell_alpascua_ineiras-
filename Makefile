@@ -20,6 +20,7 @@ SRC = src/minishell.c \
 	lib/libminishell/ft_splitmini.c \
 	lib/libminishell/ft_splitmini_utils.c \
 	lib/libminishell/ft_searchdollar.c \
+	lib/libminishell/trashlist.c \
 
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
