@@ -52,7 +52,7 @@ static int	ft_wordlen(char const *s, char sep)
 	return (i);
 }
 
-void	ft_assignvars(char **ptr, int i, int words, t_vars *vars)
+void	ft_assignvars(char **ptr, int i, t_vars *vars)
 {
 	if (ft_strlen(ptr[i]) == 1)
 	{
@@ -84,7 +84,7 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 		if (!ptr[i])
 			ft_free(ptr, i);
 		ft_nextword(s, &j, c);
-		ft_assignvars(ptr, i, words, vars);
+		ft_assignvars(ptr, i, vars);
 		i++;
 	}
 	ptr[i] = NULL;

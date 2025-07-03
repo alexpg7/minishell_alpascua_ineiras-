@@ -2,32 +2,7 @@
 
 void	ft_promptinfo(t_vars *vars)
 {
-	/*int	i;
-	int	npipe;
-
-	i = 0;
-	npipe = 0;
-	if (ft_strlen(comm[0]) == 1 && ft_strncmp(comm[0], "<", 1) == 0)
-		vars->first = 'i';
-	else if (ft_strlen(comm[0]) == 2 && ft_strncmp(comm[0], "<<", 2) == 0)
-		vars->first = 'h';
-	else
-		vars->first = 'c';
-	while (comm[i])
-	{
-		if (ft_strlen(comm[i]) == 1 && ft_strncmp(comm[i], "|", 1) == 0)
-			npipe++;
-		i++;
-	}
-	vars->np = npipe;
-	i = (i - 2) * (i >= 2);
-	if (ft_strlen(comm[i]) == 1 && ft_strncmp(comm[i], ">", 1) == 0)
-		vars->last = 'o';
-	else if (ft_strlen(comm[i]) == 2 && ft_strncmp(comm[i], ">>", 2) == 0)
-		vars->last = 'a';
-	else
-		vars->last = 'c';*/
-	ft_printf("\nmode: %c%c\nn_pipes: %i\n\n", vars->first, vars->last, vars->np);
+	ft_printf("\nn_pipes: %i\n\n", vars->np);
 	//All these could be implemented inside the splitmini function
 }
 
