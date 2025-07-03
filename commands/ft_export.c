@@ -63,5 +63,6 @@ void	ft_export(t_vars *vars, char *arg)
 		{
 			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(arg, vars), "")));//protect
 		} //REMOVE '' AND "" FROM SEARCHDOLLAR
+		//THERE IS A LEAK WHEN USING DOLLARS INSIDE DEFINITIONS
 	}
 }
