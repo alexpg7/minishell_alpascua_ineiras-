@@ -51,9 +51,9 @@ void	ft_lstdelone_lst(t_lst *lst)
 {
 	if (!lst)
 		return ;
-	if (!lst->content)
+	if (lst->content)
 		free(lst->content);
-	if (!lst->content_p)
+	if (lst->content_p)
 		ft_free_lst(lst->content_p);
 	free(lst);
 }
