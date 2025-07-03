@@ -17,6 +17,7 @@ void	do_stuff(char *str, t_vars *vars)
 	if (!comm)
 		ft_exit(NULL, 1, vars);
 	ft_promptinfo(vars);
+	ft_printf("%s\n", ft_searchdollar(comm[0], vars));
 	/*if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)

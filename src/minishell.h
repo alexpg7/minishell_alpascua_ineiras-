@@ -5,15 +5,6 @@
 #include <signal.h>
 #include <stdbool.h>
 
-typedef struct s_vars
-{
-	char	*prompt;
-	//t_lst	*trash;
-	t_list	*env;
-	t_list	*export;
-	int		np; //number of pipes
-}	t_vars;
-
 // Trash List Structure:
 typedef struct trash_lst
 {
@@ -21,6 +12,15 @@ typedef struct trash_lst
     void                **content_p;
     struct trash_lst    *next;
 }	t_lst;
+typedef struct s_vars
+{
+	char	*prompt;
+	//t_lst	*trash;
+	t_list	*env;
+	t_list	*export;
+	t_lst	*ts;
+	int		np; //number of pipes
+}	t_vars;
 
 // Trash List Functions:
 t_lst	*ft_lstnew_lst(void *content, void **content_p);
@@ -34,6 +34,9 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars);
 void	ft_jumpcom(char const *s, int *i, char sep);
 int		ft_special(char c);
 void	ft_nextword(const char *s, int *i, char sep);
+
+// searchdollar
+char	*ft_searchdollar(char *str, t_vars *vars);
 
 // COMMANDS
 
