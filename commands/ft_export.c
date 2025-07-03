@@ -1,27 +1,67 @@
 #include "../src/minishell.h"
 
-static void	ft_addenv(t_vars *vars, char *arg)
+static int	ft_varlen(char *str)
 {
-	t_list	*new;
+	int	i;
 
-	new = ft_lstnew(arg); //trashlist
-	if (!new)
-		ft_exit(NULL, 1, vars);
-	ft_lstadd_back(&vars->env, new);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+static void	ft_subsenv(char *str, t_vars *vars)
+{
+	t_list	*env;
+
+	env = vars->env;
+	while (env)
+	{
+		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
+		{
+			free(env->content);
+			env->content = ft_strjoin(ft_searchdollar(str, vars), ""); //protect
+		}
+		env = env->next;
+	}
+}
+
+int	ft_inenv(char *str, t_vars *vars)
+{
+	t_list	*env;
+
+	env = vars->env;
+	while (env)
+	{
+		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
+		{
+			return (1);
+		}
+		env = env->next;
+	}
+	return (0);
 }
 
 void	ft_export(t_vars *vars, char *arg)
 {
-	char	*loc;
-	int		flagnew;
-
-	flagnew = 0;
-	loc = ft_strchr(arg, '=');
-	if (!loc)
-		flagnew = 1;
-	//should also change the 'export' display
-	if (flagnew == 0)
+	if (!arg)
 	{
-		ft_addenv(vars, arg);
+		ft_env(vars);
+		return ;
+	}
+	if (ft_strchr(arg, '='))
+	{
+		if (ft_inenv(arg, vars))
+		{
+			ft_subsenv(arg, vars);
+		}
+		else
+		{
+			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(arg, vars), "")));//protect
+		} //REMOVE '' AND "" FROM SEARCHDOLLAR
 	}
 }

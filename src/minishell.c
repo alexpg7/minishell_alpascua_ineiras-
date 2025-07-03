@@ -18,13 +18,13 @@ void	do_stuff(char *str, t_vars *vars)
 	vars->ts = ft_lstnew_lst(NULL, (void **)comm);
 	ft_promptinfo(vars);
 	ft_printf("%s\n", ft_searchdollar(comm[0], vars));
-	ft_exit(NULL, 0, vars);
-	/*if (ft_strncmp(comm[0], "env", 3) == 0)
+	if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)
 		ft_export(vars, comm[1]);
 	if (ft_strncmp(comm[0], "pwd", 3) == 0)
-		ft_printf("%s\n", ft_pwd(vars));*/
+		ft_printf("%s\n", ft_pwd(vars));
+	ft_exit(NULL, 0, vars);
 }
 
 void	ft_sigint(int sig)
