@@ -56,32 +56,8 @@ void	ft_assignvars(char **ptr, int i, int words, t_vars *vars)
 {
 	if (ft_strlen(ptr[i]) == 1)
 	{
-		if (i == 0 && ptr[i][0] == '<')
-			vars->first = 'i';
-		else
-			vars->first = 'c';
-		if (i == words - 2 && ptr[i][0] == '>')
-			vars->last = 'o';
-		else
-			vars->last = 'c';
 		if (ptr[i][0] == '|')
 			vars->np = vars->np + 1;
-	}
-	else if (ft_strlen(ptr[i]) == 2)
-	{
-		if (i == 0 && ft_strncmp(ptr[i], "<<", 2) == 0)
-			vars->first = 'h';
-		else
-			vars->first = 'c';
-		if (i == words - 2 && ft_strncmp(ptr[i], ">>", 2) == 0)
-			vars->last = 'a';
-		else
-			vars->last = 'c';
-	}
-	else
-	{
-		vars->first = 'c';
-		vars->last = 'c';
 	}
 }
 

@@ -11,9 +11,7 @@ typedef struct s_vars
 	//t_lst	*trash;
 	t_list	*env;
 	t_list	*export;
-	char	first; //it can have 3 values: h "here doc (<<)", i "input (<)", c "command"
 	int		np; //number of pipes
-	char	last; //it can have 3 modes: a "append (>>)", o "output (>)", c "command"
 }	t_vars;
 
 // Trash List Structure:
