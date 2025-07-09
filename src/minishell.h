@@ -44,6 +44,7 @@ void	ft_exit(char *input, int ret, t_vars *vars);
 char	*ft_pwd(t_vars *vars);
 void	ft_env(t_vars *vars);
 void	ft_export(t_vars *vars, char *arg);
+void	ft_echo(char **args);
 
 // PROGRAMS
 

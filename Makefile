@@ -15,6 +15,7 @@ SRC = src/minishell.c \
 	src/ft_init.c \
 	commands/exit.c \
 	commands/pwd.c \
+	commands/ft_echo.c \
 	commands/ft_env.c \
 	commands/ft_export.c \
 	lib/libminishell/ft_splitmini.c \

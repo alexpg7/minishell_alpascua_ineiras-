@@ -137,5 +137,5 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(new, NULL));//protect
 		count--;
 	}
-	return (new);
+	return (new);//IMPLEMENT A SPECIAL CHARACTER READER
 }

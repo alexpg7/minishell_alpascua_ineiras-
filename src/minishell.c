@@ -27,6 +27,8 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_export(vars, comm[1]);
 	if (ft_strncmp(comm[0], "pwd", 3) == 0)
 		ft_printf("%s\n", ft_pwd(vars));
+	if (ft_strncmp(comm[0], "echo", 4) == 0)
+		ft_echo(&comm[1]);
 	//ft_exit(NULL, 0, vars);
 }
 
