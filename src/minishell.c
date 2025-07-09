@@ -13,6 +13,9 @@ void	do_stuff(char *str, t_vars *vars, int num)
 
 	vars->np = 0;
 	comm = ft_splitmini(str, ' ', vars);
+	ft_printf("arg1: %s\n", comm[0]);
+	ft_printf("arg2: %s\n", comm[1]);
+	ft_printf("arg2: %s\n", comm[2]);
 	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
@@ -21,7 +24,6 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	ft_promptinfo(vars);
-	ft_printf("SEARCHING DOLLAR IN: %s\n", comm[0]);
 	search = ft_searchdollar(comm[0], vars);
 	ft_printf("result: %s\nlen: %i\n", search, ft_strlen(search));
 	if (ft_strncmp(comm[0], "env", 3) == 0)
@@ -32,6 +34,8 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_printf("%s\n", ft_pwd(vars));
 	if (ft_strncmp(comm[0], "echo", 4) == 0)
 		ft_echo(&comm[1]);
+	if (ft_strncmp(comm[0], "cd", 2) == 0)
+		ft_cd(vars, comm);
 	//ft_exit(NULL, 0, vars);
 }
 

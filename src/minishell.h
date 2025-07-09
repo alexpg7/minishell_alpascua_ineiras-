@@ -53,6 +53,10 @@ char	*ft_pwd(t_vars *vars);
 void	ft_env(t_vars *vars);
 void	ft_export(t_vars *vars, char *arg);
 void	ft_echo(char **args);
+void	ft_cd(t_vars *vars, char **argv);
+
+// UTILS CD
+int		count_args(char **argv);
 
 // PROGRAMS
 
