@@ -9,6 +9,7 @@ void	ft_promptinfo(t_vars *vars)
 void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char	**comm;
+	char	*search;
 
 	vars->np = 0;
 	comm = ft_splitmini(str, ' ', vars);
@@ -17,10 +18,12 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_exit(NULL, 1, vars);
 	if (num == 0)
 		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
-	else
+	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	ft_promptinfo(vars);
-	ft_printf("%s\n", ft_searchdollar(comm[0], vars));
+	ft_printf("SEARCHING DOLLAR IN: %s\n", comm[0]);
+	search = ft_searchdollar(comm[0], vars);
+	ft_printf("result: %s\nlen: %i\n", search, ft_strlen(search));
 	if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)
@@ -71,7 +74,7 @@ int	main(int narg, char **argv, char **envp)
 		}
 		add_history(input);
 		do_stuff(input, &vars, num);
-		free (vars.prompt);
+		free(vars.prompt);
 		num++;
 	}
 	return (0);

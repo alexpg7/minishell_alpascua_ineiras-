@@ -6,12 +6,19 @@
 #include <stdbool.h>
 
 // Trash List Structure:
-typedef struct trash_lst
+typedef struct s_trash_lst
 {
 	void                *content;
     void                **content_p;
-    struct trash_lst    *next;
+    struct s_trash_lst    *next;
 }	t_lst;
+
+typedef struct s_dollar
+{
+	int		varlen;
+	int		vallen;
+	char	*value;
+}	t_dollar;
 typedef struct s_vars
 {
 	char	*prompt;
@@ -19,6 +26,7 @@ typedef struct s_vars
 	t_list	*env;
 	t_list	*export;
 	t_lst	*ts;
+	t_dollar	dollar;
 	int		np; //number of pipes
 }	t_vars;
 

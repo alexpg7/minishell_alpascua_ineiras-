@@ -7,99 +7,116 @@ static int	ft_varlen(char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (str[i])
-	{
-		if (str[i] == ' ' || str[i] == '\"')
-			return (i);
+	while (ft_isalnum2(str[i]))
 		i++;
-	}
 	return (i);
 }
 
-static int	ft_reslen(char *str, int len, t_vars *vars)
+static int	ft_isvar(char *str, t_vars *vars, int mode)
 {
 	t_list	*env;
-	int		c1;
-	int		c2;
+	int		len;
+
+	env = vars->env;
+	//mode 1 means start with '$', mode 0 not
+	if (*str == '$' && ft_isalnum2(*(str + 1)))
+	{
+		while (env)
+		{
+			len = ft_varlen(env->content);
+			if (ft_strncmp(env->content, str + mode, len) == 0)
+				return (len + 1);
+			env = env->next;
+		}
+	}
+	return (0);
+}
+
+static int	ft_countvars(char *str, t_vars *vars)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (ft_isvar(&str[i], vars, 1))
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+static int	ft_valuelen(char *str, t_vars *vars)
+{
+	t_list	*env;
+	int		len;
 
 	env = vars->env;
 	while (env)
 	{
-		c1 = (ft_strncmp(env->content, str, len - 1) == 0);
-		c2 = (*((char *)env->content + len) == '=');
-		if (c1 && c2)
-			return (ft_strlen(ft_strchr(env->content, '=') + 1));
+		len = ft_varlen(env->content);
+		if (ft_strncmp(env->content, str, len) == 0)
+		{
+			vars->dollar.value = env->content + 1 + len;
+			return (ft_strlen(env->content + 1 + len));
+		}
 		env = env->next;
 	}
 	return (0);
 }
 
-static int	ft_newlen(char *str, t_vars *vars)
+static int	ft_calclen(char *str, t_vars *vars)
 {
-	char	*first;
-	int		varlen;
-	int		reslen;
+	int	i;
 
-	first = str;
-	while (!ft_isalnum(*(ft_strchr(first, '$') + 1)))
-		first = ft_strchr(first, '$') + 1;
-	varlen = ft_varlen(ft_strchr(first, '$'));
-	reslen = ft_reslen(first + 1, varlen, vars);
-	return (reslen - varlen);
+	i = 0;
+	while (!ft_isvar(&str[i], vars, 1))
+		i++;
+	vars->dollar.vallen = ft_valuelen(&str[i + 1], vars);
+	vars->dollar.varlen = ft_isvar(&str[i], vars, 1);
+	return (vars->dollar.vallen - vars->dollar.varlen);
 }
 
-static char	*ft_searchvar(char *varname, int len, t_vars *vars)
+static void	ft_copyvar(char *dest, t_vars *vars)
 {
-	t_list	*env;
+	int		len;
+	int		i;
+	char	*val;
 
-	env = vars->env;
-	while (env)
+	len = vars->dollar.vallen;
+	i = 0;
+	val = vars->dollar.value;
+	while (i < len)
 	{
-		if (ft_strncmp(env->content, varname, len) == 0 && *((char *)env->content + len) == '=')
-			return (env->content + len + 1);
-		env = env->next;
-	}
-	return (NULL);
-}
-
-void	ft_copyvar(char *dest, char *src, int *i, t_vars *vars)
-{
-	char	*newvar;
-
-	newvar = ft_searchvar(src + 1, ft_varlen(src + 1), vars);
-	if (newvar)
-	{
-		while (*newvar)
-		{
-			dest[*i] = *newvar;
-			*i = *i + 1;
-			newvar++;
-		}
-		dest[*i] = '\0';
+		dest[i] = val[i];
+		i++;
 	}
 }
 
 static char	*ft_subs1(char *str, t_vars *vars)
 {
-	int		newlen;
+	int		len;
 	int		i;
-	int		flag;
+	int		valuelen;
 	char	*ptr;
 
-	newlen = ft_strlen(str) + ft_newlen(str, vars);
-	ptr = (char *)malloc(sizeof(char) * (newlen + 2));
+	len = ft_strlen(str) + ft_calclen(str, vars);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		ft_exit(NULL, 1, vars);
-	//add to trashlist
+	ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(ptr, NULL));//protect
 	i = 0;
-	flag = 0;
+	valuelen = -1;
 	while (*str)
 	{
-		if (*str == '$' && ft_isalnum2(*(str + 1)) && flag == 0)
+		if (ft_isvar(str, vars, 1) && valuelen == -1)
 		{
-			ft_copyvar(ptr, str, &i, vars);
-			str = ft_varlen(str) + str;
-			flag = 1;
+			valuelen = vars->dollar.vallen;
+			ft_copyvar(&ptr[i], vars);
+			i = i + valuelen;
+			str = str + vars->dollar.varlen;
 		}
 		else
 		{
@@ -108,34 +125,28 @@ static char	*ft_subs1(char *str, t_vars *vars)
 			i++;
 		}
 	}
+	ptr[i] = '\0';
 	return (ptr);
 }
 
 char	*ft_searchdollar(char *str, t_vars *vars)
 {
-	int		i;
 	int		count;
 	char	*new;
 
-	i = 0;
-	count = 0;
 	new = str;
 	if (str[0] == '\'' && str[ft_strlen(str)] == '\'')
 		return (str);
 	//else, quote error?
-	while (str[i])
-	{
-		if (str[i] == '$' && ft_isalnum2(str[i + 1]))
-			count++;
-		i++;
-	}
+	count = ft_countvars(str, vars);
 	while (count > 0)
 	{
 		new = ft_subs1(new, vars);
 		if (!new)
-			return (NULL);
-		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(new, NULL));//protect
+			ft_exit(NULL, 1, vars);
 		count--;
 	}
-	return (new);//IMPLEMENT A SPECIAL CHARACTER READER
+	//IMPLEMENT A SPECIAL CHARACTER READER
+	//THEN, ERASE ALL \", \' CHARACTERS
+	return (new);
 }
