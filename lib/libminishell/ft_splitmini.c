@@ -23,7 +23,7 @@ static int	ft_words(char const *s, char sep)
 	{
 		while (s[i] == sep)
 			i++;
-		if (s[i] != sep)
+		if (s[i] != '\0' && s[i] != sep)
 			cont++;
 		ft_nextword(s, &i, sep);
 	}
@@ -76,7 +76,7 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 	ptr = (char **)malloc((words + 1) * sizeof(char *));
 	if (!ptr)
 		return (NULL);
-	while (s[j])
+	while (s[j] && words > 0)
 	{
 		while (s[j] == c)
 			j++;
@@ -85,6 +85,7 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 			ft_free(ptr, i);
 		ft_nextword(s, &j, c);
 		ft_assignvars(ptr, i, vars);
+		words--;
 		i++;
 	}
 	ptr[i] = NULL;

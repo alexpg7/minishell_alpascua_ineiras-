@@ -6,6 +6,15 @@ void	ft_promptinfo(t_vars *vars)
 	//All these could be implemented inside the splitmini function
 }
 
+void	ft_printcom(char **comm)
+{
+	while (*comm != NULL)
+	{
+		ft_printf("%s\n", *comm);
+		comm++;
+	}
+}
+
 void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char	**comm;
@@ -13,9 +22,6 @@ void	do_stuff(char *str, t_vars *vars, int num)
 
 	vars->np = 0;
 	comm = ft_splitmini(str, ' ', vars);
-	ft_printf("arg1: %s\n", comm[0]);
-	ft_printf("arg2: %s\n", comm[1]);
-	ft_printf("arg2: %s\n", comm[2]);
 	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
@@ -24,6 +30,7 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	ft_promptinfo(vars);
+	ft_printcom(comm);
 	search = ft_searchdollar(comm[0], vars);
 	ft_printf("result: %s\nlen: %i\n", search, ft_strlen(search));
 	if (ft_strncmp(comm[0], "env", 3) == 0)
