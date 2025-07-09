@@ -59,7 +59,7 @@ void ft_cd(t_vars *vars, char **argv)
 	cd_not_args(vars, argv);
 	if ((argc == 2) && (ft_strcmp(argv[1], "~") == 0))
 	cd_not_args(vars, argv);
-	if ((argc == 2) && (ft_strcmp(argv[1], ".") == 0))
+	if ((argc == 2) && (ft_strcmp(argv[1], ".") == 0))git
 	cd_not_args(vars, argv);
 	if ((argc == 2) && (ft_strcmp(argv[1], "..") == 0))
 	cd_not_args(vars, argv);
