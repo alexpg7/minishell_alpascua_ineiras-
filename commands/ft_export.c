@@ -54,8 +54,8 @@ void	ft_export(t_vars *vars, char *arg)
 	{
 		ft_env(vars);
 		return ;
-	}
-	if (ft_strchr(arg, '='))
+	}//
+	if (ft_strchr(arg, '='))//execute export for each argument
 	{
 		if (ft_inenv(arg, vars))
 		{
@@ -64,7 +64,6 @@ void	ft_export(t_vars *vars, char *arg)
 		else
 		{
 			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(arg, vars), "")));//protect
-		} //REMOVE '' AND "" FROM SEARCHDOLLAR
-		//THERE IS A LEAK WHEN USING DOLLARS INSIDE DEFINITIONS
+		}
 	}
 }
