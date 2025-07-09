@@ -35,8 +35,8 @@ void	ft_echo(char **args)
 	{
 		if (flag == 1)
 			ft_putchar_fd(' ', 1);
-		flag = 1;
 		ft_printf("%s", args[i]);
+		flag = 1;
 		if (!ft_echonext(args, i))
 		{
 			if (mode == 1)
