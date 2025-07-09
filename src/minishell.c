@@ -6,7 +6,7 @@ void	ft_promptinfo(t_vars *vars)
 	//All these could be implemented inside the splitmini function
 }
 
-void	do_stuff(char *str, t_vars *vars)
+void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char	**comm;
 
@@ -15,7 +15,10 @@ void	do_stuff(char *str, t_vars *vars)
 	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	vars->ts = ft_lstnew_lst(NULL, (void **)comm);
+	if (num == 0)
+		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
+	else
+		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	ft_promptinfo(vars);
 	ft_printf("%s\n", ft_searchdollar(comm[0], vars));
 	if (ft_strncmp(comm[0], "env", 3) == 0)
@@ -24,7 +27,7 @@ void	do_stuff(char *str, t_vars *vars)
 		ft_export(vars, comm[1]);
 	if (ft_strncmp(comm[0], "pwd", 3) == 0)
 		ft_printf("%s\n", ft_pwd(vars));
-	ft_exit(NULL, 0, vars);
+	//ft_exit(NULL, 0, vars);
 }
 
 void	ft_sigint(int sig)
@@ -42,9 +45,11 @@ void	ft_init_sig(void)
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
+	int		num;
 	t_vars	vars;
 
 	ft_init_sig();
+	num = 0;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
 	//vars.trash = create first
@@ -63,7 +68,9 @@ int	main(int narg, char **argv, char **envp)
 			ft_exit(input, 1, &vars);
 		}
 		add_history(input);
-		do_stuff(input, &vars);
+		do_stuff(input, &vars, num);
+		free (vars.prompt);
+		num++;
 	}
 	return (0);
 }

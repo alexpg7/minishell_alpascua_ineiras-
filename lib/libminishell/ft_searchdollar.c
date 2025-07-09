@@ -5,6 +5,8 @@ static int	ft_varlen(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == ' ' || str[i] == '\"')
@@ -73,6 +75,7 @@ void	ft_copyvar(char *dest, char *src, int *i, t_vars *vars)
 			*i = *i + 1;
 			newvar++;
 		}
+		dest[*i] = '\0';
 	}
 }
 
@@ -84,7 +87,7 @@ static char	*ft_subs1(char *str, t_vars *vars)
 	char	*ptr;
 
 	newlen = ft_strlen(str) + ft_newlen(str, vars);
-	ptr = (char *)malloc(sizeof(char) * (newlen + 1));
+	ptr = (char *)malloc(sizeof(char) * (newlen + 2));
 	if (!ptr)
 		ft_exit(NULL, 1, vars);
 	//add to trashlist
@@ -131,6 +134,7 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 		new = ft_subs1(new, vars);
 		if (!new)
 			return (NULL);
+		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(new, NULL));//protect
 		count--;
 	}
 	return (new);

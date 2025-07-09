@@ -17,14 +17,16 @@ static int	ft_varlen(char *str)
 static void	ft_subsenv(char *str, t_vars *vars)
 {
 	t_list	*env;
+	char	*aux;
 
 	env = vars->env;
 	while (env)
 	{
 		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
 		{
-			free(env->content);
+			aux = env->content;
 			env->content = ft_strjoin(ft_searchdollar(str, vars), ""); //protect
+			free(aux);
 		}
 		env = env->next;
 	}
