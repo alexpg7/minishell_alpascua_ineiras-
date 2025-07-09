@@ -135,7 +135,7 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 	char	*new;
 
 	new = str;
-	if (str[0] == '\'' && str[ft_strlen(str)] == '\'')
+	if (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'')
 		return (str);
 	//else, quote error?
 	count = ft_countvars(str, vars);
