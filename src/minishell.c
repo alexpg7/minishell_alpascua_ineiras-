@@ -28,8 +28,8 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
-	ft_promptinfo(vars);
-	ft_printcom(comm);
+	//ft_promptinfo(vars);
+	//ft_printcom(comm); // MAKE THE COMPARISON INSIDE FT_EXECUTE
 	if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)
@@ -40,6 +40,8 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_echo(&comm[1]);
 	if (ft_strncmp(comm[0], "cd", 2) == 0)
 		ft_cd(vars, comm);
+	else
+		ft_execute(comm, vars);
 	//ft_exit(NULL, 0, vars);
 }
 

@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <stdbool.h>
 #include <dirent.h>
+#include <sys/wait.h>
 
 // Trash List Structure:
 typedef struct s_trash_lst
@@ -52,6 +53,7 @@ char	*ft_removequotes(char *str);
 
 void	ft_exit(char *input, int ret, t_vars *vars);
 char	*ft_pwd(t_vars *vars);
+char	*ft_path(t_vars *vars);
 void	ft_env(t_vars *vars);
 void	ft_export(t_vars *vars, char *arg);
 void	ft_echo(char **args);
@@ -63,5 +65,7 @@ int		count_args(char **argv);
 char	*minus_dir(char *dir);
 
 // PROGRAMS
-
 void	ft_init(t_vars *vars, char **envp);
+
+// EXECUTION
+void	ft_execute(char **comm, t_vars *vars);

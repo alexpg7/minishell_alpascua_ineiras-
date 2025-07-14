@@ -20,6 +20,7 @@ SRC = src/minishell.c \
 	commands/ft_echo.c \
 	commands/ft_env.c \
 	commands/ft_export.c \
+	execution/ft_execute.c \
 	lib/libminishell/ft_splitmini.c \
 	lib/libminishell/ft_splitmini_utils.c \
 	lib/libminishell/ft_searchdollar.c \
