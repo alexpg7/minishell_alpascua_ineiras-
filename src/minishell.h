@@ -45,6 +45,7 @@ void	ft_nextword(const char *s, int *i, char sep);
 
 // SEARCH DOLLAR
 char	*ft_searchdollar(char *str, t_vars *vars);
+char	*ft_removequotes(char *str);
 
 // COMMANDS
 

@@ -76,7 +76,7 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 		i++;
 	}
 	ptr[i] = NULL;
-	return (ptr);
+	return (ptr); //NO PASA LA NORMA
 }
 /*int	main(int narg, char **argv)
 {
