@@ -14,6 +14,19 @@ static void change_old_pwd(t_vars *vars, char *old_pwd)
 		env->content = ft_strjoin("OLDPWD=", old_pwd + 4);
 }
 
+static void cd_double_point(t_vars *vars)
+{
+	t_list *env;
+	char	*content;
+
+	env = vars->env;
+	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
+		env = env->next;	
+	content = minus_dir(env->content);
+	change_old_pwd(vars, env->content);
+	env->content = content;
+}
+
 static void	slash_cd(t_vars *vars)
 {
 	t_list	*env;
@@ -45,15 +58,22 @@ static void	cd_not_args(t_vars *vars)
 void ft_cd(t_vars *vars, char **argv)
 {
 	int argc;
+	DIR *directory;
 	
 	argc = count_args(argv);
-
-	if (argc == 1)
+	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 		cd_not_args(vars);
 	else if ((argc == 2) && (ft_strcmp(argv[1], "/") == 0))
-	{
 		slash_cd(vars);
-	}
+	else if ((argc == 2) && (ft_strcmp(argv[1], ".") == 0))
+		;
+	else if ((argc == 2) && (ft_strcmp(argv[1], "..") == 0))
+		cd_double_point(vars);
+	else if (argc == 2 && (directory = opendir(argv[1])) != NULL)
+		//cd_path();
+		ft_printf("yes\n");
+	else
+		ft_printf("cd: not such file or directory: %s\n", argv[1]);
 	/*
 	if ((argc == 2) && (ft_strcmp(argv[1], "/") == 0))
 	cd_not_args(vars, argv);
