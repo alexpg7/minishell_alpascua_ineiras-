@@ -14,29 +14,27 @@
 
 static int	ft_words(char const *s, char sep)
 {
-	int	i;
 	int	cont;
 
-	i = 0;
 	cont = 0;
-	while (s[i])
+	while (*s)
 	{
-		while (s[i] == sep)
-			i++;
-		if (s[i] != '\0' && s[i] != sep)
+		while (*s == sep)
+			s++;
+		if (*s != '\0' && *s != sep)
 			cont++;
-		ft_nextword(s, &i, sep);
+		ft_nextword(&s, sep);
 	}
 	return (cont);
 }
 
 static int	ft_wordlen(char const *s, char sep)
 {
-	int	i;
+	const char	*aux;
 
-	i = 0;
-	ft_nextword(s, &i, sep);
-	return (i);
+	aux = s;
+	ft_nextword(&aux, sep);
+	return (aux - s);
 }
 
 void	ft_assignvars(char **ptr, int i, t_vars *vars)
@@ -53,24 +51,22 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 	char	**ptr;
 	int		words;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	if (!s)
 		return (NULL);
 	words = ft_words(s, c);
 	ptr = (char **)malloc((words + 1) * sizeof(char *));
 	if (!ptr)
 		return (NULL);
-	while (s[j] && words > 0)
+	while (*s && words > 0)
 	{
-		while (s[j] == c)
-			j++;
-		ptr[i] = ft_substr(s, j, ft_wordlen(&s[j], c));
+		while (*s == c)
+			s++;
+		ptr[i] = ft_substr(s, 0, ft_wordlen(s, c));
 		if (!ptr[i])
-			ft_free(ptr, i);
-		ft_nextword(s, &j, c);
+			return (ft_free(ptr, i));
+		ft_nextword((const char **)&s, c);
 		ft_assignvars(ptr, i, vars);
 		words--;
 		i++;

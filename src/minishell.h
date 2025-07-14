@@ -39,9 +39,9 @@ void	ft_free_lst(void **ptr);
 
 // SPLITMINI
 char	**ft_splitmini(char const *s, char c, t_vars *vars);
-void	ft_jumpcom(char const *s, int *i, char sep);
+void	ft_jumpcom(char const **s, char sep);
 int		ft_special(char c);
-void	ft_nextword(const char *s, int *i, char sep);
+void	ft_nextword(const char **s, char sep);
 
 // SEARCH DOLLAR
 char	*ft_searchdollar(char *str, t_vars *vars);

@@ -1,19 +1,19 @@
 #include "../../src/minishell.h"
 #include <stdio.h>
 
-void	ft_jumpcom(char const *s, int *i, char sep)
+void	ft_jumpcom(char const **s, char sep)
 {
 	char	c;
 
-	while (s[*i] && s[*i] != sep)
+	while (**s && **s != sep)
 	{
-		if (s[*i] == '\"' || s[*i] == '\'')
+		if (**s == '\"' || **s == '\'')
 		{
-			c = s[*i];
-			*i = *i + 1;
-			while (s[*i] != c)
-				*i = *i + 1;
-			*i = *i + 1;
+			c = **s;
+			*s = *s + 1;
+			while (**s != c)
+				*s = *s + 1;
+			*s = *s + 1;
 		}
 	}
 }
@@ -25,28 +25,28 @@ int	ft_special(char c)
 	return (0);
 }
 
-void	ft_nextword(const char *s, int *i, char sep)
+void	ft_nextword(const char **s, char sep)
 {
-	if (s[*i] == '\'' || s[*i] == '\"')
+	if (**s == '\'' || **s == '\"')
 	{
-		ft_jumpcom(s, i, sep);
+		ft_jumpcom(s, sep);
 		return ;
 	}
-	else if (s[*i] == '|')
+	else if (**s == '|')
 	{
-		*i = *i + 1;
+		*s = *s + 1;
 		return ;
 	}
-	else if (s[*i] == '>')
+	else if (**s == '>')
 	{
-		*i = *i + 1 + (s[*i + 1] == '>');
+		*s = *s + 1 + (*(*s + 1) == '>');
 		return ;
 	}
-	else if (s[*i] == '<')
+	else if (**s == '<')
 	{
-		*i = *i + 1 + (s[*i + 1] == '<');
+		*s = *s + 1 + (*(*s + 1) == '<');
 		return ;
 	}
-	while (s[*i] != ' ' && !ft_special(s[*i]) && s[*i])
-		*i = *i + 1;
+	while (**s != ' ' && !ft_special(**s) && **s)
+		*s = *s + 1;
 }
