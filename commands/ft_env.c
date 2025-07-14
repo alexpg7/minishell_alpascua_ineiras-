@@ -11,3 +11,32 @@ void	ft_env(t_vars *vars)
 		lst = lst->next;
 	}
 }
+
+char	**ft_getenv(t_list *env)
+{
+	int		size;
+	int		i;
+	char	**ptr;
+
+	size = ft_lstsize(env);
+	ptr = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (env && i < size)
+	{
+		if (i != 5)
+			ptr[i] = ft_strjoin(env->content, "");
+		else
+			ptr[i] = NULL;
+		if (!ptr[i])
+		{
+			ft_free(ptr, i);
+			return (NULL);
+		}
+		i++;
+		env = env->next;
+	}
+	ptr[i] = NULL;
+	return (ptr);
+}

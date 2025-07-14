@@ -30,20 +30,20 @@ typedef struct s_vars
 	int		np; //number of pipes
 }	t_vars;
 
-// Trash List Functions:
+// TRSH LIST FUNCTIONS
 t_lst	*ft_lstnew_lst(void *content, void **content_p);
 void	ft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	ft_lstdelone_lst(t_lst *lst);
 void	ft_lstclear_lst(t_lst **lst);
 void	ft_free_lst(void **ptr);
 
-// splitmini:
+// SPLITMINI
 char	**ft_splitmini(char const *s, char c, t_vars *vars);
 void	ft_jumpcom(char const *s, int *i, char sep);
 int		ft_special(char c);
 void	ft_nextword(const char *s, int *i, char sep);
 
-// searchdollar
+// SEARCH DOLLAR
 char	*ft_searchdollar(char *str, t_vars *vars);
 
 // COMMANDS
@@ -54,6 +54,7 @@ void	ft_env(t_vars *vars);
 void	ft_export(t_vars *vars, char *arg);
 void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
+char	**ft_getenv(t_list *env);
 
 // UTILS CD
 int		count_args(char **argv);
