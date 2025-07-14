@@ -25,10 +25,7 @@ char	**ft_getenv(t_list *env)
 	i = 0;
 	while (env && i < size)
 	{
-		if (i != 5)
-			ptr[i] = ft_strjoin(env->content, "");
-		else
-			ptr[i] = NULL;
+		ptr[i] = ft_strjoin(env->content, "");
 		if (!ptr[i])
 		{
 			ft_free(ptr, i);
