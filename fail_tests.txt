@@ -1,15 +1,3 @@
-"$HOLA"
+"pongo una $PATH variable"
 
-3
-
-"$HOLA"
-
-error
-
-$HOLA
-
-3
-
-"$HOLA"
-
-error
+LEAK

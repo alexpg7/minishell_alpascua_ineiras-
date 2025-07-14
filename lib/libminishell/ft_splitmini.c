@@ -46,6 +46,33 @@ void	ft_assignvars(char **ptr, int i, t_vars *vars)
 	}
 }
 
+static void	*ft_addword(char **ptr, char **str, int i, t_vars *vars)
+{
+	char	c;
+	char	*new;
+
+	c = ' ';
+	while (**str == c)
+			*str = *str + 1;
+	ptr[i] = ft_substr(*str, 0, ft_wordlen(*str, c));
+	if (!ptr[i])
+		return (ft_free(ptr, i));
+	new = ft_searchdollar(ptr[i], vars);
+	if (!new)
+	{
+		free(ptr[i]);
+		return (ft_free(ptr, i));
+	}
+	new = ft_removequotes(new);
+	if (!new)
+	{
+		free(ptr[i]);
+		return (ft_free(ptr, i));
+	}
+	ptr[i] = new;
+	return (ptr[i]);
+}
+
 char	**ft_splitmini(char const *s, char c, t_vars *vars)
 {
 	char	**ptr;
@@ -61,18 +88,16 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 		return (NULL);
 	while (*s && words > 0)
 	{
-		while (*s == c)
-			s++;
-		ptr[i] = ft_substr(s, 0, ft_wordlen(s, c));
-		if (!ptr[i])
-			return (ft_free(ptr, i));
-		ft_nextword((const char **)&s, c);
+		if (!ft_addword(ptr, (char **)&s, i, vars))
+			return (NULL);
+		ft_printf("%s\n", ptr[i]);
+		ft_nextword(&s, c);
 		ft_assignvars(ptr, i, vars);
 		words--;
 		i++;
 	}
 	ptr[i] = NULL;
-	return (ptr); //NO PASA LA NORMA
+	return (ptr);
 }
 /*int	main(int narg, char **argv)
 {

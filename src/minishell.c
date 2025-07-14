@@ -18,7 +18,6 @@ void	ft_printcom(char **comm)
 void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char	**comm;
-	char	*search;
 
 	vars->np = 0;
 	comm = ft_splitmini(str, ' ', vars);
@@ -31,8 +30,6 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	ft_promptinfo(vars);
 	ft_printcom(comm);
-	search = ft_searchdollar(comm[0], vars);
-	ft_printf("result: %s\nlen: %i\n", search, ft_strlen(search));
 	if (ft_strncmp(comm[0], "env", 3) == 0)
 		ft_env(vars);
 	if (ft_strncmp(comm[0], "export", 6) == 0)

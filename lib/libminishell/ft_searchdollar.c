@@ -106,7 +106,7 @@ static char	*ft_subs1(char *str, t_vars *vars)
 	ptr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		ft_exit(NULL, 1, vars);
-	ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(ptr, NULL));//protect
+	//ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(ptr, NULL));//protect
 	i = 0;
 	valuelen = -1;
 	while (*str)
@@ -133,6 +133,7 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 {
 	int		count;
 	char	*new;
+	char	*aux;
 
 	new = str;
 	if (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'')
@@ -141,7 +142,9 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 	count = ft_countvars(str, vars);
 	while (count > 0)
 	{
+		aux = new;
 		new = ft_subs1(new, vars);
+		free(aux);
 		if (!new)
 			ft_exit(NULL, 1, vars);
 		count--;

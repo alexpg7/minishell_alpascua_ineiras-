@@ -29,13 +29,17 @@ char	*ft_remove2(char *str)
 
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
 	if (!ptr)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 1;
 	while (str[i] && str[i] != '\"')
 	{
 		ptr[i - 1] = str[i];
 		i++;
 	}
+	free(str);
 	ptr[i - 1] = '\0';
 	return (ptr);
 }
