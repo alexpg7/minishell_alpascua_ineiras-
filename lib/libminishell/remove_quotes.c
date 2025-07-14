@@ -1,54 +1,84 @@
 #include "../../src/minishell.h"
 
-char	*ft_remove1(char *str)
+char	ft_isspecial(char c)
 {
-	char	*ptr;
-	int		i;
-
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
-	if (!ptr)
-	{
-		free(str);
-		return (NULL);
-	}
-	i = 1;
-	while (str[i] && str[i] != '\'')
-	{
-		ptr[i - 1] = str[i];
-		i++;
-	}
-	ptr[i - 1] = '\0';
-	free(str);
-	return (ptr);
+	if (c == 't')
+		return ('\t');
+	else if (c == 'n')
+		return ('\n');
+	else if (c == 'v')
+		return ('\v');
+	else if (c == 'f')
+		return ('\f');
+	else if (c == 'r')
+		return ('\r');
+	return ('\0');
 }
 
-char	*ft_remove2(char *str)
+static int	ft_countspecial(char *str)
+{
+	int	count;
+	int	i;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\')
+		{
+			if (ft_isspecial(str[i + 1]))
+				count++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+void	ft_appendchar(char *ptr, char **str, int i)
+{
+	if (**str == '\\' && ft_isspecial(*(*str + 1)))
+	{
+		ptr[i] = ft_isspecial(*(*str + 1));
+		*str = *str + 1;
+	}
+	else
+		ptr[i] = **str;
+}
+
+char	*ft_remove(char *str, int count)
 {
 	char	*ptr;
 	int		i;
+	char	*start;
+	char	c;
 
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
+	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str)- 1 - count));
 	if (!ptr)
 	{
 		free(str);
 		return (NULL);
 	}
-	i = 1;
-	while (str[i] && str[i] != '\"')
+	i = 0;
+	c = str[0];
+	start = str;
+	str++;
+	while (*str && *str != c)
 	{
-		ptr[i - 1] = str[i];
+		ft_appendchar(ptr, &str, i);
 		i++;
+		str++;
 	}
-	free(str);
-	ptr[i - 1] = '\0';
+	free(start);
+	ptr[i] = '\0';
 	return (ptr);
 }
 
 char	*ft_removequotes(char *str)
 {
+	int	count;
+
 	if (str[0] != '\"' && str[0] != '\'')
 		return (str);
-	if (str[0] == '\'')
-		return (ft_remove1(str));
-	return (ft_remove2(str));
+	count = ft_countspecial(str);
+	return (ft_remove(str, count));
 }

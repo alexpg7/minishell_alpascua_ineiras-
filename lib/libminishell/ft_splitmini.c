@@ -90,7 +90,6 @@ char	**ft_splitmini(char const *s, char c, t_vars *vars)
 	{
 		if (!ft_addword(ptr, (char **)&s, i, vars))
 			return (NULL);
-		ft_printf("%s\n", ptr[i]);
 		ft_nextword(&s, c);
 		ft_assignvars(ptr, i, vars);
 		words--;
