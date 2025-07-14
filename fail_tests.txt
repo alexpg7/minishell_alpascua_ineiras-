@@ -1,3 +1,6 @@
 "pongo una $PATH variable"
 
 LEAK
+
+cd..
+BUG

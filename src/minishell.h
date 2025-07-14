@@ -4,6 +4,7 @@
 #include <readline/history.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <dirent.h>
 
 // Trash List Structure:
 typedef struct s_trash_lst
@@ -59,6 +60,7 @@ char	**ft_getenv(t_list *env);
 
 // UTILS CD
 int		count_args(char **argv);
+char	*minus_dir(char *dir);
 
 // PROGRAMS
 

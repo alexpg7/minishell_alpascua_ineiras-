@@ -21,7 +21,7 @@ static void cd_double_point(t_vars *vars)
 
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
-		env = env->next;	
+		env = env->next;
 	content = minus_dir(env->content);
 	change_old_pwd(vars, env->content);
 	env->content = content;
@@ -45,7 +45,7 @@ static void	cd_not_args(t_vars *vars)
 
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "HOME=", 5) != 0)
-		env = env->next; 
+		env = env->next;
 	content = ft_strjoin("PWD=", env->content + 5);
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
@@ -54,12 +54,12 @@ static void	cd_not_args(t_vars *vars)
 	change_old_pwd(vars, env->content);
 	env->content = content;
 }
- 
+
 void ft_cd(t_vars *vars, char **argv)
 {
 	int argc;
 	DIR *directory;
-	
+
 	argc = count_args(argv);
 	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 		cd_not_args(vars);
@@ -69,7 +69,7 @@ void ft_cd(t_vars *vars, char **argv)
 		;
 	else if ((argc == 2) && (ft_strcmp(argv[1], "..") == 0))
 		cd_double_point(vars);
-	else if (argc == 2 && (directory = opendir(argv[1])) != NULL)
+	else if (argc == 2 && (directory = opendir(ft_strjoin3(ft_pwd(vars), "/", argv[1]))) != NULL) //protect
 		//cd_path();
 		ft_printf("yes\n");
 	else
