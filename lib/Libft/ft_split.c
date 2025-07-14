@@ -38,7 +38,7 @@ static int	ft_calclen(const char *s, char c)
 	return (ft_strchr(s, c) - s);
 }
 
-void	ft_free(char **ptr, int i)
+void	*ft_free(char **ptr, int i)
 {
 	int	cont;
 
@@ -49,6 +49,7 @@ void	ft_free(char **ptr, int i)
 		cont++;
 	}
 	free(ptr);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)

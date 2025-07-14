@@ -86,7 +86,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 
 char	**ft_split(char const *s, char c);
 
-void	ft_free(char **ptr, int i);
+void	*ft_free(char **ptr, int i);
 
 char	*ft_itoa(int n);
 
