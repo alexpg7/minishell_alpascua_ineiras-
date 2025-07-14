@@ -30,19 +30,6 @@ static int	ft_words(char const *s, char sep)
 	return (cont);
 }
 
-static void	ft_free(char **ptr, int i)
-{
-	int	cont;
-
-	cont = 0;
-	while (cont < i)
-	{
-		free(ptr[cont]);
-		cont++;
-	}
-	free(ptr);
-}
-
 static int	ft_wordlen(char const *s, char sep)
 {
 	int	i;
