@@ -69,7 +69,7 @@ void ft_cd(t_vars *vars, char **argv)
 		;
 	else if ((argc == 2) && (ft_strcmp(argv[1], "..") == 0))
 		cd_double_point(vars);
-	else if (argc == 2 && (directory = opendir(ft_strjoin3(ft_pwd(vars), "/", argv[1]))) != NULL) //protect
+	else if (argc == 2 && (directory = opendir(ft_strjoin3(ft_pwd(NULL, vars), "/", argv[1]))) != NULL) //protect
 		//cd_path();
 		ft_printf("yes\n");
 	else

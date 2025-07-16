@@ -29,19 +29,8 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	//ft_promptinfo(vars);
-	//ft_printcom(comm); // MAKE THE COMPARISON INSIDE FT_EXECUTE
-	if (ft_strncmp(comm[0], "env", 3) == 0)
-		ft_env(vars);
-	if (ft_strncmp(comm[0], "export", 6) == 0)
-		ft_export(vars, comm[1]);
-	if (ft_strncmp(comm[0], "pwd", 3) == 0)
-		ft_printf("%s\n", ft_pwd(vars));
-	if (ft_strncmp(comm[0], "echo", 4) == 0)
-		ft_echo(&comm[1]);
-	if (ft_strncmp(comm[0], "cd", 2) == 0)
-		ft_cd(vars, comm);
-	else
-		ft_execute(comm, vars);
+	//ft_printcom(comm);
+	ft_execute(comm, vars);
 	//ft_exit(NULL, 0, vars);
 }
 
@@ -60,17 +49,19 @@ void	ft_init_sig(void)
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
+	char	*nul;
 	int		num;
 	t_vars	vars;
 
 	ft_init_sig();
 	num = 0;
+	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
 	//vars.trash = create first
 	while (narg == 1 && argv[0])
 	{
-		vars.prompt = ft_strjoin(ft_pwd(&vars), "-> ");
+		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");
 		if (!vars.prompt)
 		{
 			perror("malloc");
