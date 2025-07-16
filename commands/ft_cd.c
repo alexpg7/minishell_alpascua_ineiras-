@@ -78,7 +78,6 @@ void ft_cd(t_vars *vars, char **argv)
 		cd_not_args(vars);
 	else if (argc == 2)
 	{
-		ft_printf("%s %s\ncount: %i\n", argv[0], argv[1], argc);
 		if (ft_strcmp(argv[1], "/") == 0)
 			slash_cd(vars);
 		else if (ft_strcmp(argv[1], "-") == 0)
@@ -90,5 +89,5 @@ void ft_cd(t_vars *vars, char **argv)
 		else if (cd_move_dir(vars, argv) == -1)
 			ft_printf("cd: not such file or directory: %s\n", argv[1]);
 	}
-	//if more, error
+	//if more, error ft_putstr_fd("", 2);
 }

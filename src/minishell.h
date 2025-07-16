@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <stdbool.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include <sys/wait.h>
 
 // Trash List Structure:
@@ -60,7 +61,7 @@ void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);
 
-// UTILS & COMMANDS OF CD 
+// UTILS & COMMANDS OF CD
 void	swap_pwd(t_vars *vars);
 void 	change_old_pwd(t_vars *vars, char *old_pwd);
 void	change_pwd(t_vars *vars, char *pwd);
