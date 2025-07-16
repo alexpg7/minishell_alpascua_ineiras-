@@ -21,6 +21,19 @@ void	ft_printcom(t_command *command)
 	}
 }
 
+void	ft_freecommand(t_command *command)
+{
+	int	i;
+
+	i = 0;
+	while (command[i].comm)
+	{
+		free(command[i].comm);
+		i++;
+	}
+	free(command);
+}
+
 void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char		**comm;
@@ -35,14 +48,14 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
-	command = ft_createcomm(comm, vars);
+	command = ft_createcomm(comm, vars);//add to trashlist
 	ft_printcom(command);
-	free(command);
+	ft_freecommand(command);
 	//ft_execute(comm, vars);
 	//ft_exit(NULL, 0, vars);
 }
 
-void	ft_sigint(int sig)
+/*void	ft_sigint(int sig)
 {
 	sig = 0;
 	ft_printf("^C\n");
@@ -52,7 +65,7 @@ void	ft_sigint(int sig)
 void	ft_init_sig(void)
 {
 	signal(SIGINT, &ft_sigint);
-}
+}*/
 
 int	main(int narg, char **argv, char **envp)
 {
@@ -61,7 +74,7 @@ int	main(int narg, char **argv, char **envp)
 	int		num;
 	t_vars	vars;
 
-	ft_init_sig();
+	//ft_init_sig();
 	num = 0;
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");

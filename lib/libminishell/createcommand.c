@@ -29,7 +29,15 @@ void	ft_countredirect(char **comm, int *n_in, int *n_out)
 	}
 }
 
-void	ft_copycommand(t_command *command, char **comm, int len)
+static void	ft_setin(char **file, char **comm, int *flag, int *num)
+{
+	*flag= 1;
+	*file = *(comm + 1);
+	if (ft_strcmp(*comm, "<<") == 0)
+		*num = 1;
+}
+
+void	ft_copycommand(t_command *command, char **comm)
 {
 	int	i;
 	int	flagin;
@@ -42,24 +50,17 @@ void	ft_copycommand(t_command *command, char **comm, int len)
 	command->ap = 0;
 	command->infile = NULL;
 	command->outfile = NULL;
-	while (i < len + 1)
+	while (comm[i] && comm[i][0] != '|')
 	{
 		if ((ft_strcmp(comm[i], "<") == 0 || ft_strcmp(comm[i], "<<") == 0) && flagin == 0)
 		{
-			flagin = 1;
-			command->infile = comm[i + 1];
-			if (ft_strcmp(comm[i], "<<") == 0)
-				command->hd = 1;
+			ft_setin(&command->infile, &comm[i], &flagin, &command->hd);
 			comm = comm + 2;
 		}
 		else if ((ft_strcmp(comm[i], ">") == 0 || ft_strcmp(comm[i], ">>") == 0) && flagout == 0)
 		{
-			flagout = 1;
-			command->outfile = comm[i + 1];
-			if (ft_strcmp(comm[i], ">>") == 0)
-				command->ap = 1;
+			ft_setin(&command->outfile, &comm[i], &flagout, &command->ap);
 			comm = comm + 2;
-			len -= 1;
 		}
 		else
 		{
@@ -79,14 +80,13 @@ t_command	*ft_createcomm(char **comm, t_vars *vars)
 	int			len;
 
 	command = (t_command *)malloc(sizeof(t_command) * (vars->np + 2));//there's 2 commands per pipe + NULL at the end
-	ft_printf("LEN: %i\n", vars->np + 2);
 	i = 0;
 	while (i <= vars->np)
 	{
 		ft_countredirect(comm, &n_in, &n_out);
 		len = ft_commandlen(comm) - 2 * n_in - 2 * n_out; //- 2 for each extra argument (<) (infile) + 1 for the NULL
 		command[i].comm = (char **)malloc(sizeof(char *) * (len + 1)); // + 1 for the null
-		ft_copycommand(&command[i], comm, len);
+		ft_copycommand(&command[i], comm);
 		comm = comm + len + 2 * n_in + 2 * n_out + 1; //step to the next command
 		i++;
 	}
