@@ -1,5 +1,3 @@
-
-
 #include "../src/minishell.h"
 
 void change_old_pwd(t_vars *vars, char *old_pwd) // Changes $OLD_PWD for current PWW;

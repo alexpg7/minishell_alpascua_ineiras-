@@ -1,4 +1,3 @@
-
 #include "../src/minishell.h"
 
 static int	cd_move_dir(t_vars *vars, char **argv)
@@ -49,7 +48,7 @@ static void	slash_cd(t_vars *vars)
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 		env = env->next;
 	change_old_pwd(vars, env->content);
-	env->content = ft_strjoin("PWD=", "/");
+	env->content = ft_strjoin("PWD=", "/");//protect
 	chdir(env->content + 4);
 }
 
@@ -61,7 +60,7 @@ static void	cd_not_args(t_vars *vars)
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "HOME=", 5) != 0)
 		env = env->next;
-	content = ft_strjoin("PWD=", env->content + 5);
+	content = ft_strjoin("PWD=", env->content + 5);//protect
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 		env = env->next;
@@ -79,6 +78,7 @@ void ft_cd(t_vars *vars, char **argv)
 		cd_not_args(vars);
 	else if (argc == 2)
 	{
+		ft_printf("%s %s\ncount: %i\n", argv[0], argv[1], argc);
 		if (ft_strcmp(argv[1], "/") == 0)
 			slash_cd(vars);
 		else if (ft_strcmp(argv[1], "-") == 0)
@@ -90,4 +90,5 @@ void ft_cd(t_vars *vars, char **argv)
 		else if (cd_move_dir(vars, argv) == -1)
 			ft_printf("cd: not such file or directory: %s\n", argv[1]);
 	}
+	//if more, error
 }

@@ -8,7 +8,7 @@ int	ft_builtin(char **comm, t_vars *vars)
 	if (ft_strcmp("echo", comm[0]) == 0)
 		ft_echo(comm + 1);
 	else if (ft_strcmp("cd", comm[0]) == 0)
-		ft_cd(vars, comm + 1);
+		ft_cd(vars, comm);
 	else if (ft_strcmp("pwd", comm[0]) == 0)
 	{
 		pwd = ft_pwd(comm + 1, vars);
@@ -17,6 +17,10 @@ int	ft_builtin(char **comm, t_vars *vars)
 	}
 	else if (ft_strcmp("export", comm[0]) == 0)
 		ft_export(vars, comm[1]); //change to accept different arguments (+ not an identifier: if not valid var)
+	else if (ft_strcmp("unset", comm[0]) == 0)
+		ft_printf("\"executing unset...\"\n");
+	else if (ft_strcmp("env", comm[0]) == 0)
+		ft_env(vars);
 	else
 		return (0);
 	return (1);
@@ -28,6 +32,7 @@ void	ft_command(char **comm, t_vars *vars)
 	char	**envp;
 	char	*path;
 
+	//fork only if np > 0 (and builtin)
 	//BEFORE, WE SHOULD "CUT" THE ARRAY UNTIL '|' OR '>'
 	pid = fork();
 	if (pid == -1)
