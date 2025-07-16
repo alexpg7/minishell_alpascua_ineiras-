@@ -8,6 +8,17 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+// struct commands
+typedef struct s_command
+{
+	char	**comm;
+	char	*infile;
+	char	*outfile; //can also be HERE_DOC if hd = 1
+	int		hd; //here_doc
+	int		ap; //append mode
+}	t_command;
+
+
 // Trash List Structure:
 typedef struct s_trash_lst
 {
@@ -73,3 +84,6 @@ void	ft_init(t_vars *vars, char **envp);
 
 // EXECUTION
 void	ft_execute(char **comm, t_vars *vars);
+
+// CREATE COMMAND (struct command)
+t_command	*ft_createcomm(char **comm, t_vars *vars);

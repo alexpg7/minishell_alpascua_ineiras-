@@ -1,6 +1,6 @@
-"pongo una $PATH variable"
+## TESTING PARSING
+< in hola > out | hola
+segfault
 
-LEAK
-
-cd..
-BUG
+< in hola > out
+unused memory(??) (~leak)

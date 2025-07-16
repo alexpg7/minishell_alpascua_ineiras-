@@ -1,23 +1,30 @@
 #include "minishell.h"
 
-void	ft_promptinfo(t_vars *vars)
+void	ft_printcom(t_command *command)
 {
-	ft_printf("\nn_pipes: %i\n\n", vars->np);
-	//All these could be implemented inside the splitmini function
-}
+	int	i;
+	int	j;
 
-void	ft_printcom(char **comm)
-{
-	while (*comm != NULL)
+	i = 0;
+	while (command[i].comm)
 	{
-		ft_printf("%s\n", *comm);
-		comm++;
+		ft_printf("-PIPE %i:\n", i + 1);
+		j = 0;
+		while (command[i].comm[j])
+		{
+			ft_printf("%s\n", command[i].comm[j]);
+			j++;
+		}
+		ft_printf("-RED IN: %s, mode: %i\n", command[i].infile, command[i].hd);
+		ft_printf("-RED OUT: %s, mode: %i\n\n", command[i].outfile, command[i].ap);
+		i++;
 	}
 }
 
 void	do_stuff(char *str, t_vars *vars, int num)
 {
-	char	**comm;
+	char		**comm;
+	t_command	*command;
 
 	vars->np = 0;
 	comm = ft_splitmini(str, ' ', vars);
@@ -28,9 +35,10 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
-	//ft_promptinfo(vars);
-	//ft_printcom(comm);
-	ft_execute(comm, vars);
+	command = ft_createcomm(comm, vars);
+	ft_printcom(command);
+	free(command);
+	//ft_execute(comm, vars);
 	//ft_exit(NULL, 0, vars);
 }
 
