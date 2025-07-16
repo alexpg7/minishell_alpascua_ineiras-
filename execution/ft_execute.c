@@ -34,26 +34,31 @@ void	ft_command(char **comm, t_vars *vars)
 
 	//fork only if np > 0 (and builtin)
 	//BEFORE, WE SHOULD "CUT" THE ARRAY UNTIL '|' OR '>'
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0) // CHILD
-	{
-		if (!ft_builtin(comm, vars))
-		{
-			envp = ft_getenv(vars->env);
-			path = ft_strjoin3("/usr/bin", "/", comm[0]);//protect AND SEARCH TRUE PATH
-			if (!envp || !path)
-				ft_exit(NULL, 1, vars);
-			if (execve(path, comm, envp) == -1)
-				ft_exit(ft_free(envp, 1), 1, vars);
-		}
-		else
-			ft_exit(NULL, 0, vars);
-	}
+	if (ft_strcmp(comm[0], "cd") == 0)
+		ft_cd(vars, comm);
 	else
 	{
-		waitpid(pid, NULL, 0);
+		pid = fork();
+		if (pid == -1)
+			return ;
+		if (pid == 0) // CHILD
+		{
+			if (!ft_builtin(comm, vars))
+			{
+				envp = ft_getenv(vars->env);
+				path = ft_strjoin3("/usr/bin", "/", comm[0]);//protect AND SEARCH TRUE PATH
+				if (!envp || !path)
+					ft_exit(NULL, 1, vars);
+				if (execve(path, comm, envp) == -1)
+					ft_exit(ft_free(envp, 1), 1, vars);
+			}
+			else
+				ft_exit(NULL, 0, vars);
+		}
+		else
+		{
+			waitpid(pid, NULL, 0);
+		}
 	}
 }
 

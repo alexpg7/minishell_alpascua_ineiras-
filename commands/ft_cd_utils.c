@@ -28,7 +28,7 @@ int count_args(char **argv)
 	return i;
 }
 
-char	*minus_dir(char  *dir)
+char	*minus_dir(char *dir, t_vars *vars)
 {
 	size_t	i;
 	size_t	size;
@@ -39,14 +39,30 @@ char	*minus_dir(char  *dir)
 	if (size <= 5 || slash_count(dir) == 1)
 	{
 		content = ft_strjoin("PWD=", "/");
+		if (!content)
+			ft_exit(NULL, 1, vars);
 		return (content);
 	}
 	while (dir[size - i] && ft_strncmp(&dir[size - i], "/", 1) != 0)
 		i++;
 	content = malloc(sizeof(char *) * (size + 1));
 	if (!content)
-		return (NULL);
+		ft_exit(NULL, 1, vars);
 	ft_strlcpy(content, dir, (size - i + 1));
-	//free(dir); // Not sure about this.
+	free(dir); // Not sure about this.
 	return (content);
+}
+
+void	ft_putendl_fd2(char *s, int fd, char *var)
+{
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd(var, fd);
+	ft_putchar_fd('\n', fd);
+}
+
+int	ft_free_minus_one(char *str)
+{
+	free(str);
+	str = NULL;
+	return (-1);
 }
