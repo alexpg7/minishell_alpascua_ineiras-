@@ -60,7 +60,10 @@ void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);
 
-// UTILS CD
+// UTILS & COMMANDS OF CD 
+void	swap_pwd(t_vars *vars);
+void 	change_old_pwd(t_vars *vars, char *old_pwd);
+void	change_pwd(t_vars *vars, char *pwd);
 int		count_args(char **argv);
 char	*minus_dir(char *dir);
 

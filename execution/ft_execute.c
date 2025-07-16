@@ -13,8 +13,10 @@ int	ft_builtin(char **comm, t_vars *vars)
 	{
 		pwd = ft_pwd(comm + 1, vars);
 		if (pwd)
-			ft_printf("%s\n", pwd);;
+			ft_printf("%s\n", pwd);
 	}
+	else if (ft_strcmp("export", comm[0]) == 0)
+		ft_export(vars, comm[1]); //change to accept different arguments (+ not an identifier: if not valid var)
 	else
 		return (0);
 	return (1);
