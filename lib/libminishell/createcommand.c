@@ -33,7 +33,7 @@ static void	ft_setin(char **file, char **comm, int *flag, int *num)
 {
 	*flag= 1;
 	*file = *(comm + 1);
-	if (ft_strcmp(*comm, "<<") == 0)
+	if (ft_strcmp(*comm, "<<") == 0 || ft_strcmp(*comm, ">>") == 0)
 		*num = 1;
 }
 
