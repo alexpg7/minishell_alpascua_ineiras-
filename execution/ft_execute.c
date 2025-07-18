@@ -20,19 +20,27 @@ int	ft_builtin(char **comm, t_vars *vars)
 		ft_printf("\"executing unset...\"\n");
 	else if (ft_strcmp("env", comm[0]) == 0)
 		ft_env(vars);
+	else if (ft_strcmp("exit", comm[0]) == 0)
+		ft_exit(NULL, 0, vars);
 	else
 		return (0);
 	return (1);
 }
 
-int	ft_readin(char *str)
+int	ft_heredoc(char *lim)
+{
+	ft_printf("here_doc %s\n", lim);
+	return (0);
+}
+
+int	ft_readin2(char *file)
 {
 	int	fd;
 
-	fd = open(str, O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(str);
+		perror(file);
 		return (-1);
 	}
 	if (dup2(fd, 0) == -1)
@@ -48,56 +56,91 @@ int	ft_readin(char *str)
 	return (0);
 }
 
-void	ft_exec1(char **comm, t_vars *vars)
+int	ft_readin(char *file, int mode)
 {
-	int		pid;
-	int		read;
-	char	**envp;
-	char	*path;
+	if (mode == 1)
+		return (ft_heredoc(file));
+	else
+		return (ft_readin2(file));
+	return (0);
+}
 
-	read = 0;
-	if (ft_strcmp(comm[0], "<") == 0 || ft_strcmp(comm[0], "<<") == 0)
-		read = 1;
-	if (!ft_builtin(comm + 2 * read, vars))
+
+int	ft_readout(char *file, int mode)
+{
+	int	fd;
+
+	if (mode == 1)
+		fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	else
+		fd = open(file, O_TRUNC | O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
 	{
-		pid = fork();
-		if (pid == -1)
-			perror("fork");
-		else if (pid == 0)
-		{
-			if (read == 1)
-			{
-				if (ft_readin(comm[1]) == -1)
-					ft_exit(NULL, 1, vars);
-				comm = comm + 2;
-			}
-			envp = ft_getenv(vars->env);
-			path = ft_strjoin3("/usr/bin", "/", comm[0]);//protect AND SEARCH TRUE PATH
-			if (!envp || !path)
-				ft_exit(NULL, 1, vars);
-			if (execve(path, comm, envp) == -1)//save exit status
-				ft_exit(ft_free(envp, 1), 1, vars);
-		}
-		else
-			waitpid(pid, NULL, 0);//save exit status
+		perror(file);
+		return (-1);
+	}
+	if (dup2(fd, 1) == -1)
+	{
+		perror("dup2");
+		return (-1);
+	}
+	if (close(fd) == -1)
+	{
+		perror("close");
+		return (-1);
+	}
+	return (0);
+}
+
+void	ft_set_redir(t_command *command, t_vars *vars)
+{
+	if (command->infile)
+	{
+		if (ft_readin(command->infile, command->hd) == -1)
+			ft_exit(NULL, 1, vars);
+	}
+	if (command->outfile)
+	{
+		if (ft_readout(command->outfile, command->ap) == -1)
+			ft_exit(NULL, 1, vars);
 	}
 }
 
-void	ft_execmore(char **comm, t_vars *vars)
+void	ft_exec1(t_command *command, t_vars *vars)
 {
-	ft_printf("\"pipex here\" %s\npipes: %i\n", comm[0], vars->np);
+	int		pid;
+	char	**envp;
+	char	*path;
+
+	if (!ft_builtin(command->comm, vars))
+	{
+		pid = fork();
+		if (pid == 1)
+			perror("fork");
+		else if (pid == 0)
+		{
+			ft_set_redir(command, vars);
+			envp = ft_getenv(vars->env); //protect
+			path = ft_strjoin("/usr/bin/", command->comm[0]);//protect and SEARCH FOR TRUE PATH
+			if (!envp || !path)
+				ft_exit(NULL, 1, vars);
+			if (execve(path, command->comm, envp) == -1) //save exit status
+				ft_exit(NULL, 1, vars); //SHOULD FREE ENVP AND PATH
+		}
+		else
+			waitpid(pid, NULL, 0);//save exit status somewhere
+	}
 }
 
-void	ft_command(char **comm, t_vars *vars)
+void	ft_execmore(t_command *command, t_vars *vars)
+{
+	ft_printf("\"pipex here\" %s\npipes: %i\n", command->comm[0], vars->np);
+}
+
+void	ft_execute(t_command *command, t_vars *vars)
 {
 	if (vars->np == 0)
-		ft_exec1(comm, vars);
+		ft_exec1(command, vars);
 	else
-		ft_execmore(comm, vars);
-	//BEFORE, WE SHOULD "CUT" THE ARRAY UNTIL '|' OR '>'
-}
-
-void	ft_execute(char **comm, t_vars *vars)
-{
-	ft_command(comm, vars);
+		ft_execmore(command, vars);
 }

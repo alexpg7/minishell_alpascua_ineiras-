@@ -83,7 +83,7 @@ char	*minus_dir(char *dir);
 void	ft_init(t_vars *vars, char **envp);
 
 // EXECUTION
-void	ft_execute(char **comm, t_vars *vars);
+void	ft_execute(t_command *command, t_vars *vars);
 
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);

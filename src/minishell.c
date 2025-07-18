@@ -49,9 +49,9 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	command = ft_createcomm(comm, vars);//add to trashlist
-	ft_printcom(command);
+	ft_execute(command, vars);
+	//ft_printcom(command);
 	ft_freecommand(command);
-	//ft_execute(comm, vars);
 	//ft_exit(NULL, 0, vars);
 }
 
