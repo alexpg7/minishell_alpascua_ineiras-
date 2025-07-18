@@ -2,7 +2,8 @@ NAME = libft.a
 FLAG = -Wall -Wextra -Werror
 OPTION = -MMD -c -I.
 INCLUDE = Makefile libft.h
-SRC = ft_isdigit.c \
+SRC = get_next_line.c \
+	ft_isdigit.c \
 	ft_isalpha.c \
 	ft_isalnum.c \
 	ft_isalnum2.c \

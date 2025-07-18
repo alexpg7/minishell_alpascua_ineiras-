@@ -20,12 +20,6 @@ int	ft_checkfd(char *file, int fd, int final)
 	return (0);
 }
 
-int	ft_heredoc(char *lim)
-{
-	ft_printf("here_doc %s\n", lim);
-	return (0);
-}
-
 int	ft_readin2(char *file)
 {
 	int	fd;

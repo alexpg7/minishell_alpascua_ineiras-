@@ -1,12 +1,14 @@
-#include "../lib/Libft/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <stdbool.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <sys/wait.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+# include "../lib/Libft/libft.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <dirent.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 // struct commands
 typedef struct s_command
@@ -18,13 +20,12 @@ typedef struct s_command
 	int		ap; //append mode
 }	t_command;
 
-
 // Trash List Structure:
 typedef struct s_trash_lst
 {
-	void                *content;
-    void                **content_p;
-    struct s_trash_lst    *next;
+	void				*content;
+	void				**content_p;
+	struct s_trash_lst	*next;
 }	t_lst;
 
 typedef struct s_dollar
@@ -35,13 +36,13 @@ typedef struct s_dollar
 }	t_dollar;
 typedef struct s_vars
 {
-	char	*prompt;
-	//t_lst	*trash;
-	t_list	*env;
-	t_list	*export;
-	t_lst	*ts;
+	char		*prompt;
+	//t_lst		*trash;
+	t_list		*env;
+	t_list		*export;
+	t_lst		*ts;
 	t_dollar	dollar;
-	int		np; //number of pipes
+	int			np; //number of pipes
 }	t_vars;
 
 // TRSH LIST FUNCTIONS
@@ -74,7 +75,7 @@ char	**ft_getenv(t_list *env);
 
 // UTILS & COMMANDS OF CD
 void	swap_pwd(t_vars *vars);
-void 	change_old_pwd(t_vars *vars, char *old_pwd);
+void	change_old_pwd(t_vars *vars, char *old_pwd);
 void	change_pwd(t_vars *vars, char *pwd);
 int		count_args(char **argv);
 char	*minus_dir(char *dir);
@@ -84,6 +85,8 @@ void	ft_init(t_vars *vars, char **envp);
 
 // EXECUTION
 void	ft_execute(t_command *command, t_vars *vars);
+int		ft_heredoc(char *lim);
 
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);
+#endif
