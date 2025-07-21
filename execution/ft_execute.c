@@ -1,10 +1,31 @@
 #include "../src/minishell.h"
 
+void	ft_child(t_command *command, t_vars *vars)
+{
+	char	**envp;
+	char	*path;
+
+	if (!ft_builtin2(command, vars))
+	{
+		ft_set_redir(command, vars, 2);
+		envp = ft_getenv(vars->env);
+		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
+		if (!envp || !path)
+		{
+			ft_freestrarr(&envp, 1);
+			ft_exit(path, 1, vars);
+		}
+		if (execve(path, command->comm, envp) == -1)
+		{
+			ft_freestrarr(&envp, 1);
+			ft_exit(path, 1, vars);
+		}
+	}
+}
+
 void	ft_exec1(t_command *command, t_vars *vars)
 {
 	int		pid;
-	char	**envp;
-	char	*path;
 
 	if (command->hd == 1)
 	{
@@ -18,22 +39,7 @@ void	ft_exec1(t_command *command, t_vars *vars)
 			perror("fork");
 		else if (pid == 0)
 		{
-			if (!ft_builtin2(command, vars))
-			{
-				ft_set_redir(command, vars, 2);
-				envp = ft_getenv(vars->env); //protect
-				path = ft_findpath(command->comm[0], envp, vars);//protect
-				if (!envp || !path)
-				{
-					ft_freestrarr(&envp, 1);
-					ft_exit(path, 1, vars);
-				}
-				if (execve(path, command->comm, envp) == -1) //save exit status
-				{
-					ft_freestrarr(&envp, 1);
-					ft_exit(path, 1, vars); //SHOULD FREE ENVP AND PATH
-				}
-			}
+			ft_child(command, vars);
 			ft_exit(NULL, 0, vars);
 		}
 		else
