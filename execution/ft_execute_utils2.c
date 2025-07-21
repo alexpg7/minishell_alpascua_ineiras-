@@ -29,7 +29,9 @@ int	ft_builtin2(t_command *com, t_vars *vars)
 	}
 	else if (ft_strcmp("env", com->comm[0]) == 0)
 		ft_env(vars);
-	return (0);
+	else
+		return (0);
+	return (1);
 }
 
 int	ft_builtin1(t_command *com, t_vars *vars)
@@ -42,7 +44,9 @@ int	ft_builtin1(t_command *com, t_vars *vars)
 		ft_printf("\"executing unset...\"\n");
 	else if (ft_strcmp("exit", com->comm[0]) == 0)
 		ft_exit(NULL, 0, vars);
-	return (0);
+	else
+		return (0);
+	return (1);
 }
 
 int	ft_searchbuiltin(t_command *com)
