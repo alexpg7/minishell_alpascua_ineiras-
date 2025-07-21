@@ -40,6 +40,7 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	t_command	*command;
 
 	vars->np = 0;
+	vars->command = NULL;
 	comm = ft_splitmini(str, ' ', vars);
 	free(str);
 	if (!comm)
@@ -48,10 +49,12 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
 	else if (num != 0)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
-	command = ft_createcomm(comm, vars);//add to trashlist
+	if (vars->command)
+		ft_freecommand(vars->command);
+	command = ft_createcomm(comm, vars);
+	vars->command = command;
 	ft_execute(command, vars);
 	//ft_printcom(command);
-	ft_freecommand(command);
 	//ft_exit(NULL, 0, vars);
 }
 
@@ -79,7 +82,7 @@ int	main(int narg, char **argv, char **envp)
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
-	//vars.trash = create first
+	//INITIALIZE TRASHLIST (IMPORTANT TO AVOID SEGFAULT)
 	while (narg == 1 && argv[0])
 	{
 		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");

@@ -81,7 +81,7 @@ static void cd_argc_2(t_vars *vars, char **argv)
 		//slash_cd(vars, argv);
 		cd_move_dir(vars, argv, content, path);
 	else if (ft_strcmp(argv[1], "-") == 0)
-		swap_pwd(vars);		
+		swap_pwd(vars);
 	else if (ft_strcmp(argv[1], ".") == 0)
 		;
 	else if(ft_strcmp(argv[1], "..") == 0)
@@ -98,26 +98,9 @@ void ft_cd(t_vars *vars, char **argv)
 	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 		cd_not_args(vars);
 	else if (argc == 2)
-<<<<<<< HEAD
-	{
-		if (ft_strcmp(argv[1], "/") == 0)
-			slash_cd(vars);
-		else if (ft_strcmp(argv[1], "-") == 0)
-			swap_pwd(vars);
-		else if (ft_strcmp(argv[1], ".") == 0)
-			;
-		else if(ft_strcmp(argv[1], "..") == 0)
-			cd_double_point(vars);
-		else if (cd_move_dir(vars, argv) == -1)
-			ft_printf("cd: not such file or directory: %s\n", argv[1]);
-	}
-	//if more, error ft_putstr_fd("", 2);
-}
-=======
 		cd_argc_2(vars, argv);
 	else if (argc == 3)
 		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);
 	else
 		ft_putendl_fd("cd: too many arguments", 2);
 }
->>>>>>> origin/cd_branch

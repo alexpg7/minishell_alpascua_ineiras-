@@ -1,6 +1,4 @@
-## TESTING PARSING
-< in hola > out | hola
-segfault
-
-< in hola > out
-unused memory(??) (~leak)
+(valgrind) ./minishell
+command
+exit
+LEAK

@@ -42,6 +42,7 @@ typedef struct s_vars
 	t_list		*export;
 	t_lst		*ts;
 	t_dollar	dollar;
+	t_command	*command;
 	int			np; //number of pipes
 }	t_vars;
 
@@ -50,6 +51,7 @@ t_lst	*ft_lstnew_lst(void *content, void **content_p);
 void	ft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	ft_lstdelone_lst(t_lst *lst);
 void	ft_lstclear_lst(t_lst **lst);
+void	ft_freecommand(t_command *command);
 void	ft_free_lst(void **ptr);
 
 // SPLITMINI
@@ -88,6 +90,7 @@ void	ft_init(t_vars *vars, char **envp);
 // EXECUTION
 void	ft_execute(t_command *command, t_vars *vars);
 int		ft_heredoc(char *lim);
+char	*ft_findpath(char *comm, char **envp, t_vars *vars);
 
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);

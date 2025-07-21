@@ -113,7 +113,6 @@ void	ft_exec1(t_command *command, t_vars *vars)
 	char	**envp;
 	char	*path;
 
-<<<<<<< HEAD
 	if (command->hd == 1)
 	{
 		if (ft_heredoc(command->infile) == -1)
@@ -128,48 +127,24 @@ void	ft_exec1(t_command *command, t_vars *vars)
 		{
 			if (!ft_builtin2(command, vars))
 			{
-				ft_set_redir(command, vars, 2);//for here_doc, file must be created before execution
-				//(if mode == 1 condition)
+				ft_set_redir(command, vars, 2);
 				envp = ft_getenv(vars->env); //protect
-				path = ft_strjoin("/usr/bin/", command->comm[0]);//protect and SEARCH FOR TRUE PATH
+				path = ft_findpath(command->comm[0], envp, vars);//protect
 				if (!envp || !path)
-					ft_exit(NULL, 1, vars);
+				{
+					ft_freestrarr(&envp, 1);
+					ft_exit(path, 1, vars);
+				}
 				if (execve(path, command->comm, envp) == -1) //save exit status
-					ft_exit(NULL, 1, vars); //SHOULD FREE ENVP AND PATH
+				{
+					ft_freestrarr(&envp, 1);
+					ft_exit(path, 1, vars); //SHOULD FREE ENVP AND PATH
+				}
 			}
 			ft_exit(NULL, 0, vars);
 		}
 		else
 			waitpid(pid, NULL, 0);//save exit status somewhere
-=======
-	//fork only if np > 0 (and builtin)
-	//BEFORE, WE SHOULD "CUT" THE ARRAY UNTIL '|' OR '>'
-	if (ft_strcmp(comm[0], "cd") == 0)
-		ft_cd(vars, comm);
-	else
-	{
-		pid = fork();
-		if (pid == -1)
-			return ;
-		if (pid == 0) // CHILD
-		{
-			if (!ft_builtin(comm, vars))
-			{
-				envp = ft_getenv(vars->env);
-				path = ft_strjoin3("/usr/bin", "/", comm[0]);//protect AND SEARCH TRUE PATH
-				if (!envp || !path)
-					ft_exit(NULL, 1, vars);
-				if (execve(path, comm, envp) == -1)
-					ft_exit(ft_free(envp, 1), 1, vars);
-			}
-			else
-				ft_exit(NULL, 0, vars);
-		}
-		else
-		{
-			waitpid(pid, NULL, 0);
-		}
->>>>>>> origin/cd_branch
 	}
 	if (command->hd == 1)
 		unlink(".here_doc.tmp");
