@@ -1,4 +1,4 @@
-# :books: minishell ![Static Badge](https://img.shields.io/badge/Barcelona-black?style=for-the-badge&logo=42&logoColor=%23FFFFFF)
+# 🖥️ minishell ![Static Badge](https://img.shields.io/badge/Barcelona-black?style=for-the-badge&logo=42&logoColor=%23FFFFFF)
 ![Static Badge](https://img.shields.io/badge/C-grey?style=flat)
 ![Static Badge](https://img.shields.io/badge/Makefile-green?style=flat)
 ![Static Badge](https://img.shields.io/badge/status-in_progress-orange?style=flat)
