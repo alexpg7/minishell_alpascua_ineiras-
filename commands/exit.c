@@ -18,6 +18,5 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 		ft_freecommand(vars->command);
 	ft_lstclear(&vars->env, &free);
 	ft_lstclear(&vars->export, &free); //should delete export from vars at some point
-	//ft_printf("Exiting minishell\n");
 	exit(ret);
 }

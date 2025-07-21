@@ -37,7 +37,6 @@ void	ft_freecommand(t_command *command)
 void	do_stuff(char *str, t_vars *vars, int num)
 {
 	char		**comm;
-	t_command	*command;
 
 	vars->np = 0;
 	vars->command = NULL;
@@ -51,9 +50,9 @@ void	do_stuff(char *str, t_vars *vars, int num)
 		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
 	if (vars->command)
 		ft_freecommand(vars->command);
-	command = ft_createcomm(comm, vars);
-	vars->command = command;
-	ft_execute(command, vars);
+	vars->command = ft_createcomm(comm, vars);
+	ft_execute(vars->command, vars);
+	ft_freecommand(vars->command);
 	//ft_printcom(command);
 	//ft_exit(NULL, 0, vars);
 }
