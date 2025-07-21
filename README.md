@@ -1,6 +1,6 @@
 # 🖥️ minishell ![Static Badge](https://img.shields.io/badge/Barcelona-black?style=for-the-badge&logo=42&logoColor=%23FFFFFF)
-![Static Badge](https://img.shields.io/badge/C-grey?style=flat)
-![Static Badge](https://img.shields.io/badge/Makefile-green?style=flat)
+![Static Badge](https://img.shields.io/badge/c-grey?style=flat&logo=c)
+![Static Badge](https://img.shields.io/badge/Makefile-green?style=flat&logo=AnkerMake)
 ![Static Badge](https://img.shields.io/badge/status-in_progress-orange?style=flat)
 
 The first challenging 42 project: a bash terminal.
