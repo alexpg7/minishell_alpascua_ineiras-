@@ -78,7 +78,9 @@ void	swap_pwd(t_vars *vars);
 void	change_old_pwd(t_vars *vars, char *old_pwd);
 void	change_pwd(t_vars *vars, char *pwd);
 int		count_args(char **argv);
-char	*minus_dir(char *dir);
+char	*minus_dir(char *dir, t_vars *vars);
+void	ft_putendl_fd2(char *s, int fd, char *var);
+int		ft_free_minus_one(char *str);
 
 // PROGRAMS
 void	ft_init(t_vars *vars, char **envp);

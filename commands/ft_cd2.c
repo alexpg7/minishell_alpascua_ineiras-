@@ -9,8 +9,10 @@ void change_old_pwd(t_vars *vars, char *old_pwd) // Changes $OLD_PWD for current
 		env = env->next;
 	if (ft_strncmp("HOME=", old_pwd, 5) == 0)
 		env->content = ft_strjoin("OLDPWD=", old_pwd + 5);
-	if (ft_strncmp("PWD=", old_pwd, 4) == 0)
+	else if (ft_strncmp("PWD=", old_pwd, 4) == 0)
 		env->content = ft_strjoin("OLDPWD=", old_pwd + 4);
+	if (!env->content)
+		ft_exit(NULL, 1, vars);
 }
 
 void change_pwd(t_vars *vars, char *pwd) // Changes $PWD for $OLD_PWD;
@@ -25,6 +27,8 @@ void change_pwd(t_vars *vars, char *pwd) // Changes $PWD for $OLD_PWD;
 		env->content = ft_strjoin("OLDPWD=", old_pwd + 5);*/
 	if (ft_strncmp("OLDPWD=", pwd, 7) == 0)
 		env->content = ft_strjoin("PWD=", pwd + 7);
+	if (!env->content)
+		ft_exit(NULL, 1, vars);
 }
 
 void swap_pwd(t_vars *vars)
@@ -43,7 +47,7 @@ void swap_pwd(t_vars *vars)
 	while (old_env && ft_strncmp("OLDPWD=", old_env->content, 7) != 0)
 		old_env = old_env->next;
 	content_2 = old_env->content;
-	change_old_pwd(vars, content);
-	change_pwd(vars, content_2);
+	//change_old_pwd(vars, content);
+	//change_pwd(vars, content_2);
 	chdir(content_2 + 4);
 }
