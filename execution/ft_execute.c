@@ -7,18 +7,18 @@ void	ft_child(t_command *command, t_vars *vars)
 
 	if (!ft_builtin2(command, vars))
 	{
-		ft_set_redir(command, vars, 2);
+		ft_set_redir(command, vars, 2);//if == -1 return
 		envp = ft_getenv(vars->env);
 		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
 		if (!envp || !path)
 		{
 			ft_freestrarr(&envp, 1);
-			ft_exit(path, 1, vars);
+			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
 		}
 		if (execve(path, command->comm, envp) == -1)
 		{
 			ft_freestrarr(&envp, 1);
-			ft_exit(path, 1, vars);
+			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
 		}
 	}
 }
@@ -35,7 +35,7 @@ void	ft_exec1(t_command *command, t_vars *vars)
 	if (!ft_builtin1(command, vars))
 	{
 		pid = fork();
-		if (pid == 1)
+		if (pid == -1)
 			perror("fork");
 		else if (pid == 0)
 		{

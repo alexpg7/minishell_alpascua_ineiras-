@@ -93,15 +93,23 @@ int		ft_heredoc(char *lim);
 char	*ft_findpath(char *comm, char **envp, t_vars *vars);
 void	ft_execmore(t_command *command, t_vars *vars);
 
+// EXEC FIRST
+int	ft_execfirst(t_command *command, int *pid, int **pip, t_vars *vars);
+
+// EXEC LAST
+int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars);
+
 // EXECCUTION UTILS
-int	ft_checkfd(char *file, int fd, int final);
-int	ft_readin2(char *file);
-int	ft_readin3(char *file);
-int	ft_readin(char *file, int mode);
-int	ft_readout(char *file, int mode);
+int		ft_checkfd(char *file, int fd, int final);
+int		ft_readin2(char *file);
+int		ft_readin3(char *file);
+int		ft_readin(char *file, int mode);
+int		ft_readout(char *file, int mode);
 void	ft_set_redir(t_command *command, t_vars *vars, int mode);
-int	ft_builtin2(t_command *com, t_vars *vars);
-int	ft_builtin1(t_command *com, t_vars *vars);
+int		ft_builtin2(t_command *com, t_vars *vars);
+int		ft_builtin1(t_command *com, t_vars *vars);
+int		ft_searchbuiltin(t_command *com);
+
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 #endif
