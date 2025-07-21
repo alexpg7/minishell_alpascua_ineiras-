@@ -28,10 +28,18 @@ int	ft_readin2(char *file)
 	return (ft_checkfd(file, fd, 0));
 }
 
+int	ft_readin3(char *file)
+{
+	int	fd;
+
+	fd = open(".here_doc.tmp", O_RDONLY);//REMEMBER TO DELETE IT AT THE END
+	return (ft_checkfd(file, fd, 0));
+}
+
 int	ft_readin(char *file, int mode)
 {
 	if (mode == 1)
-		return (ft_heredoc(file));
+		return (ft_readin3(file));
 	else
 		return (ft_readin2(file));
 	return (0);
@@ -105,6 +113,11 @@ void	ft_exec1(t_command *command, t_vars *vars)
 	char	**envp;
 	char	*path;
 
+	if (command->hd == 1)
+	{
+		if (ft_heredoc(command->infile) == -1)
+			ft_exit(NULL, 1, vars);
+	}
 	if (!ft_builtin1(command, vars))
 	{
 		pid = fork();
@@ -114,7 +127,8 @@ void	ft_exec1(t_command *command, t_vars *vars)
 		{
 			if (!ft_builtin2(command, vars))
 			{
-				ft_set_redir(command, vars, 2);
+				ft_set_redir(command, vars, 2);//for here_doc, file must be created before execution
+				//(if mode == 1 condition)
 				envp = ft_getenv(vars->env); //protect
 				path = ft_strjoin("/usr/bin/", command->comm[0]);//protect and SEARCH FOR TRUE PATH
 				if (!envp || !path)
@@ -127,6 +141,8 @@ void	ft_exec1(t_command *command, t_vars *vars)
 		else
 			waitpid(pid, NULL, 0);//save exit status somewhere
 	}
+	if (command->hd == 1)
+		unlink(".here_doc.tmp");
 }
 
 void	ft_execmore(t_command *command, t_vars *vars)
