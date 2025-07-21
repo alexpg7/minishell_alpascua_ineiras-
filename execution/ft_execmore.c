@@ -71,10 +71,10 @@ int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 			perror("pipe");
 			return (-1);
 		}
-		command++;
 		ft_execbetween();
+		i++;
 	}
-	ft_execlast(command, pid, pip, vars);
+	ft_execlast(&command[i], pid, pip, vars);
 	ft_waitall(pid, vars->np + 1);
 	free(pid);
 	ft_freepip(pip, vars->np, vars->np + 1);
