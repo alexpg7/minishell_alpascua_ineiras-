@@ -43,11 +43,11 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // 
 		env = env->next;
 	change_old_pwd(vars, env->content);
 	free(env->content);
-	content = ft_strjoin("PWD=", path);
+	chdir(path);
+	content = ft_strjoin("PWD=", ft_new_pwd());
 	env->content = content;
 	if (!env->content)
 		ft_exit(NULL, 1, vars);
-	chdir(path);
 	closedir(directory);
 	free(path);
 	return (0);
