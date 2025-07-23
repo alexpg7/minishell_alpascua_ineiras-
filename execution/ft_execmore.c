@@ -76,6 +76,8 @@ int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 	}
 	ft_execlast(&command[i], pid, pip, vars);
 	ft_waitall(pid, vars->np + 1);
+	free(pid);
+	ft_freepip(pip, vars->np, vars->np + 1);
 	unlink(".here_doc.tmp");
 	return (0);
 }
