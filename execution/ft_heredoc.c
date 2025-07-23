@@ -25,7 +25,7 @@ int	ft_writefile(char *lim, int fd)
 {
 	char	*text;
 
-	ft_putstr_fd("heredoc> ", 1);
+	ft_putstr_fd("heredoc> ", 0);
 	text = get_next_line(0);
 	if (!text)
 	{
@@ -53,7 +53,6 @@ int	ft_heredoc(char *lim)
 {
 	int	fd;
 
-	ft_printf("here_doc %s\n", lim);
 	fd = open(".here_doc.tmp", O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{

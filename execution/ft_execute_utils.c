@@ -28,18 +28,18 @@ int	ft_readin2(char *file)
 	return (ft_checkfd(file, fd, 0));
 }
 
-int	ft_readin3(char *file)
+int	ft_readin3(void)
 {
 	int	fd;
 
 	fd = open(".here_doc.tmp", O_RDONLY);//REMEMBER TO DELETE IT AT THE END
-	return (ft_checkfd(file, fd, 0));
+	return (ft_checkfd(".here_doc.tmp", fd, 0));
 }
 
 int	ft_readin(char *file, int mode)
 {
 	if (mode == 1)
-		return (ft_readin3(file));
+		return (ft_readin3());
 	else
 		return (ft_readin2(file));
 	return (0);

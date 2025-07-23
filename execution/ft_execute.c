@@ -7,7 +7,7 @@ void	ft_child(t_command *command, t_vars *vars)
 
 	if (!ft_builtin2(command, vars))
 	{
-		ft_set_redir(command, vars, 2);//if == -1 return
+		//ft_set_redir(command, vars, 2);//if == -1 return
 		envp = ft_getenv(vars->env);
 		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
 		if (!envp || !path)

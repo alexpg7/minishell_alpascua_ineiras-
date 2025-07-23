@@ -102,7 +102,7 @@ int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars);
 // EXECCUTION UTILS
 int		ft_checkfd(char *file, int fd, int final);
 int		ft_readin2(char *file);
-int		ft_readin3(char *file);
+int		ft_readin3(void);
 int		ft_readin(char *file, int mode);
 int		ft_readout(char *file, int mode);
 void	ft_set_redir(t_command *command, t_vars *vars, int mode);

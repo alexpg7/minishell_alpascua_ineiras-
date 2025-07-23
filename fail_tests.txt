@@ -3,3 +3,9 @@ HERE: No such file or directory
 HERE: No such file or directory
 
 +ALL HERE DOC TESTS FAIL WITH PIPES
+
+/home/alpascua/Desktop/minishell-> echo hola | << HERE echo hola2
+hola
+heredoc> jajja
+heredoc> HERE
+HERE: No such file or directory

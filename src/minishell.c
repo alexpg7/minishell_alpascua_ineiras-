@@ -51,10 +51,10 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
+	//ft_printcom(vars->command);
 	ft_execute(vars->command, vars);
 	ft_freecommand(vars->command);
 	vars->command = NULL;
-	//ft_printcom(command);
 	//ft_exit(NULL, 0, vars);
 }
 
