@@ -75,6 +75,7 @@ void	ft_export(t_vars *vars, char *arg);
 void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);
+void	ft_unset(char **args, t_vars *vars);
 
 // UTILS & COMMANDS OF CD
 void	swap_pwd(t_vars *vars);
