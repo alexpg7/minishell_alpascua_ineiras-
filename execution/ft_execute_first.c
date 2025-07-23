@@ -5,6 +5,7 @@ static int	ft_checkfdpipe(int pipe, int final)
 	if (dup2(pipe, final) == -1)
 	{
 		perror("dup2");
+		close(pipe);
 		return (-1);
 	}
 	close(pipe);
@@ -31,7 +32,7 @@ void	ft_childfirst(t_command *command, int *pip, t_vars *vars)
 	char	*path;
 
 	ft_checkfdpipe(pip[1], 1);//if == -1 return
-		close(pip[0]);
+	close(pip[0]);
 	if (!ft_builtin2(command, vars))
 	{
 		//ft_set_redirfirst(command, vars, 2);

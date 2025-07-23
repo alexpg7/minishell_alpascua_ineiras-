@@ -98,6 +98,9 @@ void	ft_execmore(t_command *command, t_vars *vars);
 // EXEC FIRST
 int	ft_execfirst(t_command *command, int *pid, int **pip, t_vars *vars);
 
+// EXEC BETWEEN
+int	ft_execbetween(t_command *command, int *pid, int **pip, t_vars *vars);
+
 // EXEC LAST
 int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars);
 

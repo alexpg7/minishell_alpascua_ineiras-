@@ -22,5 +22,6 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	if (vars->command)
 		ft_freecommand(vars->command);
 	ft_lstclear(&vars->env, &free);
+	unlink(".here_doc.tmp");
 	exit(ret);
 }

@@ -1,8 +1,1 @@
-echo hola | cat
-hola
-
-echo hola | cat > out
-LEAKS, why??
-
-FREE'S FAIL WHEN USING 2 COMMANDS. WE MUST FREE PIPES AFTER EACH waitall()
-(or before analizing a new command)
+no fails

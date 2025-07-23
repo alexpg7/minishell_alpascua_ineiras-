@@ -48,11 +48,6 @@ static int	**ft_pipalloc(int len)
 	return (ptr);
 }
 
-int	ft_execbetween(void)
-{
-	return (0);
-}
-
 int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 {
 	int	i;
@@ -71,10 +66,10 @@ int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 			perror("pipe");
 			return (-1);
 		}
-		ft_execbetween();
+		ft_execbetween(&command[i], pid + i, pip + i - 1, vars);
 		i++;
 	}
-	ft_execlast(&command[i], pid, pip, vars);
+	ft_execlast(&command[i], pid + i, pip + i - 1, vars);
 	ft_waitall(pid, vars->np + 1);
 	free(pid);
 	ft_freepip(pip, vars->np, vars->np + 1);

@@ -12,32 +12,20 @@ static int	ft_checkfdpipe(int pipe, int final)
 	return (0);
 }
 
-/*static void	ft_set_redirlast(t_command *command, t_vars *vars, int mode)
-{
-	if (command->infile && (mode == 0 || mode == 2))
-	{
-		if (ft_readin(command->infile, command->hd) == -1)
-			ft_exit(NULL, 1, vars);
-	}
-	if (command->outfile && (mode == 1 || mode == 2))
-	{
-		if (ft_readout(command->outfile, command->ap) == -1)
-			ft_exit(NULL, 1, vars);
-	}
-}*/
-
-void	ft_childlast(t_command *command, int *pip, t_vars *vars)
+void	ft_childbetween(t_command *command, int *pip0, int *pip1, t_vars *vars)
 {
 	char	**envp;
 	char	*path;
 
-	ft_checkfdpipe(pip[0], 0);//if == -1 return
-	close(pip[1]);
+	ft_checkfdpipe(pip1[1], 1);//if == -1 return
+	close(pip0[1]);
+	ft_checkfdpipe(pip0[0], 0);//if == -1 return
+	close(pip1[0]);
 	if (!ft_builtin2(command, vars))
 	{
-		//ft_set_redirlast(command, vars, 2);
-		/*ft_checkfdpipe(pip[0], 0);//if == -1 return
-		close(pip[1]);*/
+		//ft_set_redirfirst(command, vars, 2);
+		/*ft_checkfdpipe(pip[1], 1);//if == -1 return
+		close(pip[0]);*/
 		envp = ft_getenv(vars->env);
 		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
 		if (!envp || !path)
@@ -51,9 +39,10 @@ void	ft_childlast(t_command *command, int *pip, t_vars *vars)
 			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
 		}
 	}
+	//free pip and pid
 }
 
-int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars)
+int	ft_execbetween(t_command *command, int *pid, int **pip, t_vars *vars)
 {
 	if (command->hd == 1)
 	{
@@ -62,15 +51,16 @@ int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars)
 	}
 	if (!ft_searchbuiltin(command))//some builtins are not executed if they are in a pipe
 	{
-		pid[0] = fork();
+		pid[0] = fork();// save pipes in trashlist?
 		if (pid[0] == -1)
 			perror("fork");
 		else if (pid[0] == 0)
 		{
-			ft_childlast(command, pip[0], vars);
+			ft_childbetween(command, pip[0], pip[1], vars);
 			ft_exit(NULL, 0, vars);
 		}
 		close(pip[0][0]);
+		close(pip[1][1]);
 	}
 	else
 		pid[0] = -1;
