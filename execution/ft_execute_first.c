@@ -50,6 +50,7 @@ void	ft_childfirst(t_command *command, int *pip, t_vars *vars)
 			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
 		}
 	}
+	//free pip and pid
 }
 
 int	ft_execfirst(t_command *command, int *pid, int **pip, t_vars *vars)

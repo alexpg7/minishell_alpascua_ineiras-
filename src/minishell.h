@@ -44,6 +44,8 @@ typedef struct s_vars
 	t_dollar	dollar;
 	t_command	*command;
 	int			np; //number of pipes
+	int			**pip; //pipes
+	int			*pid; //pid's
 }	t_vars;
 
 // TRSH LIST FUNCTIONS
@@ -109,6 +111,7 @@ void	ft_set_redir(t_command *command, t_vars *vars, int mode);
 int		ft_builtin2(t_command *com, t_vars *vars);
 int		ft_builtin1(t_command *com, t_vars *vars);
 int		ft_searchbuiltin(t_command *com);
+int		**ft_freepip(int **arr, int len, int index);
 
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);

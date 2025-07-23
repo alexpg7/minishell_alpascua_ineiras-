@@ -1,11 +1,8 @@
-/home/alpascua/Desktop/minishell-> < HERE cat | cat
-HERE: No such file or directory
-HERE: No such file or directory
-
-+ALL HERE DOC TESTS FAIL WITH PIPES
-
-/home/alpascua/Desktop/minishell-> echo hola | << HERE echo hola2
+echo hola | cat
 hola
-heredoc> jajja
-heredoc> HERE
-HERE: No such file or directory
+
+echo hola | cat > out
+LEAKS, why??
+
+FREE'S FAIL WHEN USING 2 COMMANDS. WE MUST FREE PIPES AFTER EACH waitall()
+(or before analizing a new command)

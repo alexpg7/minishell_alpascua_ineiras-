@@ -13,7 +13,7 @@ static void	ft_waitall(int *pid, int len)
 	}
 }
 
-static int	**ft_freepip(int **arr, int len, int index)
+int	**ft_freepip(int **arr, int len, int index)
 {
 	int	i;
 	int	**aux;
@@ -77,33 +77,26 @@ int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 	ft_execlast(&command[i], pid, pip, vars);
 	ft_waitall(pid, vars->np + 1);
 	unlink(".here_doc.tmp");
-	free(pid);
-	ft_freepip(pip, vars->np, vars->np + 1);
 	return (0);
 }
 
 void	ft_execmore(t_command *command, t_vars *vars)
 {
-	int	**pip;
-	int	*pid;
-
-	pid = (int *)malloc(sizeof(int) * (vars->np + 1));
-	if (!pid)
+	vars->pid = (int *)malloc(sizeof(int) * (vars->np + 1));
+	if (!vars->pid)
 	{
 		perror("pid malloc");
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, 1, vars);//np >= and pip is not allocated ! carefull with free
 	}
-	pip = ft_pipalloc(vars->np);
-	if (!pip)
+	vars->pip = ft_pipalloc(vars->np);
+	if (!vars->pip)
 	{
-		free(pid);
+		free(vars->pid);
 		perror("pipes malloc");
 		ft_exit(NULL, 1, vars);
 	}
-	if (ft_execmore2(command, pid, pip, vars) == -1)
+	if (ft_execmore2(command, vars->pid, vars->pip, vars) == -1)
 	{
-		free(pid);
-		ft_freepip(pip, vars->np, vars->np + 1);
 		ft_exit(NULL, 1, vars);
 	}
 }
