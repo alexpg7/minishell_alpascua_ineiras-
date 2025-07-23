@@ -39,7 +39,6 @@ typedef struct s_vars
 	char		*prompt;
 	//t_lst		*trash;
 	t_list		*env;
-	t_list		*export;
 	t_lst		*ts;
 	t_dollar	dollar;
 	t_command	*command;
