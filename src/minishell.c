@@ -34,7 +34,7 @@ void	ft_freecommand(t_command *command)
 	free(command);
 }
 
-void	do_stuff(char *str, t_vars *vars, int num)
+void	do_stuff(char *str, t_vars *vars)
 {
 	char		**comm;
 
@@ -44,10 +44,9 @@ void	do_stuff(char *str, t_vars *vars, int num)
 	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	if (num == 0)
-		vars->ts = ft_lstnew_lst(NULL, (void **)comm);//protect
-	else if (num != 0)
-		ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
+	ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
+	if (comm[0] == NULL) //necessary if you dont put any command
+		return ;
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
@@ -82,7 +81,6 @@ int	main(int narg, char **argv, char **envp)
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
-	//INITIALIZE TRASHLIST (IMPORTANT TO AVOID SEGFAULT)
 	while (narg == 1 && argv[0])
 	{
 		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");
@@ -91,14 +89,14 @@ int	main(int narg, char **argv, char **envp)
 			perror("malloc");
 			ft_exit(NULL, 1, &vars);
 		}
-		input = readline(vars.prompt); //put here directory like in bash
+		input = readline(vars.prompt); //handle Ctrl+D?
 		if (!input)
 		{
 			perror("malloc");
 			ft_exit(input, 1, &vars);
 		}
 		add_history(input);
-		do_stuff(input, &vars, num);
+		do_stuff(input, &vars);
 		free(vars.prompt);
 		num++;
 	}
