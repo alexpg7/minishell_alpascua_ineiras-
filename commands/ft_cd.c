@@ -11,7 +11,23 @@ static char	*ft_set_path(t_vars *vars, char *path, char **argv)
 	return (path);
 }
 
-static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // Fi multipl //// prompt
+static void cd_double_point(t_vars *vars)
+{
+	t_list *env;
+	char	*content;
+
+	env = vars->env;
+	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
+		env = env->next;
+	content = minus_dir(env->content, vars);
+	if (!content)
+		ft_exit(NULL, 1, vars);
+	change_old_pwd(vars, env->content);
+	env->content = content;
+	chdir(env->content + 4);
+}
+
+static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // No leaks
 {
 	DIR		*directory;
 	t_list	*env;
@@ -25,49 +41,16 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // 
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 		env = env->next;
-	//change_old_pwd(vars, env->content);
+	change_old_pwd(vars, env->content);
 	free(env->content);
-	content = ft_strjoin("PWD=", path);
+	chdir(path);
+	content = ft_strjoin("PWD=", ft_new_pwd());
 	env->content = content;
 	if (!env->content)
 		ft_exit(NULL, 1, vars);
-	chdir(path);
 	closedir(directory);
 	free(path);
 	return (0);
-}
-
-static void cd_double_point(t_vars *vars)
-{
-	t_list *env;
-	char	*content;
-
-	env = vars->env;
-	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
-		env = env->next;
-	content = minus_dir(env->content, vars);
-//	change_old_pwd(vars, env->content);
-	env->content = content;
-	chdir(env->content + 4);
-}
-
-static void	cd_not_args(t_vars *vars)
-{
-	t_list	*env;
-	char	*content;
-
-	env = vars->env;
-	while (env && ft_strncmp(env->content, "HOME=", 5) != 0)
-		env = env->next;
-	content = ft_strjoin("PWD=", env->content + 5);//protect
-	if (!content)
-		ft_exit(NULL, 1, vars);
-	env = vars->env;
-	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
-		env = env->next;
-	//change_old_pwd(vars, env->content);
-	env->content = content;
-	chdir(env->content + 4);
 }
 
 static void cd_argc_2(t_vars *vars, char **argv)
@@ -78,7 +61,6 @@ static void cd_argc_2(t_vars *vars, char **argv)
 	content = NULL;
 	path = NULL;
 	if (ft_strcmp(argv[1], "/") == 0)
-		//slash_cd(vars, argv);
 		cd_move_dir(vars, argv, content, path);
 	else if (ft_strcmp(argv[1], "-") == 0)
 		swap_pwd(vars);
@@ -88,6 +70,25 @@ static void cd_argc_2(t_vars *vars, char **argv)
 		cd_double_point(vars);
 	else if (cd_move_dir(vars, argv, content, path) == -1)
 		ft_putendl_fd2("cd: not such file or directory: ", 2, argv[1]);
+}
+
+static void	cd_not_args(t_vars *vars)
+{
+	t_list	*env;
+	char	*content;
+
+	env = vars->env;
+	while (env && ft_strncmp(env->content, "HOME=", 5) != 0)
+		env = env->next;
+	content = ft_strjoin("PWD=", env->content + 5);
+	if (!content)
+		ft_exit(NULL, 1, vars);
+	env = vars->env;
+	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
+		env = env->next;
+	change_old_pwd(vars, env->content);
+	env->content = content;
+	chdir(env->content + 4);
 }
 
 void ft_cd(t_vars *vars, char **argv)

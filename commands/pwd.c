@@ -16,3 +16,14 @@ char	*ft_pwd(char **comm, t_vars *vars)
 	}
 	return (env->content + 4);
 }
+
+char *ft_new_pwd(void)
+{
+	char cwd[10000];
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		return (getcwd(cwd, sizeof(cwd)));
+	}
+	return (NULL);
+}
