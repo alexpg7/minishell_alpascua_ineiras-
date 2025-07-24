@@ -13,7 +13,7 @@ static char	*ft_set_path(t_vars *vars, char *path, char **argv)
 
 static void cd_double_point(t_vars *vars)
 {
-	t_list *env;
+	t_list	*env;
 	char	*content;
 
 	env = vars->env;
@@ -23,6 +23,7 @@ static void cd_double_point(t_vars *vars)
 	if (!content)
 		ft_exit(NULL, 1, vars);
 	change_old_pwd(vars, env->content);
+	free(env->content);
 	env->content = content;
 	chdir(env->content + 4);
 }
@@ -87,6 +88,7 @@ static void	cd_not_args(t_vars *vars)
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 		env = env->next;
 	change_old_pwd(vars, env->content);
+	free(env->content);
 	env->content = content;
 	chdir(env->content + 4);
 }
