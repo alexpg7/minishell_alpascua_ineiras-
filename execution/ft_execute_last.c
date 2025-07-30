@@ -46,21 +46,21 @@ void	ft_childlast(t_command *command, int *pip, t_vars *vars)
 	}
 }
 
-int	ft_execlast(t_command *command, int *pid, int **pip, t_vars *vars)
+int	ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars)
 {
-	if (command->hd == 1)
+	if (comm->hd == 1)
 	{
-		if (ft_heredoc(command->infile) == -1)
+		if (ft_heredoc(comm->infile) == -1)
 			ft_exit(NULL, 1, vars);
 	}
-	if (!ft_searchbuiltin(command))//some builtins are not executed if they are in a pipe
+	if (!ft_searchbuiltin(comm))//some builtins are not executed if they are in a pipe
 	{
 		pid[0] = fork();
 		if (pid[0] == -1)
 			perror("fork");
 		else if (pid[0] == 0)
 		{
-			ft_childlast(command, pip[0], vars);
+			ft_childlast(comm, pip[0], vars);
 			ft_exit(NULL, 0, vars);
 		}
 		close(pip[0][0]);

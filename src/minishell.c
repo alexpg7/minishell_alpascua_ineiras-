@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
+/*   Updated: 2025/07/30 20:05:04 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 
 void	ft_newexit(t_vars *vars)
@@ -16,23 +27,23 @@ void	ft_newexit(t_vars *vars)
 	free(com);
 }
 
-void	ft_printcom(t_command *command)
+void	ft_printcom(t_command *comm)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (command[i].comm)
+	while (comm[i].comm)
 	{
 		ft_printf("-PIPE %i:\n", i + 1);
 		j = 0;
-		while (command[i].comm[j])
+		while (comm[i].comm[j])
 		{
-			ft_printf("%s\n", command[i].comm[j]);
+			ft_printf("%s\n", comm[i].comm[j]);
 			j++;
 		}
-		ft_printf("-RED IN: %s, mode: %i\n", command[i].infile, command[i].hd);
-		ft_printf("-RED OUT: %s, mode: %i\n\n", command[i].outfile, command[i].ap);
+		ft_printf("-RED IN: %s, mode: %i\n", comm[i].infile, comm[i].hd);
+		ft_printf("-RED OUT: %s, mode: %i\n\n", comm[i].outfile, comm[i].ap);
 		i++;
 	}
 }
@@ -66,23 +77,20 @@ void	do_stuff(char *str, t_vars *vars)
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
-	//ft_printcom(vars->command);
 	ft_execute(vars->command, vars);
 	ft_freecommand(vars->command);
 	vars->command = NULL;
-	//ft_exit(NULL, 0, vars);
+	ft_newexit(vars);
 }
 
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
 	char	*nul;
-	int		num;
 	t_vars	vars;
 
 	g_signal = 0;
 	ft_init_sig();
-	num = 0;
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
@@ -96,15 +104,10 @@ int	main(int narg, char **argv, char **envp)
 		}
 		input = readline(vars.prompt); //handle Ctrl+D?
 		if (!input)
-		{
-			perror("malloc");
 			ft_exit(input, 1, &vars);
-		}
 		add_history(input);
 		do_stuff(input, &vars);
-		ft_newexit(&vars);
 		free(vars.prompt);
-		num++;
 	}
 	return (0);
 }

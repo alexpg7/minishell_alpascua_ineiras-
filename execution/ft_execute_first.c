@@ -47,21 +47,21 @@ void	ft_childfirst(t_command *command, int *pip, t_vars *vars)
 	//free pip and pid
 }
 
-int	ft_execfirst(t_command *command, int *pid, int **pip, t_vars *vars)
+int	ft_execfirst(t_command *comm, int *pid, int **pip, t_vars *vars)
 {
-	if (command->hd == 1)
+	if (comm->hd == 1)
 	{
-		if (ft_heredoc(command->infile) == -1)
+		if (ft_heredoc(comm->infile) == -1)
 			ft_exit(NULL, 1, vars);
 	}
-	if (!ft_searchbuiltin(command))//some builtins are not executed if they are in a pipe
+	if (!ft_searchbuiltin(comm))//some builtins are not executed if they are in a pipe
 	{
 		pid[0] = fork();// save pipes in trashlist?
 		if (pid[0] == -1)
 			perror("fork");
 		else if (pid[0] == 0)
 		{
-			ft_childfirst(command, pip[0], vars);
+			ft_childfirst(comm, pip[0], vars);
 			ft_exit(NULL, 0, vars);
 		}
 		close(pip[0][1]);
