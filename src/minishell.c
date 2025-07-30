@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+void	ft_newexit(t_vars *vars)
+{
+	char	*num;
+	char	*com;
+
+	num = ft_itoa(vars->exit_status);
+	if (!num)
+		ft_exit(NULL, 1, vars);
+	com = ft_strjoin("?=", num);
+	free(num);
+	if (!com)
+		ft_exit(NULL, 1, vars);
+	ft_export(vars, &com, 1);
+	free(com);
+}
+
 void	ft_printcom(t_command *command)
 {
 	int	i;
@@ -86,6 +102,7 @@ int	main(int narg, char **argv, char **envp)
 		}
 		add_history(input);
 		do_stuff(input, &vars);
+		ft_newexit(&vars);
 		free(vars.prompt);
 		num++;
 	}

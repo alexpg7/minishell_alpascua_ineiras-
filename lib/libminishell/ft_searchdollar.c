@@ -5,6 +5,8 @@ static int	ft_varlen(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == '?')
+		return (1);
 	if (!str)
 		return (0);
 	while (ft_isalnum2(str[i]))

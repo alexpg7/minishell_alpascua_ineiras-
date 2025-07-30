@@ -46,7 +46,7 @@ int	ft_inenv(char *str, t_vars *vars)
 	return (0);
 }
 
-void	ft_export(t_vars *vars, char **arg)
+void	ft_export(t_vars *vars, char **arg, int mode)
 {
 	if (!(*arg))
 	{
@@ -66,6 +66,8 @@ void	ft_export(t_vars *vars, char **arg)
 		{
 			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));//protect
 		}
+		if (mode == 1)// 1 for exit status
+			break ;
 		arg++;
 	}
 }

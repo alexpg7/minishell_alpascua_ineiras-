@@ -82,7 +82,7 @@ char	*ft_pwd(char **comm, t_vars *vars);
 char 	*ft_new_pwd(void);
 char	*ft_path(t_vars *vars);
 void	ft_env(t_vars *vars);
-void	ft_export(t_vars *vars, char **arg);
+void	ft_export(t_vars *vars, char **arg, int mode);
 void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);

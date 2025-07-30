@@ -7,7 +7,8 @@ void	ft_env(t_vars *vars)
 	lst = vars->env;
 	while (lst)
 	{
-		ft_printf("%s\n", (char *)lst->content);
+		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
+			ft_printf("%s\n", (char *)lst->content);
 		lst = lst->next;
 	}
 }
