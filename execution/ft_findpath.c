@@ -5,22 +5,24 @@ static char	*ft_path2(char **envp)
 	int	i;
 
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 	{
 		i++;
 	}
 	if (envp[i])
 		return (envp[i] + 5);
-	ft_putstr_fd("No PATH variable found.", 2);
+	ft_putstr_fd("no PATH variable found.\n", 2);
 	return (NULL);
 }
 
 static char	*ft_checkpath(char **paths, char *comm, int *ret)
 {
 	int		i;
+	int		ex;
 	char	*program;
 
 	i = 0;
+	ex = 0;
 	while (paths[i])
 	{
 		program = ft_strjoin3(paths[i], "/", comm);
@@ -34,12 +36,12 @@ static char	*ft_checkpath(char **paths, char *comm, int *ret)
 			if (access(program, X_OK) == 0)
 				return (program);
 			perror(program);
-			//exit status 126
+			ex = 126;
 		}
 		free(program);
 		i++;
 	}
-	//exit status 127
+	ex = 127;
 	perror(comm);
 	return (NULL);
 }
