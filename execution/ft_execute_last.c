@@ -28,7 +28,6 @@ static int	ft_checkfdpipe(int pipe, int final)
 
 void	ft_childlast(t_command *command, int *pip, t_vars *vars)
 {
-	char	**envp;
 	char	*path;
 
 	ft_checkfdpipe(pip[0], 0);//if == -1 return
@@ -38,18 +37,12 @@ void	ft_childlast(t_command *command, int *pip, t_vars *vars)
 		//ft_set_redirlast(command, vars, 2);
 		/*ft_checkfdpipe(pip[0], 0);//if == -1 return
 		close(pip[1]);*/
-		envp = ft_getenv(vars->env);
-		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
-		if (!envp || !path)
-		{
-			ft_freestrarr(&envp, 1);
+		vars->envp = ft_getenv(vars->env);
+		path = ft_findpath(command->comm[0], vars->envp, vars);// save exit status (in case the command is not found/executable)
+		if (!vars->envp || !path)
+			ft_exit(path, vars->exit_status, vars);//put the exit status here, wait will collect it
+		if (execve(path, command->comm, vars->envp) == -1)
 			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
-		}
-		if (execve(path, command->comm, envp) == -1)
-		{
-			ft_freestrarr(&envp, 1);
-			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
-		}
 	}
 }
 

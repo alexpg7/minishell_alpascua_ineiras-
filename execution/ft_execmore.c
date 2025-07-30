@@ -10,7 +10,7 @@ static void	ft_waitall(int *pid, int len, t_vars *vars)
 		if (pid[i] > 0)
 			waitpid(pid[i], &vars->exit_status, 0);
 		vars->exit_status = exitstatus2(vars->exit_status);
-		ft_printf("%i\n", vars->exit_status);
+		ft_printexit(vars->exit_status, i, vars);
 		i++;
 	}
 }

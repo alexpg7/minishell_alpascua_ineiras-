@@ -14,7 +14,6 @@ static int	ft_checkfdpipe(int pipe, int final)
 
 void	ft_childbetween(t_command *command, int *pip0, int *pip1, t_vars *vars)
 {
-	char	**envp;
 	char	*path;
 
 	ft_checkfdpipe(pip1[1], 1);//if == -1 return
@@ -26,18 +25,12 @@ void	ft_childbetween(t_command *command, int *pip0, int *pip1, t_vars *vars)
 		//ft_set_redirfirst(command, vars, 2);
 		/*ft_checkfdpipe(pip[1], 1);//if == -1 return
 		close(pip[0]);*/
-		envp = ft_getenv(vars->env);
-		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
-		if (!envp || !path)
-		{
-			ft_freestrarr(&envp, 1);
+		vars->envp = ft_getenv(vars->env);
+		path = ft_findpath(command->comm[0], vars->envp, vars);// save exit status (in case the command is not found/executable)
+		if (!vars->envp || !path)
+			ft_exit(path, vars->exit_status, vars);//put the exit status here, wait will collect it
+		if (execve(path, command->comm, vars->envp) == -1)
 			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
-		}
-		if (execve(path, command->comm, envp) == -1)
-		{
-			ft_freestrarr(&envp, 1);
-			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
-		}
 	}
 	//free pip and pid
 }
