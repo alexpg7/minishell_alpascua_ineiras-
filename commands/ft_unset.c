@@ -1,11 +1,13 @@
 #include "../src/minishell.h"
 
-static int	ft_strisalnum2(char *str)
+int	ft_strisalnum2(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	if (ft_isalpha(str[0]) == 0 && str[0] != '_')
+		return (0);
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum2(str[i]))
 			return (0);

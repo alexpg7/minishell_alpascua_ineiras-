@@ -1,1 +1,4 @@
-no fails
+Welcome to minishell
+/home/alpascua/Desktop/minishell-> cd ..
+/home/alpascua/Desktop-> cd minishell/
+==693400== Invalid read of size 1

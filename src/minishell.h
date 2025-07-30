@@ -47,6 +47,8 @@ typedef struct s_vars
 	int			*pid; //pid's
 }	t_vars;
 
+static int	g_signal;
+
 // TRSH LIST FUNCTIONS
 t_lst	*ft_lstnew_lst(void *content, void **content_p);
 void	ft_lstadd_back_lst(t_lst **lst, t_lst *new);
@@ -54,6 +56,11 @@ void	ft_lstdelone_lst(t_lst *lst);
 void	ft_lstclear_lst(t_lst **lst);
 void	ft_freecommand(t_command *command);
 void	ft_free_lst(void **ptr);
+
+// SIGNALS
+void	ft_init_sig(void);
+void	ft_sigint(int sig);
+void	ft_sigkill(int sig);
 
 // SPLITMINI
 char	**ft_splitmini(char const *s, char c, t_vars *vars);
@@ -71,11 +78,12 @@ char	*ft_pwd(char **comm, t_vars *vars);
 char 	*ft_new_pwd(void);
 char	*ft_path(t_vars *vars);
 void	ft_env(t_vars *vars);
-void	ft_export(t_vars *vars, char *arg);
+void	ft_export(t_vars *vars, char **arg);
 void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);
 void	ft_unset(char **args, t_vars *vars);
+int		ft_strisalnum2(char *str);
 
 // UTILS & COMMANDS OF CD
 void	swap_pwd(t_vars *vars);

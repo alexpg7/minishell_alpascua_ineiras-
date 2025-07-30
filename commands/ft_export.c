@@ -48,22 +48,28 @@ int	ft_inenv(char *str, t_vars *vars)
 	return (0);
 }
 
-void	ft_export(t_vars *vars, char *arg)
+void	ft_export(t_vars *vars, char **arg)
 {
-	if (!arg)
+	if (!(*arg))
 	{
 		ft_env(vars);
 		return ;
-	}//
-	if (ft_strchr(arg, '='))//execute export for each argument
+	}
+	while (arg && ft_strchr(*arg, '='))//execute export for each argument
 	{
-		if (ft_inenv(arg, vars))
+		if (ft_strisalnum2(*arg) == 0)
 		{
-			ft_subsenv(arg, vars);
+			arg++;
+			continue ;
+		}
+		if (ft_inenv(*arg, vars))
+		{
+			ft_subsenv(*arg, vars);
 		}
 		else
 		{
-			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(arg, vars), "")));//protect
+			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(*arg, vars), "")));//protect
 		}
+		arg++;
 	}
 }

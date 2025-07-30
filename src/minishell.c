@@ -57,18 +57,6 @@ void	do_stuff(char *str, t_vars *vars)
 	//ft_exit(NULL, 0, vars);
 }
 
-/*void	ft_sigint(int sig)
-{
-	sig = 0;
-	ft_printf("^C\n");
-	ft_exit(NULL, 1, NULL);
-}
-
-void	ft_init_sig(void)
-{
-	signal(SIGINT, &ft_sigint);
-}*/
-
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
@@ -76,7 +64,8 @@ int	main(int narg, char **argv, char **envp)
 	int		num;
 	t_vars	vars;
 
-	//ft_init_sig();
+	g_signal = 0;
+	ft_init_sig();
 	num = 0;
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");

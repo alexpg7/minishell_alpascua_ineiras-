@@ -39,6 +39,7 @@ void	ft_exec1(t_command *command, t_vars *vars)
 			perror("fork");
 		else if (pid == 0)
 		{
+			signal(SIGINT, &ft_sigkill);
 			ft_child(command, vars);
 			ft_exit(NULL, 0, vars);
 		}

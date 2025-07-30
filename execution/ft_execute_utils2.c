@@ -39,7 +39,7 @@ int	ft_builtin1(t_command *com, t_vars *vars)
 	if (ft_strcmp("cd", com->comm[0]) == 0)
 		ft_cd(vars, com->comm);
 	else if (ft_strcmp("export", com->comm[0]) == 0)
-		ft_export(vars, com->comm[1]); //change to accept different arguments (+ not an identifier: if not valid var)
+		ft_export(vars, com->comm + 1); //change to accept different arguments (+ not an identifier: if not valid var)
 	else if (ft_strcmp("unset", com->comm[0]) == 0)
 		ft_unset(com->comm + 1, vars);
 	else if (ft_strcmp("exit", com->comm[0]) == 0)
