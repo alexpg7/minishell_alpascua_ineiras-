@@ -58,6 +58,8 @@ void	ft_lstdelone_lst(t_lst *lst);
 void	ft_lstclear_lst(t_lst **lst);
 void	ft_freecommand(t_command *command);
 void	ft_free_lst(void **ptr);
+void	ft_free_both(char *str1, char *str2);
+//void	ft_free_three(char *str1, char *str2, char *str3);
 
 // SIGNALS
 void	ft_init_sig(void);
@@ -85,7 +87,10 @@ void	ft_echo(char **args);
 void	ft_cd(t_vars *vars, char **argv);
 char	**ft_getenv(t_list *env);
 void	ft_unset(char **args, t_vars *vars);
+
+
 int		ft_strisalnum2(char *str);
+char	*new_var(t_vars *vars, char *arg);
 
 // UTILS & COMMANDS OF CD
 void	swap_pwd(t_vars *vars);

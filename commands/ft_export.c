@@ -17,16 +17,14 @@ static int	ft_varlen(char *str)
 static void	ft_subsenv(char *str, t_vars *vars)
 {
 	t_list	*env;
-	char	*aux;
 
 	env = vars->env;
 	while (env)
 	{
 		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
 		{
-			aux = env->content;
-			env->content = ft_strjoin(ft_searchdollar(str, vars), ""); //protect
-			free(aux);
+			free(env->content);
+			env->content = new_var(vars, str); //protec
 		}
 		env = env->next;
 	}
@@ -63,13 +61,33 @@ void	ft_export(t_vars *vars, char **arg)
 			continue ;
 		}
 		if (ft_inenv(*arg, vars))
-		{
 			ft_subsenv(*arg, vars);
-		}
 		else
 		{
-			ft_lstadd_back(&vars->env, ft_lstnew(ft_strjoin(ft_searchdollar(*arg, vars), "")));//protect
+			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));//protect
 		}
 		arg++;
 	}
+}
+
+char	*new_var(t_vars *vars, char *arg)
+{
+	char	*str;
+	char	*str_ae;
+	char	*str_en;
+
+	if (!arg)
+		return (NULL);
+	str = ft_strdup_eq(arg);
+	if (!str)
+		ft_exit(NULL, 1, vars);
+	str_ae = ft_strdup(ft_strchr(arg, '=') + 1);
+	if (!str_ae)
+		ft_exit(NULL, 1, vars);
+	str_ae =  ft_removequotes(ft_searchdollar(str_ae, vars));
+	if (!str_ae)
+		ft_exit(NULL, 1, vars);
+	str_en = ft_strjoin(str, str_ae);
+	ft_free_both(str, str_ae);
+	return (str_en);
 }

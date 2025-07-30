@@ -62,3 +62,16 @@ void swap_pwd(t_vars *vars)
 	free(content);
 	free(content_2);
 }
+
+void	ft_free_both(char *str1, char *str2)
+{
+	free(str1);
+	free(str2);
+}
+
+void	ft_free_three(char *str1, char *str2, char *str3)
+{
+	free(str1);
+	free(str2);
+	free(str3);
+}

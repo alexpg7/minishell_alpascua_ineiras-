@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:03:18 by alpascua          #+#    #+#             */
-/*   Updated: 2025/01/08 19:44:52 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:00:09 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
+#include "libft.h"
 char	*ft_strrchr(const char *s, int c)
 {
 	int		i;
@@ -23,4 +23,16 @@ char	*ft_strrchr(const char *s, int c)
 		i--;
 	}
 	return (NULL);
+}
+
+int	ft_cout_c(char *s, int c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] && (s[i] != c))
+	{
+		i++;
+	}
+	return (i);
 }
