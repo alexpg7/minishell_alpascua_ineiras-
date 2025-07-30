@@ -57,7 +57,7 @@ void	ft_export(t_vars *vars, char **arg)
 	}
 	while (arg && ft_strchr(*arg, '='))//execute export for each argument
 	{
-		if (ft_strisalnum2(*arg) == 0)
+		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{
 			arg++;
 			continue ;

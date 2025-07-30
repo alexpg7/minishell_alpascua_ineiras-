@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+void	ft_init2(t_vars *vars)
+{
+	t_list	*new;
+
+	new = ft_lstnew(ft_strjoin("?=0", "")); // protect
+	if (!new)
+		ft_lstclear(&vars->env, &free);
+	ft_lstadd_back(&vars->env, new);
+}
+
 void	ft_init(t_vars *vars, char **envp)
 {
 	t_list	*env;
@@ -20,7 +30,9 @@ void	ft_init(t_vars *vars, char **envp)
 	}
 	vars->envp = NULL;
 	vars->env = env;
+	vars->exit_status = 0;
 	vars->np = 0;
 	vars->command = NULL;
 	vars->ts = ft_lstnew_lst(NULL, NULL);//protect
+	ft_init2(vars);
 }

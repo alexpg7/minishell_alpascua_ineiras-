@@ -18,6 +18,8 @@ static int	ft_isvar(char *str, t_vars *vars, int mode)
 	int		len;
 
 	env = vars->env;
+	if (*str == '$' && *(str + 1) == '?')
+		return (2);
 	//mode 1 means start with '$', mode 0 not
 	if (*str == '$' && ft_isalnum2(*(str + 1)))
 	{
@@ -106,7 +108,6 @@ static char	*ft_subs1(char *str, t_vars *vars)
 	ptr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		ft_exit(NULL, 1, vars);
-	//ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(ptr, NULL));//protect
 	i = 0;
 	valuelen = -1;
 	while (*str)
@@ -149,7 +150,5 @@ char	*ft_searchdollar(char *str, t_vars *vars)
 			ft_exit(NULL, 1, vars);
 		count--;
 	}
-	//IMPLEMENT A SPECIAL CHARACTER READER
-	//THEN, ERASE ALL \", \' CHARACTERS
 	return (new);
 }

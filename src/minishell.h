@@ -34,6 +34,7 @@ typedef struct s_dollar
 	int		vallen;
 	char	*value;
 }	t_dollar;
+
 typedef struct s_vars
 {
 	char		*prompt;

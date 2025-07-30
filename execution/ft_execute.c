@@ -44,7 +44,6 @@ void	ft_exec1(t_command *command, t_vars *vars)
 			ft_printexit(vars->exit_status, 0, vars);// remember to make sigint produce exit 1
 		}
 	}
-	ft_printf("exit: %i\n", vars->exit_status);
 	if (command->hd == 1)
 		unlink(".here_doc.tmp");
 }
