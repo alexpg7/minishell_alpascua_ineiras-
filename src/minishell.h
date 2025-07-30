@@ -102,7 +102,12 @@ void	ft_init(t_vars *vars, char **envp);
 void	ft_execute(t_command *command, t_vars *vars);
 int		ft_heredoc(char *lim);
 char	*ft_findpath(char *comm, char **envp, t_vars *vars);
+int		exitstatus2(int status);
 void	ft_execmore(t_command *command, t_vars *vars);
+
+// EXIT STATUS
+int		exitstatus2(int status);
+void	ft_printexit(int ex, int index, t_vars *vars);
 
 // EXEC FIRST
 int	ft_execfirst(t_command *command, int *pid, int **pip, t_vars *vars);

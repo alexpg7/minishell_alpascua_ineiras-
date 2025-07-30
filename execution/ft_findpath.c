@@ -33,14 +33,12 @@ static char	*ft_checkpath(char **paths, char *comm, int *ret)
 		{
 			if (access(program, X_OK) == 0)
 				return (program);
-			perror(program);
 			*ret = 126;
 		}
 		free(program);
 		i++;
 	}
 	*ret = 127;
-	perror(comm);
 	return (NULL);
 }
 
@@ -50,7 +48,7 @@ char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 	char	*ptr;
 	int		ret;
 
-	if (access(comm, F_OK))
+	if (access(comm, F_OK) == 0)
 	{
 		if (access(comm, X_OK) == 0)
 			return (comm);

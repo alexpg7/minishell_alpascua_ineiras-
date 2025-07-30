@@ -1,17 +1,16 @@
 #include "../src/minishell.h"
 
-static void	ft_waitall(int *pid, int len)
+static void	ft_waitall(int *pid, int len, t_vars *vars)
 {
 	int	i;
 
 	i = 0;
-	int ex;
-	ex = 0;
 	while (i < len)
 	{
 		if (pid[i] > 0)
-			waitpid(pid[i], &ex, 0);
-		ft_printf("%i\n", ex);
+			waitpid(pid[i], &vars->exit_status, 0);
+		vars->exit_status = exitstatus2(vars->exit_status);
+		ft_printf("%i\n", vars->exit_status);
 		i++;
 	}
 }
@@ -73,7 +72,7 @@ int	ft_execmore2(t_command *command, int *pid, int **pip, t_vars *vars)
 		i++;
 	}
 	ft_execlast(&command[i], pid + i, pip + i - 1, vars);
-	ft_waitall(pid, vars->np + 1);
+	ft_waitall(pid, vars->np + 1, vars);
 	free(pid);
 	ft_freepip(pip, vars->np, vars->np + 1);
 	unlink(".here_doc.tmp");

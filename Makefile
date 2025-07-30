@@ -31,6 +31,7 @@ SRC = src/minishell.c \
 	execution/ft_execute_first.c \
 	execution/ft_execute_between.c \
 	execution/ft_execute_last.c \
+	execution/exit_status.c \
 	execution/ft_findpath.c \
 	lib/libminishell/ft_splitmini.c \
 	lib/libminishell/createcommand.c \
