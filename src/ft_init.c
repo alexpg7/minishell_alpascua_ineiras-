@@ -18,6 +18,7 @@ void	ft_init(t_vars *vars, char **envp)
 		ft_lstadd_back(&env, new);
 		i++;
 	}
+	vars->envp = NULL;
 	vars->env = env;
 	vars->np = 0;
 	vars->command = NULL;

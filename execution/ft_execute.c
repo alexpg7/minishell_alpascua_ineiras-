@@ -2,22 +2,19 @@
 
 void	ft_child(t_command *command, t_vars *vars)
 {
-	char	**envp;
 	char	*path;
 
 	if (!ft_builtin2(command, vars))
 	{
 		//ft_set_redir(command, vars, 2);//if == -1 return
-		envp = ft_getenv(vars->env);
-		path = ft_findpath(command->comm[0], envp, vars);// save exit status (in case the command is not found/executable)
-		if (!envp || !path)
+		vars->envp = ft_getenv(vars->env);
+		path = ft_findpath(command->comm[0], vars->envp, vars);// save exit status (in case the command is not found/executable)
+		if (!vars->envp || !path)
 		{
-			ft_freestrarr(&envp, 1);
-			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
+			ft_exit(path, vars->exit_status, vars);//put the exit status here, wait will collect it
 		}
-		if (execve(path, command->comm, envp) == -1)
+		if (execve(path, command->comm, vars->envp) == -1)
 		{
-			ft_freestrarr(&envp, 1);
 			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
 		}
 	}
@@ -41,11 +38,12 @@ void	ft_exec1(t_command *command, t_vars *vars)
 		{
 			signal(SIGINT, &ft_sigkill);
 			ft_child(command, vars);
-			ft_exit(NULL, 0, vars);
+			ft_exit(NULL, vars->exit_status, vars);
 		}
 		else
-			waitpid(pid, NULL, 0);//save exit status somewhere
+			waitpid(pid, &vars->exit_status, 0);//save exit status somewhere
 	}
+	ft_printf("exit: %i\n", vars->exit_status);
 	if (command->hd == 1)
 		unlink(".here_doc.tmp");
 }

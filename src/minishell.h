@@ -37,7 +37,6 @@ typedef struct s_dollar
 typedef struct s_vars
 {
 	char		*prompt;
-	//t_lst		*trash;
 	t_list		*env;
 	t_lst		*ts;
 	t_dollar	dollar;
@@ -45,6 +44,8 @@ typedef struct s_vars
 	int			np; //number of pipes
 	int			**pip; //pipes
 	int			*pid; //pid's
+	int			exit_status;
+	char		**envp;
 }	t_vars;
 
 static int	g_signal;

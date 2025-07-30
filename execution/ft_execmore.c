@@ -5,10 +5,13 @@ static void	ft_waitall(int *pid, int len)
 	int	i;
 
 	i = 0;
+	int ex;
+	ex = 0;
 	while (i < len)
 	{
 		if (pid[i] > 0)
-			waitpid(pid[i], NULL, 0);
+			waitpid(pid[i], &ex, 0);
+		ft_printf("%i\n", ex);
 		i++;
 	}
 }
