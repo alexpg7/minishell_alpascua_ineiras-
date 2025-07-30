@@ -19,11 +19,8 @@ char	*ft_pwd(char **comm, t_vars *vars)
 
 char *ft_new_pwd(void)
 {
-	char cwd[10000];
+	char *cwd;
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		return (getcwd(cwd, sizeof(cwd)));
-	}
-	return (NULL);
+	cwd = NULL;
+	return (getcwd(cwd, 0));
 }

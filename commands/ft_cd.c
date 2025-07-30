@@ -32,6 +32,7 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // 
 {
 	DIR		*directory;
 	t_list	*env;
+	char	*pwd;
 
 	path = ft_set_path(vars, path, argv);
 	if (!path)
@@ -45,12 +46,13 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // 
 	change_old_pwd(vars, env->content);
 	free(env->content);
 	chdir(path);
-	content = ft_strjoin("PWD=", ft_new_pwd());
+	pwd = ft_new_pwd();
+	content = ft_strjoin("PWD=", pwd);
 	env->content = content;
 	if (!env->content)
 		ft_exit(NULL, 1, vars);
 	closedir(directory);
-	free(path);
+	ft_free_both(path, pwd);
 	return (0);
 }
 
