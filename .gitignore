@@ -1,6 +1,11 @@
 # Program name
 minishell
 
+#trash
+*.txt
+non_executable
+README.md
+
 # vscode
 .vscode
 

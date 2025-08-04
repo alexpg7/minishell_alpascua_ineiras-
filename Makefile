@@ -4,7 +4,7 @@ OPTION = -MMD -c -I.
 # Paths
 LIBFT_PATH = lib/Libft
 
-INCLUDE = Makefile $(LIBFT_PATH)/libft.h src/minishell.h
+INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
 
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a

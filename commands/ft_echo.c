@@ -12,7 +12,7 @@
 
 #include "../src/minishell.h"
 
-int	ft_echonext(char **args, int i)
+static int	ft_echonext(char **args, int i)
 {
 	char	c;
 
@@ -25,17 +25,16 @@ int	ft_echonext(char **args, int i)
 		return (1);
 }
 
-void	ft_echo_util(char **args, int *i, int flag, int mode)
+static void	ft_echo_util(char **args, int *i, int *flag, int mode)
 {
-	if (flag == 1)
+	if (*flag == 1)
 		ft_putchar_fd(' ', 1);
 	ft_printf("%s", args[*i]);
-	flag = 1;
+	*flag = 1;
 	if (!ft_echonext(args, *i))
 	{
-		if (mode == 1)
-			ft_putchar_fd('%', 1);
-		ft_putchar_fd('\n', 1);
+		if (mode != 1)
+			ft_putchar_fd('\n', 1);
 	}
 }
 
@@ -59,7 +58,7 @@ void	ft_echo(char **args)
 		return ;
 	while (args[i])
 	{
-		ft_echo_util(args, &i, flag, mode);
+		ft_echo_util(args, &i, &flag, mode);
 		i++;
 	}
 }

@@ -110,7 +110,7 @@ int	main(int narg, char **argv, char **envp)
 		}
 		input = readline(vars.prompt);
 		if (!input)
-			ft_exit(input, 1, &vars);
+			ft_exit(input, 0, &vars);
 		add_history(input);
 		do_stuff(input, &vars);
 		free(vars.prompt);
