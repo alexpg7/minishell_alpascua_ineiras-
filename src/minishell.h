@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/07/30 20:01:07 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:34:52 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../lib/Libft/libft.h"
@@ -122,6 +123,7 @@ int			count_args(char **argv);
 char		*minus_dir(char *dir, t_vars *vars);
 void		ft_putendl_fd2(char *s, int fd, char *var);
 int			ft_free_minus_one(char *str);
+void		cd_double_point(t_vars *vars);
 
 // PROGRAMS
 void		ft_init(t_vars *vars, char **envp);

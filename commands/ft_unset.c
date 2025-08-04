@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:27:24 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:27:46 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 int	ft_strisalnum2(char *str)
@@ -59,12 +71,10 @@ static void	ft_delete_env(char *var, t_vars *vars)
 	ft_delete_env2(var, len, vars);
 }
 
-
 void	ft_unset(char **args, t_vars *vars)
 {
 	while (*args)
 	{
-
 		ft_delete_env(*args, vars);
 		args++;
 	}

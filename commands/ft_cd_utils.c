@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:24:34 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:26:00 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 static int	slash_count(char *str)
 {
 	int	i;
-	int count;
+	int	count;
 
 	i = 0;
 	count = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '/')
 		{
@@ -18,21 +30,21 @@ static int	slash_count(char *str)
 	return (count);
 }
 
-int count_args(char **argv)
+int	count_args(char **argv)
 {
 	int	i;
 
 	i = 0;
 	while (argv[i])
 		i++;
-	return i;
+	return (i);
 }
 
 char	*minus_dir(char *dir, t_vars *vars)
 {
 	size_t	i;
 	size_t	size;
-	char *content;
+	char	*content;
 
 	i = 0;
 	size = ft_strlen(dir) - 1;
@@ -41,7 +53,6 @@ char	*minus_dir(char *dir, t_vars *vars)
 		content = ft_strjoin("PWD=", "/");
 		if (!content)
 			ft_exit(NULL, 1, vars);
-		//free(dir);
 		return (content);
 	}
 	while (dir[size - i] && ft_strncmp(&dir[size - i], "/", 1) != 0)
@@ -50,7 +61,6 @@ char	*minus_dir(char *dir, t_vars *vars)
 	if (!content)
 		ft_exit(NULL, 1, vars);
 	ft_strlcpy(content, dir, (size - i + 1));
-	//free(dir);
 	return (content);
 }
 

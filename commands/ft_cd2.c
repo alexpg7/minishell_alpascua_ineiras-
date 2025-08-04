@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:26:21 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:27:06 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
-void change_old_pwd(t_vars *vars, char *old_pwd) // Changes $OLD_PWD for current PWW;
+void	change_old_pwd(t_vars *vars, char *old_pwd)
 {
 	t_list	*env;
 
@@ -21,7 +33,7 @@ void change_old_pwd(t_vars *vars, char *old_pwd) // Changes $OLD_PWD for current
 		ft_exit(NULL, 1, vars);
 }
 
-void change_pwd(t_vars *vars, char *pwd) // Changes $PWD for $OLD_PWD;
+void	change_pwd(t_vars *vars, char *pwd)
 {
 	t_list	*env;
 
@@ -37,7 +49,7 @@ void change_pwd(t_vars *vars, char *pwd) // Changes $PWD for $OLD_PWD;
 		ft_exit(NULL, 1, vars);
 }
 
-void swap_pwd(t_vars *vars)
+void	swap_pwd(t_vars *vars)
 {
 	t_list	*act_env;
 	t_list	*old_env;

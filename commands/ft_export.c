@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:28:03 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:29:57 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 static int	ft_varlen2(char *str)
@@ -24,7 +36,9 @@ static void	ft_subsenv(char *str, t_vars *vars)
 		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
 		{
 			free(env->content);
-			env->content = new_var(vars, str); //protec
+			env->content = new_var(vars, str);
+			if (!env->content)
+				ft_exit(NULL, 1, vars);
 		}
 		env = env->next;
 	}
@@ -53,7 +67,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		ft_env(vars);
 		return ;
 	}
-	while (arg && ft_strchr(*arg, '='))//execute export for each argument
+	while (arg && ft_strchr(*arg, '='))
 	{
 		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{
@@ -64,9 +78,9 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 			ft_subsenv(*arg, vars);
 		else
 		{
-			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));//protect
+			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));
 		}
-		if (mode == 1)// 1 for exit status
+		if (mode == 1)
 			break ;
 		arg++;
 	}
@@ -86,7 +100,7 @@ char	*new_var(t_vars *vars, char *arg)
 	str_ae = ft_strdup(ft_strchr(arg, '=') + 1);
 	if (!str_ae)
 		ft_exit(NULL, 1, vars);
-	str_ae =  ft_removequotes(ft_searchdollar(str_ae, vars));
+	str_ae = ft_removequotes(ft_searchdollar(str_ae, vars));
 	if (!str_ae)
 		ft_exit(NULL, 1, vars);
 	str_en = ft_strjoin(str, str_ae);

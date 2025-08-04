@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 16:56:16 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:22:14 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 static char	*ft_set_path(t_vars *vars, char *path, char **argv)
@@ -11,24 +23,7 @@ static char	*ft_set_path(t_vars *vars, char *path, char **argv)
 	return (path);
 }
 
-static void cd_double_point(t_vars *vars)
-{
-	t_list	*env;
-	char	*content;
-
-	env = vars->env;
-	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
-		env = env->next;
-	content = minus_dir(env->content, vars);
-	if (!content)
-		ft_exit(NULL, 1, vars);
-	change_old_pwd(vars, env->content);
-	free(env->content);
-	env->content = content;
-	chdir(env->content + 4);
-}
-
-static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // No leaks
+static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path)
 {
 	DIR		*directory;
 	t_list	*env;
@@ -56,10 +51,10 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path) // 
 	return (0);
 }
 
-static void cd_argc_2(t_vars *vars, char **argv)
+static void	cd_argc_2(t_vars *vars, char **argv)
 {
-	char *content;
-	char *path;
+	char	*content;
+	char	*path;
 
 	content = NULL;
 	path = NULL;
@@ -69,7 +64,7 @@ static void cd_argc_2(t_vars *vars, char **argv)
 		swap_pwd(vars);
 	else if (ft_strcmp(argv[1], ".") == 0)
 		;
-	else if(ft_strcmp(argv[1], "..") == 0)
+	else if (ft_strcmp(argv[1], "..") == 0)
 		cd_double_point(vars);
 	else if (cd_move_dir(vars, argv, content, path) == -1)
 		ft_putendl_fd2("cd: not such file or directory: ", 2, argv[1]);
@@ -95,9 +90,9 @@ static void	cd_not_args(t_vars *vars)
 	chdir(env->content + 4);
 }
 
-void ft_cd(t_vars *vars, char **argv)
+void	ft_cd(t_vars *vars, char **argv)
 {
-	int argc;
+	int	argc;
 
 	argc = count_args(argv);
 	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))

@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_cd3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 18:22:34 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:01 by ineiras-         ###   ########.fr       */
+/*   Created: 2025/08/04 18:30:08 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:33:55 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
 
-char	*ft_pwd(char **comm, t_vars *vars)
+void	cd_double_point(t_vars *vars)
 {
 	t_list	*env;
+	char	*content;
 
-	if (*comm != NULL)
-	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);
-		return (NULL);
-	}
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
-	{
 		env = env->next;
-	}
-	return (env->content + 4);
-}
-
-char	*ft_new_pwd(void)
-{
-	char	*cwd;
-
-	cwd = NULL;
-	return (getcwd(cwd, 0));
+	content = minus_dir(env->content, vars);
+	if (!content)
+		ft_exit(NULL, 1, vars);
+	change_old_pwd(vars, env->content);
+	free(env->content);
+	env->content = content;
+	chdir(env->content + 4);
 }

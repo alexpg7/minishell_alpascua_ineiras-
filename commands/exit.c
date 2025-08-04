@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:23:51 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/04 18:24:11 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 void	ft_freeall(t_vars *vars)
@@ -11,7 +23,6 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	if (input)
 		free(input);
 	rl_clear_history();
-	//Should clear all malloc-ed storage
 	ft_freeall(vars);
 	if (vars->np >= 1)
 	{
