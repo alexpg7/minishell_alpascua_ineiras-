@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   trashlist.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 16:21:45 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 16:21:48 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../../src/minishell.h"
 
 void	ft_free_lst(void **ptr)
@@ -6,7 +17,7 @@ void	ft_free_lst(void **ptr)
 
 	i = 0;
 	if (!ptr)
-		return;
+		return ;
 	while (ptr[i])
 	{
 		free(ptr[i]);
@@ -23,7 +34,7 @@ t_lst	*ft_lstnew_lst(void *content, void **content_p)
 	if (!arr)
 		return (NULL);
 	arr->content = content;
-    arr->content_p = content_p;
+	arr->content_p = content_p;
 	arr->next = NULL;
 	return (arr);
 }
@@ -75,34 +86,35 @@ void	ft_lstclear_lst(t_lst **lst)
 /*
 int main(void)
 {
-    t_lst *test;
-    t_lst *test_1;
-    t_lst *test_2;
-    t_lst *test_3;
-    t_lst *temp_node;
-    int i = 0;
+	t_lst *test;
+	t_lst *test_1;
+	t_lst *test_2;
+	t_lst *test_3;
+	t_lst *temp_node;
+	int i = 0;
 
-    char **lol;
+	char **lol;
 
-    lol = ft_split("Hola poma pometa.", ' ');
+	lol = ft_split("Hola poma pometa.", ' ');
 
 
-    test = ft_lstnew_lst("Hola", NULL);
-    test_1 = ft_lstnew_lst("Sec", NULL);
-    test_2 = ft_lstnew_lst("Third", NULL);
-    test_3 = ft_lstnew_lst(NULL, (void**)lol);
-    ft_lstadd_back_lst(&test, test_1);
-    ft_lstadd_back_lst(&test, test_2);
-    ft_lstadd_back_lst(&test, test_3);
-    temp_node = test;
-    printf("Conten_p: %s\n", (char *)(temp_node->next->next->next->content_p)[0]);
-    while (temp_node)
-    {
-        printf("Node: Content: %s\n", (char *)temp_node->content);
-        temp_node = temp_node->next;
-    }
-    ft_free_lst((void**)lol);
-    ft_lstclear_lst(&test);
-    printf("%s", (char*)test);
-    return 0;
+	test = ft_lstnew_lst("Hola", NULL);
+	test_1 = ft_lstnew_lst("Sec", NULL);
+	test_2 = ft_lstnew_lst("Third", NULL);
+	test_3 = ft_lstnew_lst(NULL, (void**)lol);
+	ft_lstadd_back_lst(&test, test_1);
+	ft_lstadd_back_lst(&test, test_2);
+	ft_lstadd_back_lst(&test, test_3);
+	temp_node = test;
+	printf("Conten_p: %s\n", (char *)
+		(temp_node->next->next->next->content_p)[0]);
+	while (temp_node)
+	{
+		printf("Node: Content: %s\n", (char *)temp_node->content);
+		temp_node = temp_node->next;
+	}
+	ft_free_lst((void**)lol);
+	ft_lstclear_lst(&test);
+	printf("%s", (char*)test);
+	return 0;
 }*/

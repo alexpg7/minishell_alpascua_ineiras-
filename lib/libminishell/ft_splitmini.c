@@ -53,7 +53,7 @@ static void	*ft_addword(char **ptr, char **str, int i, t_vars *vars)
 
 	c = ' ';
 	while (**str == c)
-			*str = *str + 1;
+		*str = *str + 1;
 	ptr[i] = ft_substr(*str, 0, ft_wordlen(*str, c));
 	if (!ptr[i])
 		return (ft_free(ptr, i));

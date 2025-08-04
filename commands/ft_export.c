@@ -1,6 +1,6 @@
 #include "../src/minishell.h"
 
-static int	ft_varlen(char *str)
+static int	ft_varlen2(char *str)
 {
 	int	i;
 
@@ -21,7 +21,7 @@ static void	ft_subsenv(char *str, t_vars *vars)
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
+		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
 		{
 			free(env->content);
 			env->content = new_var(vars, str); //protec
@@ -37,7 +37,7 @@ int	ft_inenv(char *str, t_vars *vars)
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen(str) + 1) == 0)
+		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
 		{
 			return (1);
 		}
