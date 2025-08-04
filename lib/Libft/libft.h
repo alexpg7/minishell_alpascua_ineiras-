@@ -134,15 +134,15 @@ int		ft_cout_c(char *s, int c);
 
 //Printf functions
 
-int	ft_printf(char const *format, ...);
+int		ft_printf(char const *format, ...);
 
-int	ft_printchar(char c);
+int		ft_printchar(char c);
 
-int	ft_printstr(char *str);
+int		ft_printstr(char *str);
 
-int	ft_numlen(unsigned long num, unsigned long base);
+int		ft_numlen(unsigned long num, unsigned long base);
 
-int	ft_printbase(unsigned long nbr, char *base, unsigned long len);
+int		ft_printbase(unsigned long nbr, char *base, unsigned long len);
 
-int	ft_printpointer(int long long ptr);
+int		ft_printpointer(int long long ptr);
 #endif
