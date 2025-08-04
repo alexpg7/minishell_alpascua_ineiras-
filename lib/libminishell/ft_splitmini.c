@@ -73,7 +73,7 @@ static void	*ft_addword(char **ptr, char **str, int i, t_vars *vars)
 	return (ptr[i]);
 }
 
-char	**ft_splitmini(char const *s, char c, t_vars *vars)//SHOULD ALSO JUMP THROUGH TABS
+char	**ft_splitmini(char const *s, char c, t_vars *vars)
 {
 	char	**ptr;
 	int		words;

@@ -63,3 +63,22 @@ int	ft_countvars(char *str, t_vars *vars)
 	}
 	return (count);
 }
+
+int	ft_valuelen(char *str, t_vars *vars)
+{
+	t_list	*env;
+	int		len;
+
+	env = vars->env;
+	while (env)
+	{
+		len = ft_varlen(env->content);
+		if (ft_strncmp(env->content, str, len) == 0)
+		{
+			vars->dollar.value = env->content + 1 + len;
+			return (ft_strlen(env->content + 1 + len));
+		}
+		env = env->next;
+	}
+	return (0);
+}

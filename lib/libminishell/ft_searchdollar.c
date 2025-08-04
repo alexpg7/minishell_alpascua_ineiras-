@@ -11,25 +11,6 @@
 /* ************************************************************************** */
 #include "../../src/minishell.h"
 
-static int	ft_valuelen(char *str, t_vars *vars)
-{
-	t_list	*env;
-	int		len;
-
-	env = vars->env;
-	while (env)
-	{
-		len = ft_varlen(env->content);
-		if (ft_strncmp(env->content, str, len) == 0)
-		{
-			vars->dollar.value = env->content + 1 + len;
-			return (ft_strlen(env->content + 1 + len));
-		}
-		env = env->next;
-	}
-	return (0);
-}
-
 static int	ft_calclen(char *str, t_vars *vars)
 {
 	int	i;
@@ -58,17 +39,11 @@ static void	ft_copyvar(char *dest, t_vars *vars)
 	}
 }
 
-static char	*ft_subs1(char *str, t_vars *vars)
+static char	*ft_subs2(char *str, char *ptr, t_vars *vars)
 {
-	int		len;
 	int		i;
 	int		valuelen;
-	char	*ptr;
 
-	len = ft_strlen(str) + ft_calclen(str, vars);
-	ptr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!ptr)
-		ft_exit(NULL, 1, vars);
 	i = 0;
 	valuelen = -1;
 	while (*str)
@@ -89,6 +64,18 @@ static char	*ft_subs1(char *str, t_vars *vars)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+static char	*ft_subs1(char *str, t_vars *vars)
+{
+	int		len;
+	char	*ptr;
+
+	len = ft_strlen(str) + ft_calclen(str, vars);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		ft_exit(NULL, 1, vars);
+	return (ft_subs2(str, ptr, vars));
 }
 
 char	*ft_searchdollar(char *str, t_vars *vars)

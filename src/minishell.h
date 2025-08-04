@@ -94,9 +94,10 @@ void		ft_nextword(const char **s, char sep);
 // SEARCH DOLLAR
 char		*ft_searchdollar(char *str, t_vars *vars);
 char		*ft_removequotes(char *str);
-int	ft_varlen(char *str);
-int	ft_isvar(char *str, t_vars *vars, int mode);
-int	ft_countvars(char *str, t_vars *vars);
+int			ft_varlen(char *str);
+int			ft_isvar(char *str, t_vars *vars, int mode);
+int			ft_countvars(char *str, t_vars *vars);
+int			ft_valuelen(char *str, t_vars *vars);
 
 // COMMANDS
 void		ft_exit(char *input, int ret, t_vars *vars);
@@ -158,4 +159,6 @@ int			**ft_freepip(int **arr, int len, int index);
 
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);
+int			ft_commandlen(char **comm);
+
 #endif
