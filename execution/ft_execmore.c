@@ -8,10 +8,10 @@ static void	ft_waitall(int *pid, int len, t_vars *vars)
 	while (i < len)
 	{
 		g_shell_state = WAIT;
-
 		if (pid[i] > 0)
 			waitpid(pid[i], &vars->exit_status, 0);
 		g_shell_state = PROMPT;
+		unlink(".heredoc.tmp");
 		vars->exit_status = exitstatus2(vars->exit_status);
 		ft_printexit(vars->exit_status, i, vars);
 		i++;

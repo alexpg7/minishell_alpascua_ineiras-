@@ -21,9 +21,13 @@ void	ft_sigint(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (g_shell_state == WAIT)
+	else if (g_shell_state == WAIT)
 	{
 		ft_printf("\n");
+	}
+	else if (g_shell_state == HEREDOC)
+	{
+		ioctl(0, TIOCSTI, "\n");
 	}
 }
 

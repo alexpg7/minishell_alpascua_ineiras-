@@ -46,6 +46,7 @@ int	ft_writefile(char *lim, int fd)
 	}
 	free(text);
 	get_next_line(-1);
+	g_shell_state = WAIT;
 	return (0);
 }
 
@@ -53,6 +54,7 @@ int	ft_heredoc(char *lim)
 {
 	int	fd;
 
+	g_shell_state = HEREDOC;
 	fd = open(".here_doc.tmp", O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{

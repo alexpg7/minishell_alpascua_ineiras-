@@ -20,6 +20,7 @@
 # include <dirent.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 
 // struct commands
 typedef struct s_command
