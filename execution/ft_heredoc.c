@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:17:17 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:17:21 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 static char	ft_s1(char *str, int i, int len)
@@ -16,8 +27,11 @@ static int	ft_strcmp2(char *s1, char *s2)
 
 	i = 0;
 	len = ft_strlen(s1);
-	while (ft_s1(s1, i, len) == s2[i] && ft_s1(s1, i, len) != '\0' && s2[i] != '\0')
+	while (ft_s1(s1, i, len) == s2[i]
+		&& ft_s1(s1, i, len) != '\0' && s2[i] != '\0')
+	{
 		i++;
+	}
 	return (ft_s1(s1, i, len) - s2[i]);
 }
 

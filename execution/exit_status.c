@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:27:44 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:27:50 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 int	exitstatus2(int status)
@@ -12,19 +23,17 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_putstr_fd("minishell: ", 2);
 	if (ex == 1)
 	{
-		ft_putstr_fd(vars->command[index].comm[0] , 2);
+		ft_putstr_fd(vars->command[index].comm[0], 2);
 		ft_putstr_fd(": command failed.\n", 2);
 	}
 	if (ex == 126)
 	{
-		ft_putstr_fd(vars->command[index].comm[0] , 2);
+		ft_putstr_fd(vars->command[index].comm[0], 2);
 		ft_putstr_fd(": could not access.\n", 2);
 	}
 	if (ex == 127)
 	{
-		ft_putstr_fd(vars->command[index].comm[0] , 2);
+		ft_putstr_fd(vars->command[index].comm[0], 2);
 		ft_putstr_fd(": command not found.\n", 2);
 	}
-	// 130 for killed process (Ctrl+C)
-	// one for ctrl+D while process
 }

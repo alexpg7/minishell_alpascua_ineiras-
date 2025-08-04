@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_findpath.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:22:42 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:22:45 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 static char	*ft_path2(char **envp)
@@ -58,7 +69,7 @@ char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 	}
 	ret = 0;
 	path = ft_split(ft_path2(envp), ':');
-	if (!path)//maybe there is a leak if PATH is deleted
+	if (!path)
 		ft_exit(NULL, 1, vars);
 	ptr = ft_checkpath(path, comm, &ret);
 	ft_freestrarr(&path, 1);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_last.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:27:11 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:27:14 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 static int	ft_checkfdpipe(int pipe, int final)
@@ -30,19 +41,16 @@ void	ft_childlast(t_command *command, int *pip, t_vars *vars)
 {
 	char	*path;
 
-	ft_checkfdpipe(pip[0], 0);//if == -1 return
+	ft_checkfdpipe(pip[0], 0);
 	close(pip[1]);
 	if (!ft_builtin2(command, vars))
 	{
-		//ft_set_redirlast(command, vars, 2);
-		/*ft_checkfdpipe(pip[0], 0);//if == -1 return
-		close(pip[1]);*/
 		vars->envp = ft_getenv(vars->env);
-		path = ft_findpath(command->comm[0], vars->envp, vars);// save exit status (in case the command is not found/executable)
+		path = ft_findpath(command->comm[0], vars->envp, vars);
 		if (!vars->envp || !path)
-			ft_exit(path, vars->exit_status, vars);//put the exit status here, wait will collect it
+			ft_exit(path, vars->exit_status, vars);
 		if (execve(path, command->comm, vars->envp) == -1)
-			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
+			ft_exit(path, 1, vars);
 	}
 }
 
@@ -53,7 +61,7 @@ int	ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars)
 		if (ft_heredoc(comm->infile) == -1)
 			ft_exit(NULL, 1, vars);
 	}
-	if (!ft_searchbuiltin(comm))//some builtins are not executed if they are in a pipe
+	if (!ft_searchbuiltin(comm))
 	{
 		pid[0] = fork();
 		if (pid[0] == -1)

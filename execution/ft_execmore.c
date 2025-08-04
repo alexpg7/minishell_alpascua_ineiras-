@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_execmore.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:23:33 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:23:36 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
-static void	ft_waitall(int *pid, int len, t_vars *vars)
+void	ft_waitall(int *pid, int len, t_vars *vars)
 {
 	int	i;
 
@@ -88,7 +99,7 @@ void	ft_execmore(t_command *command, t_vars *vars)
 	if (!vars->pid)
 	{
 		perror("pid malloc");
-		ft_exit(NULL, 1, vars);//np >= and pip is not allocated ! carefull with free
+		ft_exit(NULL, 1, vars);
 	}
 	vars->pip = ft_pipalloc(vars->np);
 	if (!vars->pip)

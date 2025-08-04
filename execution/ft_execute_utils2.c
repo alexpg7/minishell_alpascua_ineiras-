@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_utils2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:24:36 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 void	ft_set_redir(t_command *command, t_vars *vars, int mode)
@@ -16,7 +27,7 @@ void	ft_set_redir(t_command *command, t_vars *vars, int mode)
 
 int	ft_builtin2(t_command *com, t_vars *vars)
 {
-	char *pwd;
+	char	*pwd;
 
 	ft_set_redir(com, vars, 2);
 	if (ft_strcmp("echo", com->comm[0]) == 0)
@@ -39,7 +50,7 @@ int	ft_builtin1(t_command *com, t_vars *vars)
 	if (ft_strcmp("cd", com->comm[0]) == 0)
 		ft_cd(vars, com->comm);
 	else if (ft_strcmp("export", com->comm[0]) == 0)
-		ft_export(vars, com->comm + 1, 0); //change to accept different arguments (+ not an identifier: if not valid var)
+		ft_export(vars, com->comm + 1, 0);
 	else if (ft_strcmp("unset", com->comm[0]) == 0)
 		ft_unset(com->comm + 1, vars);
 	else if (ft_strcmp("exit", com->comm[0]) == 0)

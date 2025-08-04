@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:24:25 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:24:29 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 int	ft_checkfd(char *file, int fd, int final)
@@ -32,7 +43,7 @@ int	ft_readin3(void)
 {
 	int	fd;
 
-	fd = open(".here_doc.tmp", O_RDONLY);//REMEMBER TO DELETE IT AT THE END
+	fd = open(".here_doc.tmp", O_RDONLY);
 	return (ft_checkfd(".here_doc.tmp", fd, 0));
 }
 

@@ -132,6 +132,7 @@ int			ft_heredoc(char *lim);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
 void		ft_execmore(t_command *command, t_vars *vars);
+void		ft_waitall(int *pid, int len, t_vars *vars);
 
 // EXIT STATUS
 int			exitstatus2(int status);

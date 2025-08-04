@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_between.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 18:28:38 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/04 18:28:40 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../src/minishell.h"
 
 static int	ft_checkfdpipe(int pipe, int final)
@@ -16,23 +27,19 @@ void	ft_childbetween(t_command *command, int *pip0, int *pip1, t_vars *vars)
 {
 	char	*path;
 
-	ft_checkfdpipe(pip1[1], 1);//if == -1 return
+	ft_checkfdpipe(pip1[1], 1);
 	close(pip0[1]);
-	ft_checkfdpipe(pip0[0], 0);//if == -1 return
+	ft_checkfdpipe(pip0[0], 0);
 	close(pip1[0]);
 	if (!ft_builtin2(command, vars))
 	{
-		//ft_set_redirfirst(command, vars, 2);
-		/*ft_checkfdpipe(pip[1], 1);//if == -1 return
-		close(pip[0]);*/
 		vars->envp = ft_getenv(vars->env);
-		path = ft_findpath(command->comm[0], vars->envp, vars);// save exit status (in case the command is not found/executable)
+		path = ft_findpath(command->comm[0], vars->envp, vars);
 		if (!vars->envp || !path)
-			ft_exit(path, vars->exit_status, vars);//put the exit status here, wait will collect it
+			ft_exit(path, vars->exit_status, vars);
 		if (execve(path, command->comm, vars->envp) == -1)
-			ft_exit(path, 1, vars);//put the exit status here, wait will collect it
+			ft_exit(path, 1, vars);
 	}
-	//free pip and pid
 }
 
 int	ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars)
@@ -42,9 +49,9 @@ int	ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars)
 		if (ft_heredoc(comm->infile) == -1)
 			ft_exit(NULL, 1, vars);
 	}
-	if (!ft_searchbuiltin(comm))//some builtins are not executed if they are in a pipe
+	if (!ft_searchbuiltin(comm))
 	{
-		pid[0] = fork();// save pipes in trashlist?
+		pid[0] = fork();
 		if (pid[0] == -1)
 			perror("fork");
 		else if (pid[0] == 0)
