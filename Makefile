@@ -3,9 +3,8 @@ FLAGS = -Wall -Wextra -Werror
 OPTION = -MMD -c -I.
 # Paths
 LIBFT_PATH = lib/Libft
-LIBMINI_PATH = lib/libminishell
 
-INCLUDE = Makefile $(LIBFT_PATH)/libft.h $(LIBMINI_PATH)/libminishell.h src/minishell.h
+INCLUDE = Makefile $(LIBFT_PATH)/libft.h src/minishell.h
 
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -48,8 +47,6 @@ DEP = $(SRC:.c=.d)
 # Compile the final executable
 all: $(NAME)
 
--include $(DEP)
-
 # Rebuild Libft if any object file changes
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
@@ -66,6 +63,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	cc $(FLAGS) $(OPTION) $< -o $@
 
 # Include the generated dependency files
+-include $(DEP)
 
 # Clean object and dependency files
 clean:
