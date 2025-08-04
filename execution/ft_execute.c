@@ -34,15 +34,13 @@ void	ft_exec1(t_command *command, t_vars *vars)
 			perror("fork");
 		else if (pid == 0)
 		{
-			g_shell_state = EXEC;
-			signal(SIGINT, &ft_sigint);
 			ft_child(command, vars);
 			ft_exit(NULL, vars->exit_status, vars);
 		}
 		else
 		{
 			waitpid(pid, &vars->exit_status, 0);//save exit status somewhere
-			ft_printf("COMMAND EXITED\n");
+			g_shell_state = PROMPT;
 			vars->exit_status = exitstatus2(vars->exit_status);
 			ft_printexit(vars->exit_status, 0, vars);// remember to make sigint produce exit 1
 		}
