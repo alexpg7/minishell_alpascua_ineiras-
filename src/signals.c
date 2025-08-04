@@ -14,16 +14,20 @@
 void	ft_sigint(int sig)
 {
 	sig = 0;
-	ft_putchar_fd('\n', 0);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ft_sigkill(int sig)
-{
-	ft_printf("KILL\n");
-	kill(0, sig);
+	ft_putstr_fd("SIGNAL...\n", 2);
+	/*if (g_shell_state == WAIT)
+	{
+		ft_printf("WAITING...\n");
+		ft_putchar_fd('\n', 0);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}*/
+	if (g_shell_state == EXEC)
+	{
+		ft_printf("KILLING...\n");
+		kill(0, 1);
+	}
 }
 
 void	ft_init_sig(void)

@@ -60,7 +60,15 @@ typedef struct s_vars
 	char		**envp;
 }	t_vars;
 
-static int	g_signal;
+typedef enum e_shell_state
+{
+	PROMPT,
+	EXEC,
+	HEREDOC,
+	WAIT
+}	t_shell_state;
+
+extern int	g_shell_state;
 
 // TRSH LIST FUNCTIONS
 t_lst		*ft_lstnew_lst(void *content, void **content_p);

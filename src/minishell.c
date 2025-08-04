@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+int	g_shell_state;
+
 void	ft_newexit(t_vars *vars)
 {
 	char	*num;
@@ -89,7 +91,7 @@ int	main(int narg, char **argv, char **envp)
 	char	*nul;
 	t_vars	vars;
 
-	g_signal = 0;
+	g_shell_state = PROMPT;
 	ft_init_sig();
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");

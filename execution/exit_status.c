@@ -25,4 +25,6 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_putstr_fd(vars->command[index].comm[0] , 2);
 		ft_putstr_fd(": command not found.\n", 2);
 	}
+	// 130 for killed process (Ctrl+C)
+	// one for ctrl+D while process
 }
