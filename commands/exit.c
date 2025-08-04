@@ -25,5 +25,10 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 		ft_freecommand(vars->command);
 	ft_lstclear(&vars->env, &free);
 	unlink(".here_doc.tmp");
+	if (ret == 2)
+	{
+		ft_putstr_fd("malloc error\n", 2);
+		exit(1);
+	}
 	exit(ret);
 }

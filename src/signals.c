@@ -29,5 +29,5 @@ void	ft_sigint(int sig)
 
 void	ft_init_sig(void)
 {
-	signal(SIGINT, &ft_sigint);//Ctrl+C
+	signal(SIGINT, &ft_sigint);
 }

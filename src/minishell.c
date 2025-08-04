@@ -65,7 +65,8 @@ void	ft_freecommand(t_command *command)
 
 void	do_stuff(char *str, t_vars *vars)
 {
-	char		**comm;
+	char	**comm;
+	t_lst	*ts;
 
 	vars->np = 0;
 	vars->command = NULL;
@@ -73,12 +74,15 @@ void	do_stuff(char *str, t_vars *vars)
 	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	ft_lstadd_back_lst(&vars->ts, ft_lstnew_lst(NULL, (void **)comm));//protect
-	if (comm[0] == NULL) //necessary if you dont put any command
+	if (comm[0] == NULL)
 		return ;
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
+	ts = ft_lstnew_lst(NULL, (void **)comm);
+	if (!ts)
+		ft_exit(NULL, ft_freestrarr(&comm, 2), vars);
+	ft_lstadd_back_lst(&vars->ts, ts);
 	ft_execute(vars->command, vars);
 	ft_freecommand(vars->command);
 	vars->command = NULL;
@@ -104,7 +108,7 @@ int	main(int narg, char **argv, char **envp)
 			perror("malloc");
 			ft_exit(NULL, 1, &vars);
 		}
-		input = readline(vars.prompt); //handle Ctrl+D?
+		input = readline(vars.prompt);
 		if (!input)
 			ft_exit(input, 1, &vars);
 		add_history(input);

@@ -24,10 +24,10 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->command = NULL;
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, 2, vars);
 	aux = ft_strjoin("?=0", "");
 	if (!aux)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, 2, vars);
 	new = ft_lstnew(aux);
 	if (!new)
 		ft_lstclear(&vars->env, &free);
@@ -44,15 +44,15 @@ void	ft_init(t_vars *vars, char **envp)
 	i = 1;
 	aux = ft_strjoin(envp[0], "");
 	if (!aux)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, 2, vars);
 	env = ft_lstnew(aux);
 	if (!env)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, 2, vars);
 	while (envp[i])
 	{
 		aux = ft_strjoin(envp[i], "");
 		if (!aux)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, 2, vars);
 		new = ft_lstnew(aux);
 		if (!new)
 			ft_lstclear(&env, &free);
