@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
+
 int	g_shell_state;
 
 void	ft_newexit(t_vars *vars)
@@ -75,7 +75,7 @@ void	do_stuff(char *str, t_vars *vars)
 	if (!comm)
 		ft_exit(NULL, 1, vars);
 	if (comm[0] == NULL)
-		return ;
+		return (void)free(comm);;
 	add_history(str);
 	free(str);
 	if (vars->command)
