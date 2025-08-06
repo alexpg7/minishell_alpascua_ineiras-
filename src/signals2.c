@@ -11,46 +11,14 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ft_sigint_prompt(int sig)
+void	ft_sigint_heredoc(int sig)
 {
 	g_signal = sig;
-	ft_putchar_fd('\n', 0);
+	ioctl(0, TIOCSTI, "\n");
+}
+
+void	ft_sigquit_heredoc(int sig)
+{
+	g_signal = sig;
 	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ft_sigquit_prompt(int sig)
-{
-	g_signal = sig;
-}
-
-void	ft_sigint_wait(int sig)
-{
-	g_signal = sig;
-	ft_printf("\n");
-}
-
-void	ft_sigquit_wait(int sig)
-{
-	g_signal = sig;
-}
-
-void	ft_signal(int code)
-{
-	if (code == PROMPT)
-	{
-		signal(SIGINT, &ft_sigint_prompt);
-		signal(SIGQUIT, &ft_sigquit_prompt);
-	}
-	else if (code == WAIT)
-	{
-		signal(SIGINT, &ft_sigint_wait);
-		signal(SIGQUIT, &ft_sigquit_wait);
-	}
-	else if (code == HEREDOC)
-	{
-		signal(SIGINT, &ft_sigint_heredoc);
-		signal(SIGQUIT, &ft_sigquit_heredoc);
-	}
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../src/minishell.h"
 
-static char	ft_s1(char *str, int i, int len)
+/*static char	ft_s1(char *str, int i, int len)
 {
 	if (i < len)
 		return (str[i]);
@@ -33,34 +33,34 @@ static int	ft_strcmp2(char *s1, char *s2)
 		i++;
 	}
 	return (ft_s1(s1, i, len) - s2[i]);
-}
+}*/
 
 int	ft_writefile(char *lim, int fd)
 {
 	char	*text;
 
-	ft_putstr_fd("heredoc> ", 0);
-	text = get_next_line(0);
+	text = readline("heredoc> ");
 	if (!text)
 	{
-		perror("get_next_line");
-		return (-1);
+		ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
+		ft_putstr_fd(lim, 2);
+		ft_putstr_fd("\"\n", 2);
+		return (0);
 	}
-	while (ft_strcmp2(lim, text) != 0)
+	while (ft_strcmp(lim, text) != 0 && g_signal != SIGINT)
 	{
 		ft_putstr_fd(text, fd);
-		free(text);
-		ft_putstr_fd("heredoc> ", 1);
-		text = get_next_line(0);
+		ft_putchar_fd('\n', fd);
+		text = readline("heredoc> ");
 		if (!text)
 		{
-			perror("get_next_line");
-			return (-1);
+			ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
+			ft_putstr_fd(lim, 2);
+			ft_putstr_fd("\"\n", 2);
+			return (0);
 		}
 	}
-	free(text);
-	get_next_line(-1);
-	g_shell_state = WAIT;
+	ft_signal(WAIT);
 	return (0);
 }
 
@@ -68,7 +68,7 @@ int	ft_heredoc(char *lim)
 {
 	int	fd;
 
-	g_shell_state = HEREDOC;
+	ft_signal(HEREDOC);
 	fd = open(".here_doc.tmp", O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{

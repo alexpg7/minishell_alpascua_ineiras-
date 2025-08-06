@@ -38,7 +38,7 @@ void	ft_exec1(t_command *command, t_vars *vars)
 	}
 	if (!ft_builtin1(command, vars))
 	{
-		g_shell_state = WAIT;
+		ft_signal(WAIT);
 		pid = fork();
 		if (pid == -1)
 			perror("fork");

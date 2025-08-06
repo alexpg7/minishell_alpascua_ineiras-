@@ -70,7 +70,7 @@ typedef enum e_shell_state
 	WAIT
 }	t_shell_state;
 
-extern int	g_shell_state;
+extern int	g_signal;
 
 // TRSH LIST FUNCTIONS
 t_lst		*ft_lstnew_lst(void *content, void **content_p);
@@ -83,9 +83,9 @@ void		ft_free_both(char *str1, char *str2);
 //void	ft_free_three(char *str1, char *str2, char *str3);
 
 // SIGNALS
-void		ft_init_sig(void);
-void		ft_sigint(int sig);
-void		ft_sigkill(int sig);
+void		ft_signal(int code);
+void		ft_sigint_heredoc(int sig);
+void		ft_sigquit_heredoc(int sig);
 
 // SPLITMINI
 char		**ft_splitmini(char const *s, char c, t_vars *vars);

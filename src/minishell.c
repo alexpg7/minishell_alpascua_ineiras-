@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_shell_state;
+int	g_signal;
 
 void	ft_newexit(t_vars *vars)
 {
@@ -75,7 +75,7 @@ void	do_stuff(char *str, t_vars *vars)
 	if (!comm)
 		ft_exit(NULL, 1, vars);
 	if (comm[0] == NULL)
-		return (void)free(comm);;
+		return ((void)free(comm));
 	add_history(str);
 	free(str);
 	if (vars->command)
@@ -97,13 +97,14 @@ int	main(int narg, char **argv, char **envp)
 	char	*nul;
 	t_vars	vars;
 
-	g_shell_state = PROMPT;
-	ft_init_sig();
+	g_signal = PROMPT;
+	ft_signal(PROMPT);
 	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
 	while (narg == 1 && argv[0])
 	{
+		g_signal = 0;
 		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");
 		if (!vars.prompt)
 		{
