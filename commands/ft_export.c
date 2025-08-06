@@ -52,9 +52,7 @@ int	ft_inenv(char *str, t_vars *vars)
 	while (env)
 	{
 		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
-		{
 			return (1);
-		}
 		env = env->next;
 	}
 	return (0);
@@ -67,7 +65,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		ft_env(vars);
 		return ;
 	}
-	while (arg && ft_strchr(*arg, '='))
+	while (arg && *arg && ft_strchr(*arg, '='))
 	{
 		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{
@@ -77,9 +75,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		if (ft_inenv(*arg, vars))
 			ft_subsenv(*arg, vars);
 		else
-		{
-			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));
-		}
+			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));//protect
 		if (mode == 1)
 			break ;
 		arg++;
@@ -100,7 +96,7 @@ char	*new_var(t_vars *vars, char *arg)
 	str_ae = ft_strdup(ft_strchr(arg, '=') + 1);
 	if (!str_ae)
 		ft_exit(NULL, 1, vars);
-	str_ae = ft_removequotes(ft_searchdollar(str_ae, vars));
+	str_ae = ft_removequotes(ft_searchdollar(str_ae, vars));//protect
 	if (!str_ae)
 		ft_exit(NULL, 1, vars);
 	str_en = ft_strjoin(str, str_ae);

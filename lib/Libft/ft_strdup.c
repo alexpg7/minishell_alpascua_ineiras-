@@ -36,7 +36,7 @@ char	*ft_strdup_eq(char *s)
 	int		i;
 
 	i = 0;
-	ptr = (char *)malloc(sizeof(char) * (ft_cout_c(s, '_') + 1));
+	ptr = (char *)malloc(sizeof(char) * (ft_cout_c(s, '=') + 2));
 	if (!ptr)
 		return (NULL);
 	while (s[i] && (s[i] != '='))
