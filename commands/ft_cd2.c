@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:26:21 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:27:06 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:03:00 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ void	swap_pwd(t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	change_old_pwd(vars, content);
 	change_pwd(vars, content_2);
-	chdir(content_2 + 4);
-	free(content);
-	free(content_2);
+	chdir(content_2 + 7);
+	ft_free_both(content, content_2);
 }
 
 void	ft_free_both(char *str1, char *str2)

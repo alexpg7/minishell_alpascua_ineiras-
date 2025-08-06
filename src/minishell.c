@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/07/30 20:05:04 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:15:02 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
 
+
+#include "minishell.h"
 int	g_shell_state;
 
 void	ft_newexit(t_vars *vars)
@@ -71,11 +72,12 @@ void	do_stuff(char *str, t_vars *vars)
 	vars->np = 0;
 	vars->command = NULL;
 	comm = ft_splitmini(str, ' ', vars);
-	free(str);
 	if (!comm)
 		ft_exit(NULL, 1, vars);
 	if (comm[0] == NULL)
 		return ;
+	add_history(str);
+	free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
@@ -111,7 +113,6 @@ int	main(int narg, char **argv, char **envp)
 		input = readline(vars.prompt);
 		if (!input)
 			ft_exit(input, 0, &vars);
-		add_history(input);
 		do_stuff(input, &vars);
 		free(vars.prompt);
 	}
