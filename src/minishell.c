@@ -95,30 +95,38 @@ void	do_stuff(char *str, t_vars *vars)
 	char	**comm;
 	t_input	**input;
 	int	k = 0;
+	int	i = 0;
 	//t_lst	*ts;
 
 	vars->np = 0;
-	comm = ft_splitmini(str, ' ', vars);
-	while (comm[k])
+	//comm = NULL;//ft_splitmini(str, ' ', vars);
+	comm = ft_splitmini2(str, vars);
+	if (!comm)
+		ft_exit(NULL, 2, vars);
+	/*while (comm[k])
 	{
 		ft_printf("%s\n", comm[k]);
 		k++;
-	}
-	if (!comm)
-		ft_exit(NULL, 1, vars);
-	ft_printf("HOLA\n");
+	}*/
 	if (comm[0] == NULL)
 		return ((void)free(comm));
-	add_history(str);
-	// convert comm into t_input
+	input = ft_inputstruct(comm, vars); // convert comm into t_input
 	// CHECK PARSING (PIPES, QUOTES AND REDIRECTS)
-	ft_define1(&input, vars);
+	//ft_define1(&input, vars);
 	k = 0;
-	while ((*input)->word[k])
+	while (k < vars->np + 1)
 	{
-		ft_printf("%s, %c\n", (*input)->word[k], (*input)->token[k]);
+		i = 0;
+		while ((input[k])->word[i])
+		{
+			ft_printf("%s, %c\n", (input[k])->word[i], (input[k])->token[i]);
+			i++;
+		}
 		k++;
 	}
+	free(input);
+	add_history(str);
+	ft_freestrarr(&comm, 0);
 	//ft_execute2(input, vars);
 	/*free(str);
 	if (vars->command)

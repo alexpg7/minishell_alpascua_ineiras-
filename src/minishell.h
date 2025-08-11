@@ -96,15 +96,19 @@ void		ft_signal(int code);
 void		ft_sigint_heredoc(int sig);
 void		ft_sigquit_heredoc(int sig);
 
-// SPLITMINI
+// SPLITMINI ///////////////////////////////////////////////
 char		**ft_splitmini(char const *s, char c, t_vars *vars);
 void		ft_jumpcom(char const **s, char sep);
 int			ft_special(char c);
 void		ft_nextword(const char **s, char sep);
 
 // SPLITMINI2
+char		**ft_splitmini2(char *str, t_vars *vars);
 
-// SEARCH DOLLAR
+// STRUCT INPUT
+t_input		**ft_inputstruct(char **comm, t_vars *vars);
+
+// SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);
 char		*ft_removequotes(char *str);
 int			ft_varlen(char *str);
@@ -172,7 +176,7 @@ int			ft_builtin1(t_command *com, t_vars *vars);
 int			ft_searchbuiltin(t_command *com);
 int			**ft_freepip(int **arr, int len, int index);
 
-// CREATE COMMAND (struct command)
+// CREATE COMMAND (struct command) /////////////////////////////////////////////
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 int			ft_commandlen(char **comm);
 
