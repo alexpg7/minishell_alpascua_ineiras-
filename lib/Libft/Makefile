@@ -9,6 +9,7 @@ SRC = get_next_line.c \
 	ft_isalnum2.c \
 	ft_isascii.c \
 	ft_isprint.c \
+	ft_isspace.c \
 	ft_strlen.c \
 	ft_memset.c \
 	ft_bzero.c \
