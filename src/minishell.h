@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/04 18:34:52 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/11 18:47:35 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_input
 {
 	char	**word; // word[i] = "echo"		word[i] = ">>"
 	char	*token;	// token[i] = 'c'		token[i] = 'a'
+	char	**command;
 	int		pid;
 	int		last_fd;
 }	t_input;
@@ -175,5 +176,25 @@ int			**ft_freepip(int **arr, int len, int index);
 // CREATE COMMAND (struct command)
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 int			ft_commandlen(char **comm);
+
+
+
+// NEW EXECUTION
+void		ft_execute2(t_input *input, t_vars *vars);
+void		ft_exec2(t_input *input, t_vars *vars);
+int			ft_heredoc(char *lim);
+char		*ft_findpath(char *comm, char **envp, t_vars *vars);
+int			exitstatus2(int status);
+void		ft_execmore(t_command *command, t_vars *vars);
+void		ft_waitall(int *pid, int len, t_vars *vars);
+
+// NEW EXECUTION UTILS
+int		ft_search_tokken(t_input *input, char tokken);
+int		ft_search_tokken_2(t_input *input, char tokken, int *start);
+void	ft_command_array(t_input *input, t_vars *vars);
+int		ft_builtin_n(t_input *input, t_vars *vars);
+void	ft_child_2(t_input *input, t_vars *vars);
+int		ft_builtin_2(t_input *input, t_vars *vars);
+void	ft_set_redir_2(t_input *input, t_vars *vars, int mode);
 
 #endif

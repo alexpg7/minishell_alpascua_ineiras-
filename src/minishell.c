@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/05 13:15:02 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/11 18:50:21 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	do_stuff(char *str, t_vars *vars)
 	}
 	if (!comm)
 		ft_exit(NULL, 1, vars);
-	ft_printf("HOLA\n");
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	add_history(str);
@@ -119,7 +118,7 @@ void	do_stuff(char *str, t_vars *vars)
 		ft_printf("%s, %c\n", (*input)->word[k], (*input)->token[k]);
 		k++;
 	}
-	//ft_execute2(input, vars);
+	ft_execute2(input, vars);
 	/*free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);
