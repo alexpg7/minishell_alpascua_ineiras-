@@ -64,20 +64,63 @@ void	ft_freecommand(t_command *command)
 	free(command);
 }
 
+void	ft_define1(t_input ***input, t_vars *vars)
+{
+	vars->np = 0;
+	*input = (t_input **)malloc(sizeof(t_input *) * 1);
+	(**input)->word = (char **)malloc(sizeof(char *) * 9);
+	(**input)->token = (char *)malloc(sizeof(char) * 9);
+	(**input)->word[0] = ft_strdup("<");
+	(**input)->token[0] = 'i';
+	(**input)->word[1] = ft_strdup("readline.supp");
+	(**input)->token[1] = 'w';
+	(**input)->word[2] = ft_strdup("echo");
+	(**input)->token[2] = 'c';
+	(**input)->word[3] = ft_strdup("hola");
+	(**input)->token[3] = 'c';
+	(**input)->word[4] = ft_strdup(">");
+	(**input)->token[4] = 'o';
+	(**input)->word[5] = ft_strdup("out");
+	(**input)->token[5] = 'w';
+	(**input)->word[6] = ft_strdup(">>");
+	(**input)->token[6] = 'a';
+	(**input)->word[7] = ft_strdup("out2");
+	(**input)->token[7] = 'w';
+	(**input)->word[8] = NULL;
+	(**input)->token[8] = '\0';
+}
+
 void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
-	t_lst	*ts;
+	t_input	**input;
+	int	k = 0;
+	//t_lst	*ts;
 
 	vars->np = 0;
-	vars->command = NULL;
 	comm = ft_splitmini(str, ' ', vars);
+	while (comm[k])
+	{
+		ft_printf("%s\n", comm[k]);
+		k++;
+	}
 	if (!comm)
 		ft_exit(NULL, 1, vars);
+	ft_printf("HOLA\n");
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	add_history(str);
-	free(str);
+	// convert comm into t_input
+	// CHECK PARSING (PIPES, QUOTES AND REDIRECTS)
+	ft_define1(&input, vars);
+	k = 0;
+	while ((*input)->word[k])
+	{
+		ft_printf("%s, %c\n", (*input)->word[k], (*input)->token[k]);
+		k++;
+	}
+	//ft_execute2(input, vars);
+	/*free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);
 	vars->command = ft_createcomm(comm, vars);
@@ -87,7 +130,7 @@ void	do_stuff(char *str, t_vars *vars)
 	ft_lstadd_back_lst(&vars->ts, ts);
 	ft_execute(vars->command, vars);
 	ft_freecommand(vars->command);
-	vars->command = NULL;
+	vars->command = NULL;*/
 	ft_newexit(vars);
 }
 

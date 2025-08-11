@@ -21,7 +21,7 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->env = env;
 	vars->exit_status = 0;
 	vars->np = 0;
-	vars->command = NULL;
+	//vars->command = NULL;
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)
 		ft_exit(NULL, 2, vars);

@@ -33,6 +33,14 @@ typedef struct s_command
 	int		ap; //append mode
 }	t_command;
 
+typedef struct s_input
+{
+	char	**word; // word[i] = "echo"		word[i] = ">>"
+	char	*token;	// token[i] = 'c'		token[i] = 'a'
+	int		pid;
+	int		last_fd;
+}	t_input;
+
 // Trash List Structure:
 typedef struct s_trash_lst
 {
@@ -54,10 +62,11 @@ typedef struct s_vars
 	t_list		*env;
 	t_lst		*ts;
 	t_dollar	dollar;
+	t_input		*input;
 	t_command	*command;
 	int			np; //number of pipes
 	int			**pip; //pipes
-	int			*pid; //pid's
+	int			*pid;
 	int			exit_status;
 	char		**envp;
 }	t_vars;
@@ -92,6 +101,8 @@ char		**ft_splitmini(char const *s, char c, t_vars *vars);
 void		ft_jumpcom(char const **s, char sep);
 int			ft_special(char c);
 void		ft_nextword(const char **s, char sep);
+
+// SPLITMINI2
 
 // SEARCH DOLLAR
 char		*ft_searchdollar(char *str, t_vars *vars);
