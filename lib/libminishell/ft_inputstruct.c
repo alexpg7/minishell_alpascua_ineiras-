@@ -118,7 +118,7 @@ void	ft_copycommand(t_input **input, char **comm, int size)
 		}
 		else if (flag  == 0)
 			(*input)->token[i] = 'c';
-		(*input)->word[i] = ft_strdup(comm[i]); // protect AND CLEAN STRING (looking at token)
+		(*input)->word[i] = ft_cleanstring(comm[i], (*input)->token[i]); // protect AND CLEAN STRING (looking at token)
 		i++;
 	}
 	(*input)->word[i] = NULL;

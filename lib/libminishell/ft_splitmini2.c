@@ -42,7 +42,7 @@ int	ft_nextword2(char *str, int *i)
 	{
 		if (c == '0' && ft_isop(str[*i]))
 			return (*i - k);
-		else if (c == '0' && ft_isquote(str[*i]))
+		else if (c == '0' && ft_isquote(str[*i]) && str[*i - (i != 0)] != '\\')
 		{
 			if (str[*i - (*i != 0)] != '\\')
 			{
@@ -100,10 +100,7 @@ char	**ft_splitmini2(char *str, t_vars *vars)
 	vars->np = 0;
 	words = ft_countwords2(str);
 	if (words == -1)
-	{
-		ft_putstr_fd("error\n", 2);
 		return (NULL);
-	}
 	ptr = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!ptr)
 		ft_exit(NULL, 2, vars);

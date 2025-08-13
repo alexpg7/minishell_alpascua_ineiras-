@@ -37,6 +37,7 @@ typedef struct s_input
 {
 	char	**word; // word[i] = "echo"		word[i] = ">>"
 	char	*token;	// token[i] = 'c'		token[i] = 'a'
+	char	**comm;
 	int		pid;
 	int		last_fd;
 }	t_input;
@@ -108,6 +109,9 @@ char		**ft_splitmini2(char *str, t_vars *vars);
 
 // STRUCT INPUT
 t_input		**ft_inputstruct(char **comm, t_vars *vars);
+
+// CLEAN STRING
+char		*ft_cleanstring(char *comm, char token);
 
 // SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);

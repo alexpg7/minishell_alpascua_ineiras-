@@ -118,9 +118,12 @@ void	do_stuff(char *str, t_vars *vars)
 
 	vars->np = 0;
 	//comm = NULL;//ft_splitmini(str, ' ', vars);
-	comm = ft_splitmini2(str, vars);
-	if (!comm)
-		ft_exit(NULL, 2, vars);
+	comm = ft_splitmini2(str, vars); //already protected inside
+	if (!comm) //parsing error always
+	{
+		add_history(str);
+		return ;
+	}
 	/*while (comm[k])
 	{
 		ft_printf("%s\n", comm[k]);
@@ -128,7 +131,7 @@ void	do_stuff(char *str, t_vars *vars)
 	}*/
 	if (comm[0] == NULL)
 		return ((void)free(comm));
-	input = ft_inputstruct(comm, vars); // convert comm into t_input
+	input = ft_inputstruct(comm, vars);
 	vars->input = input;
 	add_history(str);
 	//ft_define1(&input, vars);
