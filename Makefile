@@ -27,8 +27,8 @@ SRC = src/minishell.c \
 	execution/ft_heredoc.c \
 	execution/ft_execute.c \
 	execution/file_descriptors.c \
+	execution/ft_execute_utils.c \
 	execution/ft_execute_utils2.c \
-	execution/ft_execute_utils3.c \
 	execution/ft_execmore.c \
 	execution/ft_execute_first.c \
 	execution/ft_execute_between.c \
