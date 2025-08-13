@@ -64,6 +64,24 @@ void	ft_freecommand(t_command *command)
 	free(command);
 }
 
+void	ft_freeinput(t_input ***input, int np, t_vars *vars)
+{
+	int	i;
+
+	if ((**input)->token)
+		free((**input)->token);
+	if ((**input)->word)
+		ft_freestrarr(&(**input)->word, 0);
+	i = 0;
+	while (i < np + 1)
+	{
+		free(**input);
+		i++;
+	}
+	free(*input);
+	vars->input = NULL;
+}
+
 void	ft_define1(t_input ***input, t_vars *vars)
 {
 	vars->np = 0;
@@ -111,10 +129,11 @@ void	do_stuff(char *str, t_vars *vars)
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	input = ft_inputstruct(comm, vars); // convert comm into t_input
-	// CHECK PARSING (PIPES, QUOTES AND REDIRECTS)
+	vars->input = input;
+	add_history(str);
 	//ft_define1(&input, vars);
 	k = 0;
-	while (k < vars->np + 1)
+	while (input && k < vars->np + 1)
 	{
 		i = 0;
 		while ((input[k])->word[i])
@@ -124,8 +143,8 @@ void	do_stuff(char *str, t_vars *vars)
 		}
 		k++;
 	}
-	free(input);
-	add_history(str);
+	if (input)
+		ft_freeinput(&input, vars->np, vars);
 	ft_freestrarr(&comm, 0);
 	//ft_execute2(input, vars);
 	/*free(str);

@@ -62,7 +62,7 @@ typedef struct s_vars
 	t_list		*env;
 	t_lst		*ts;
 	t_dollar	dollar;
-	t_input		*input;
+	t_input		**input;
 	t_command	*command;
 	int			np; //number of pipes
 	int			**pip; //pipes
@@ -86,7 +86,8 @@ t_lst		*ft_lstnew_lst(void *content, void **content_p);
 void		ft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void		ft_lstdelone_lst(t_lst *lst);
 void		ft_lstclear_lst(t_lst **lst);
-void		ft_freecommand(t_command *command);
+void		ft_freecommand(t_command *command);////////////ERASE
+void		ft_freeinput(t_input ***input, int np, t_vars *vars);
 void		ft_free_lst(void **ptr);
 void		ft_free_both(char *str1, char *str2);
 //void	ft_free_three(char *str1, char *str2, char *str3);

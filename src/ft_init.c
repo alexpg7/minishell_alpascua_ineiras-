@@ -42,6 +42,7 @@ void	ft_init(t_vars *vars, char **envp)
 	int		i;
 
 	i = 1;
+	vars->input = NULL;
 	aux = ft_strjoin(envp[0], "");
 	if (!aux)
 		ft_exit(NULL, 2, vars);

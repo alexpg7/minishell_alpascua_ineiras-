@@ -156,6 +156,7 @@ t_input	**ft_inputstruct(char **comm, t_vars *vars)
 	t_input	**input;
 	int		np;
 
+	//input->command = NULL;
 	if (ft_checkredirs(comm) == -1)
 	{
 		ft_putstr_fd("parsing error: wrong redirecitons\n", 2);
