@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 10:16:00 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:20:03 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,48 +65,6 @@ void	ft_execute(t_command *command, t_vars *vars)
 }
 */
 //--------------------------------------------------------------------------------------------------------------------
-
-
-void	ft_child_2(t_input *input, t_vars *vars)
-{
-	char	*path;
-
-	vars->exit_status = 0;
-	if (!ft_builtin_2(input, vars))
-	{
-		vars->envp = ft_getenv(vars->env);
-		path = ft_findpath(input->command[0], vars->envp, vars);
-		if (!vars->envp || !path)
-			ft_exit(path, vars->exit_status, vars);
-		if (execve(path, input->command, vars->envp) == -1)
-			ft_exit(path, 1, vars);
-	}
-}
-
-int	ft_search_tokken_2(t_input *input, char tokken, int *start)
-{
-	while (input->word[*start])
-	{
-		if (input->token[*start] == tokken)
-			return (*start); // Assuming input is always OK.
-		(*start)++;
-	}
-	return (-1);
-}
-
-int	ft_search_tokken(t_input *input, char tokken)
-{
-	int	i = 0;
-	
-	while (input->word[i])
-	{
-		if (input->token[i] == tokken)
-			return (i); // Assuming input is always OK.
-		i++;
-	}
-	return (-1);
-}
-
 /*
 void	ft_exec2(t_input *input, t_vars *vars)
 {
@@ -136,6 +94,24 @@ void	ft_exec2(t_input *input, t_vars *vars)
 	if (ft_search_tokken(input, 'h') > 0)
 		unlink(".here_doc.tmp");
 }*/
+
+
+void	ft_child_2(t_input *input, t_vars *vars)
+{
+	char	*path;
+
+	ft_set_redir_2(input, vars);
+	vars->exit_status = 0;
+	if (!ft_builtin_2(input, vars))
+	{
+		vars->envp = ft_getenv(vars->env);
+		path = ft_findpath(input->command[0], vars->envp, vars);
+		if (!vars->envp || !path)
+			ft_exit(path, vars->exit_status, vars);
+		if (execve(path, input->command, vars->envp) == -1)
+			ft_exit(path, 1, vars);
+	}
+}
 
 void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
 {
