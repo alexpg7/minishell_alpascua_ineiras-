@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:46:24 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 19:01:30 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 		{
 			input->last_in = ft_heredoc(input->word[i + 1]);
 			if (input->last_in == -1)
-				ft_exit(NULL, 1, vars);
+				ft_exit(NULL, 1, vars); 
 		}
 		i++;
 	}
@@ -124,17 +124,17 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 {
 	char	*pwd;
 
-	if (input->command[0]) 
+	if (input->comm[0]) 
 	{
-		if (ft_strcmp("echo", input->command[0]) == 0)
-			ft_echo(input->command + 1);
-		else if (ft_strcmp("pwd", input->command[0]) == 0)
+		if (ft_strcmp("echo", input->comm[0]) == 0)
+			ft_echo(input->comm + 1);
+		else if (ft_strcmp("pwd", input->comm[0]) == 0)
 		{
-			pwd = ft_pwd(input->command + 1, vars); // We pass the input into PWD?
+			pwd = ft_pwd(input->comm + 1, vars); // We pass the input into PWD?
 			if (pwd)
 				ft_printf("%s\n", pwd);
 		}
-		else if (ft_strcmp("env", input->command[0]) == 0)
+		else if (ft_strcmp("env", input->comm[0]) == 0)
 			ft_env(vars);
 		else
 			return (0);
@@ -144,15 +144,15 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 
 int	ft_builtin_n(t_input *input, t_vars *vars)
 {
-	if (!input->command)
+	if (!input->comm)
 		ft_exit(NULL, 0, vars);
-	if (ft_strcmp("cd", input->command[0]) == 0)
-		ft_cd(vars, input->command);
-	else if (ft_strcmp("export", input->command[0]) == 0)
-		ft_export(vars, input->command + 1, 0);
-	else if (ft_strcmp("unset", input->command[0]) == 0)
-		ft_unset(input->command + 1, vars);
-	else if (ft_strcmp("exit", input->command[0]) == 0)
+	if (ft_strcmp("cd", input->comm[0]) == 0)
+		ft_cd(vars, input->comm);
+	else if (ft_strcmp("export", input->comm[0]) == 0)
+		ft_export(vars, input->comm + 1, 0);
+	else if (ft_strcmp("unset", input->comm[0]) == 0)
+		ft_unset(input->comm + 1, vars);
+	else if (ft_strcmp("exit", input->comm[0]) == 0)
 		ft_exit(NULL, 0, vars);
 	else
 		return (0);
@@ -168,18 +168,18 @@ void ft_command_array(t_input *input, t_vars *vars) // NEED TO ADD EVERYTHING TO
 	n = ft_tokken_counter(input, 'c');
 	if (n == 0)
 		return;
-	input->command = malloc(sizeof(char*) * (n + 1));
-	if (!input->command)
+	i = 0;
+	input->comm = malloc(sizeof(char*) * (n + 1));
+	if (!input->comm)
 		ft_exit(NULL, 1, vars);
 	while (i < n)
 	{
-		input->command[i] = ft_strdup(input->word[ft_search_tokken_2(input, 'c', &pos)]);
-		if (!input->command[i])
+		input->comm[i] = ft_strdup(input->word[ft_search_tokken_2(input, 'c', &pos)]);
+		if (!input->comm[i])
 			ft_exit(NULL, 1, vars);
 		pos += 1;
-		ft_printf("%s\n", input->command[i]); // Debug
 		i++;
 	}
-	input->command[i] = NULL;
+	input->comm[i] = NULL;
 	i = 0;
 }

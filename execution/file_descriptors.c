@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:25 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:17:06 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:42:57 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_write_out(t_input *input, t_vars *vars, int pos)
 
 void	ft_read_app(t_input *input, t_vars *vars, int pos)
 {
-	input->last_in = open(input->word[pos], O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (input->last_in == -1)
+	input->last_out = open(input->word[pos], O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (input->last_out == -1)
 		ft_exit(NULL, 1, vars);
-	dup2(input->last_in, STDOUT_FILENO);
-	close(input->last_in);
+	dup2(input->last_out, STDOUT_FILENO);
+	close(input->last_out);
 }
 
 void	ft_read_in(t_input *input, t_vars *vars, int pos)

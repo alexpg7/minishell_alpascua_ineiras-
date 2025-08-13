@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:47:00 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:51:53 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	ft_child_2(t_input *input, t_vars *vars)
 	if (!ft_builtin_2(input, vars))
 	{
 		vars->envp = ft_getenv(vars->env);
-		path = ft_findpath(input->command[0], vars->envp, vars);
+		path = ft_findpath(input->comm[0], vars->envp, vars);
 		if (!vars->envp || !path)
 			ft_exit(path, vars->exit_status, vars);
-		if (execve(path, input->command, vars->envp) == -1)
+		if (execve(path, input->comm, vars->envp) == -1)
 			ft_exit(path, 1, vars);
 	}
 }
@@ -42,9 +42,8 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 			perror("fork");
 		else if (pid == 0)
 		{
-			ft_printf("Yea\n");
+	
 			ft_child_2(input, vars);
-			ft_printf("Yea\n");
 			ft_exit(NULL, vars->exit_status, vars);
 		}
 		else
