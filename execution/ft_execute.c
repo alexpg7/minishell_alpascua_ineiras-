@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:51:53 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 19:53:18 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 	}
 	if (ft_search_tokken(input, 'h') > 0)
 		unlink(".here_doc.tmp");
+	//ft_freestrarr(&input->comm, 0); Free here if its not done outside.
 }
 
 void	ft_execute2(t_input *input, t_vars *vars)

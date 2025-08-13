@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 19:01:30 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 19:45:56 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 				ft_exit(NULL, 1, vars); 
 		}
 		i++;
+	close(input->last_in);
 	}
 	i = 0;
 	while (input->word[i])

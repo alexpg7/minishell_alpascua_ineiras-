@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:52:07 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 19:26:34 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,5 +205,7 @@ int		ft_search_tokken_2(t_input *input, char tokken, int *pos);
 void	ft_read_in(t_input *input, t_vars *vars, int pos);
 void	ft_write_out(t_input *input, t_vars *vars, int pos);
 void	ft_read_app(t_input *input, t_vars *vars, int pos);
+
+// EXECUTION WITH PIPES
 
 #endif
