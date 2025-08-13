@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_utils3.c                                :+:      :+:    :+:   */
+/*   ft_execute_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 10:23:51 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:27:17 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
+
+int	**ft_freepip(int **arr, int len, int index)
+{
+	int	i;
+	int	**aux;
+
+	i = 0;
+	aux = arr;
+	while (i < len && i < index - 1)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(aux);
+	return (NULL);
+}
 
 int	ft_input_count(char **str_array)
 {

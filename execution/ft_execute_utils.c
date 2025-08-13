@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 12:48:05 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:46:24 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
-
+/*
 void	ft_set_redir(t_command *command, t_vars *vars, int mode)
 {
 	if (command->infile && (mode == 0 || mode == 2))
@@ -72,53 +72,9 @@ int	ft_searchbuiltin(t_command *com)
 	else if (ft_strcmp("exit", com->comm[0]) == 0)
 		return (1);
 	return (0);
-}
+}*/
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-void	ft_set_redir_2(t_input *input, t_vars *vars)
-{
-	int	i;
-
-	i = 0;
-	while (input->word[i])
-	{
-		if (input->token[i] == 'i' && input->token[i + 1])
-			ft_read_in(input, vars, i + 1);
-		else if (input->token[i] == 'o')
-			ft_read_out(input, vars, i + 1);
-		else if (input->token[i] == 'a'  && input->token[i + 1])
-			ft_read_app(input, vars, i + 1);
-		else if (input->token[i] == 'h' && input->token[i + 1])
-		{
-			input->last_fd = ft_heredoc(input->word[i + 1]);
-			if (input->last_fd == -1)
-				ft_exit(NULL, 1, vars);
-		}
-	}
-}
-
-int	ft_builtin_2(t_input *input, t_vars *vars) 
-{
-	char	*pwd;
-
-	if (input->command[0]) 
-	{
-		if (ft_strcmp("echo", input->command[0]) == 0)
-			ft_echo(input->command[1]);
-		else if (ft_strcmp("pwd", input->command) == 0)
-		{
-			pwd = ft_pwd(input->command + 1, vars); // We pass the input into PWD?
-			if (pwd)
-				ft_printf("%s\n", pwd);
-		}
-		else if (ft_strcmp("env", input->command[0]) == 0)
-			ft_env(vars);
-		else
-			return (0);
-	}
-	return (1);
-}
-
 
 int	ft_searchbuiltin(t_command *com)
 {
@@ -133,6 +89,59 @@ int	ft_searchbuiltin(t_command *com)
 	return (0);
 }
 
+void	ft_set_redir_2(t_input *input, t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+
+	input->last_in = -42;
+	input->last_out = -42;
+	while (input->word[i])
+	{
+		if (input->token[i] == 'i')
+			ft_read_in(input, vars, i + 1);
+		else if (input->token[i] == 'h')
+		{
+			input->last_in = ft_heredoc(input->word[i + 1]);
+			if (input->last_in == -1)
+				ft_exit(NULL, 1, vars);
+		}
+		i++;
+	}
+	i = 0;
+	while (input->word[i])
+	{
+		if (input->token[i] == 'o')
+			ft_write_out(input, vars, i + 1);
+		else if (input->token[i] == 'a')
+			ft_read_app(input, vars, i + 1);
+		i++;
+	}
+}
+
+int	ft_builtin_2(t_input *input, t_vars *vars) 
+{
+	char	*pwd;
+
+	if (input->command[0]) 
+	{
+		if (ft_strcmp("echo", input->command[0]) == 0)
+			ft_echo(input->command + 1);
+		else if (ft_strcmp("pwd", input->command[0]) == 0)
+		{
+			pwd = ft_pwd(input->command + 1, vars); // We pass the input into PWD?
+			if (pwd)
+				ft_printf("%s\n", pwd);
+		}
+		else if (ft_strcmp("env", input->command[0]) == 0)
+			ft_env(vars);
+		else
+			return (0);
+	}
+	return (1);
+}
+
 int	ft_builtin_n(t_input *input, t_vars *vars)
 {
 	if (!input->command)
@@ -140,7 +149,7 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 	if (ft_strcmp("cd", input->command[0]) == 0)
 		ft_cd(vars, input->command);
 	else if (ft_strcmp("export", input->command[0]) == 0)
-			ft_export(vars, input->command + 1, 0);
+		ft_export(vars, input->command + 1, 0);
 	else if (ft_strcmp("unset", input->command[0]) == 0)
 		ft_unset(input->command + 1, vars);
 	else if (ft_strcmp("exit", input->command[0]) == 0)
@@ -167,8 +176,10 @@ void ft_command_array(t_input *input, t_vars *vars) // NEED TO ADD EVERYTHING TO
 		input->command[i] = ft_strdup(input->word[ft_search_tokken_2(input, 'c', &pos)]);
 		if (!input->command[i])
 			ft_exit(NULL, 1, vars);
+		pos += 1;
 		ft_printf("%s\n", input->command[i]); // Debug
 		i++;
 	}
 	input->command[i] = NULL;
+	i = 0;
 }

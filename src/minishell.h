@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 11:34:12 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:17:18 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct s_input
 	char	*token;	// token[i] = 'c'		token[i] = 'a'
 	char	**command;
 	int		pid;
-	int		last_fd;
+	int		last_in;
+	int		last_out;
 }	t_input;
 
 // Trash List Structure:
@@ -141,7 +142,6 @@ void		cd_double_point(t_vars *vars);
 void		ft_init(t_vars *vars, char **envp);
 
 // EXECUTION
-void		ft_execute(t_command *command, t_vars *vars);
 int			ft_heredoc(char *lim);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
@@ -162,14 +162,6 @@ int			ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars);
 int			ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars);
 
 // EXECCUTION UTILS
-int			ft_checkfd(char *file, int fd, int final);
-int			ft_readin2(char *file);
-int			ft_readin3(void);
-int			ft_readin(char *file, int mode);
-int			ft_readout(char *file, int mode);
-void		ft_set_redir(t_command *command, t_vars *vars, int mode);
-int			ft_builtin2(t_command *com, t_vars *vars);
-int			ft_builtin1(t_command *com, t_vars *vars);
 int			ft_searchbuiltin(t_command *com);
 int			**ft_freepip(int **arr, int len, int index);
 
@@ -180,13 +172,13 @@ int			ft_commandlen(char **comm);
 
 
 // NEW EXECUTION
-void		ft_execute2(t_input *input, t_vars *vars);
-void		ft_exec2(t_input *input, t_vars *vars);
-int			ft_heredoc(char *lim);
-char		*ft_findpath(char *comm, char **envp, t_vars *vars);
-int			exitstatus2(int status);
-void		ft_execmore(t_command *command, t_vars *vars);
-void		ft_waitall(int *pid, int len, t_vars *vars);
+void	ft_execute2(t_input *input, t_vars *vars);
+void	ft_new_exec(t_input *input, t_vars *vars);
+int		ft_heredoc(char *lim);
+char	*ft_findpath(char *comm, char **envp, t_vars *vars);
+int		exitstatus2(int status);
+void	ft_execmore(t_command *command, t_vars *vars);
+void	ft_waitall(int *pid, int len, t_vars *vars);
 
 // NEW EXECUTION UTILS
 void	ft_command_array(t_input *input, t_vars *vars);
@@ -203,7 +195,7 @@ int		ft_search_tokken_2(t_input *input, char tokken, int *pos);
 
 // NEW EXECUTION 3 (FILE DESCRIPTION)
 void	ft_read_in(t_input *input, t_vars *vars, int pos);
-void	ft_read_out(t_input *input, t_vars *vars, int pos);
+void	ft_write_out(t_input *input, t_vars *vars, int pos);
 void	ft_read_app(t_input *input, t_vars *vars, int pos);
 
 #endif
