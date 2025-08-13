@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/05 13:15:02 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:33:41 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -112,8 +113,6 @@ void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
 	t_input	**input;
-	int	k = 0;
-	int	i = 0;
 	//t_lst	*ts;
 
 	vars->np = 0;
@@ -124,32 +123,15 @@ void	do_stuff(char *str, t_vars *vars)
 		add_history(str);
 		return ;
 	}
-	/*while (comm[k])
-	{
-		ft_printf("%s\n", comm[k]);
-		k++;
-	}*/
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	input = ft_inputstruct(comm, vars);
 	vars->input = input;
 	add_history(str);
-	//ft_define1(&input, vars);
-	k = 0;
-	while (input && k < vars->np + 1)
-	{
-		i = 0;
-		while ((input[k])->word[i])
-		{
-			ft_printf("%s, %c\n", (input[k])->word[i], (input[k])->token[i]);
-			i++;
-		}
-		k++;
-	}
+	ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
 	ft_freestrarr(&comm, 0);
-	//ft_execute2(input, vars);
 	/*free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);

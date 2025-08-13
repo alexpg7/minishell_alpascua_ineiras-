@@ -3,72 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/04 18:24:36 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:27:17 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../src/minishell.h"
 
-void	ft_set_redir(t_command *command, t_vars *vars, int mode)
+int	**ft_freepip(int **arr, int len, int index)
 {
-	if (command->infile && (mode == 0 || mode == 2))
+	int	i;
+	int	**aux;
+
+	i = 0;
+	aux = arr;
+	while (i < len && i < index - 1)
 	{
-		if (ft_readin(command->infile, command->hd) == -1)
-			ft_exit(NULL, 1, vars);
+		free(arr[i]);
+		i++;
 	}
-	if (command->outfile && (mode == 1 || mode == 2))
-	{
-		if (ft_readout(command->outfile, command->ap) == -1)
-			ft_exit(NULL, 1, vars);
-	}
+	free(aux);
+	return (NULL);
 }
 
-int	ft_builtin2(t_command *com, t_vars *vars)
+int	ft_input_count(char **str_array)
 {
-	char	*pwd;
+	int i;
 
-	ft_set_redir(com, vars, 2);
-	if (ft_strcmp("echo", com->comm[0]) == 0)
-		ft_echo(com->comm + 1);
-	else if (ft_strcmp("pwd", com->comm[0]) == 0)
+	i = 0;
+	while (str_array[i])
+		i++;
+	return (i);
+}
+
+int	ft_tokken_counter(t_input *input, char tokken)
+{
+	int	i = 0;
+	int	count = 0;
+
+	while (input->word[i])
 	{
-		pwd = ft_pwd(com->comm + 1, vars);
-		if (pwd)
-			ft_printf("%s\n", pwd);
+		if (input->token[i] == tokken)
+			count++; // Assuming input is always OK.
+		i++;
 	}
-	else if (ft_strcmp("env", com->comm[0]) == 0)
-		ft_env(vars);
-	else
-		return (0);
-	return (1);
+	return (count);
 }
 
-int	ft_builtin1(t_command *com, t_vars *vars)
+int	ft_search_tokken_2(t_input *input, char tokken, int *pos)
 {
-	if (ft_strcmp("cd", com->comm[0]) == 0)
-		ft_cd(vars, com->comm);
-	else if (ft_strcmp("export", com->comm[0]) == 0)
-		ft_export(vars, com->comm + 1, 0);
-	else if (ft_strcmp("unset", com->comm[0]) == 0)
-		ft_unset(com->comm + 1, vars);
-	else if (ft_strcmp("exit", com->comm[0]) == 0)
-		ft_exit(NULL, 0, vars);
-	else
-		return (0);
-	return (1);
+	while (input->word[*pos])
+	{
+		if (input->token[*pos] == tokken)
+			return (*pos); // Assuming input is always OK.
+		(*pos)++;
+	}
+	return (-1);
 }
 
-int	ft_searchbuiltin(t_command *com)
+int	ft_search_tokken(t_input *input, char tokken)
 {
-	if (ft_strcmp("cd", com->comm[0]) == 0)
-		return (1);
-	else if (ft_strcmp("export", com->comm[0]) == 0)
-		return (1);
-	else if (ft_strcmp("unset", com->comm[0]) == 0)
-		return (1);
-	else if (ft_strcmp("exit", com->comm[0]) == 0)
-		return (1);
-	return (0);
+	int	i = 0;
+	
+	while (input->word[i])
+	{
+		if (input->token[i] == tokken)
+			return (i); // Assuming input is always OK.
+		i++;
+	}
+	return (-1);
 }

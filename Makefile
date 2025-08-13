@@ -9,6 +9,10 @@ INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
 
+#  execution/ft_execmore.c \
+#	execution/ft_execute_first.c \
+#	execution/ft_execute_between.c \
+#	execution/ft_execute_last.c \
 # Source and object files
 SRC = src/minishell.c \
 	src/ft_init.c \
@@ -26,12 +30,9 @@ SRC = src/minishell.c \
 	commands/ft_unset.c \
 	execution/ft_heredoc.c \
 	execution/ft_execute.c \
+	execution/file_descriptors.c \
 	execution/ft_execute_utils.c \
 	execution/ft_execute_utils2.c \
-	execution/ft_execmore.c \
-	execution/ft_execute_first.c \
-	execution/ft_execute_between.c \
-	execution/ft_execute_last.c \
 	execution/exit_status.c \
 	execution/ft_findpath.c \
 	lib/libminishell/ft_splitmini.c \
