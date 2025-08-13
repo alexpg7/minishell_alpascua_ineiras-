@@ -42,7 +42,7 @@ int	ft_nextword2(char *str, int *i)
 	{
 		if (c == '0' && ft_isop(str[*i]))
 			return (*i - k);
-		else if (c == '0' && ft_isquote(str[*i]) && str[*i - (i != 0)] != '\\')
+		else if (c == '0' && ft_isquote(str[*i]) && str[*i - (*i != 0)] != '\\')
 		{
 			if (str[*i - (*i != 0)] != '\\')
 			{

@@ -106,12 +106,13 @@ void		ft_nextword(const char **s, char sep);
 
 // SPLITMINI2
 char		**ft_splitmini2(char *str, t_vars *vars);
+int			ft_isquote(char c);
 
 // STRUCT INPUT
 t_input		**ft_inputstruct(char **comm, t_vars *vars);
 
 // CLEAN STRING
-char		*ft_cleanstring(char *comm, char token);
+char		*ft_cleanstring(char *comm, char token, t_vars *vars);
 
 // SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);

@@ -97,7 +97,7 @@ char	ft_redirtoken(char *comm)
 	return ('w');
 }
 
-void	ft_copycommand(t_input **input, char **comm, int size)
+void	ft_copycommand(t_input **input, char **comm, int size, t_vars *vars)
 {
 	int	i;
 	int	flag;
@@ -118,7 +118,7 @@ void	ft_copycommand(t_input **input, char **comm, int size)
 		}
 		else if (flag  == 0)
 			(*input)->token[i] = 'c';
-		(*input)->word[i] = ft_cleanstring(comm[i], (*input)->token[i]); // protect AND CLEAN STRING (looking at token)
+		(*input)->word[i] = ft_cleanstring(comm[i], (*input)->token[i], vars); // protect AND CLEAN STRING (looking at token)
 		i++;
 	}
 	(*input)->word[i] = NULL;
@@ -137,7 +137,7 @@ void	ft_fillinput(t_input ***input, char **comm, t_vars *vars)
 		(*input)[i] = (t_input *)malloc(sizeof(t_input)); // protect
 		(*input)[i]->word = (char **)malloc(sizeof(char *) * (size + 1)); // protect
 		(*input)[i]->token = (char *)malloc(sizeof(char) * (size + 1)); // protect
-		ft_copycommand((*input + i), comm, size);
+		ft_copycommand((*input + i), comm, size, vars);
 		while (*comm)
 		{
 			if (ft_strcmp(*comm, "|") == 0)
