@@ -3,127 +3,172 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 18:24:25 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/11 16:40:37 by ineiras-         ###   ########.fr       */
+/*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/13 12:48:05 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
-/*
-int	ft_checkfd(char *file, int fd, int final)
+
+void	ft_set_redir(t_command *command, t_vars *vars, int mode)
 {
-	if (fd == -1)
+	if (command->infile && (mode == 0 || mode == 2))
 	{
-		perror(file);
-		return (-1);
+		if (ft_readin(command->infile, command->hd) == -1)
+			ft_exit(NULL, 1, vars);
 	}
-	if (dup2(fd, final) == -1)
+	if (command->outfile && (mode == 1 || mode == 2))
 	{
-		perror("dup2");
-		return (-1);
+		if (ft_readout(command->outfile, command->ap) == -1)
+			ft_exit(NULL, 1, vars);
 	}
-	if (close(fd) == -1)
-	{
-		perror("close");
-		return (-1);
-	}
-	return (0);
 }
 
-int	ft_readin2(char *file)
+int	ft_builtin2(t_command *com, t_vars *vars)
 {
-	int	fd;
+	char	*pwd;
 
-	fd = open(file, O_RDONLY);
-	return (ft_checkfd(file, fd, 0));
-}
-
-int	ft_readin3(void)
-{
-	int	fd;
-
-	fd = open(".here_doc.tmp", O_RDONLY);
-	return (ft_checkfd(".here_doc.tmp", fd, 0));
-}
-
-int	ft_readin(char *file, int mode)
-{
-	if (mode == 1)
-		return (ft_readin3());
+	ft_set_redir(com, vars, 2);
+	if (ft_strcmp("echo", com->comm[0]) == 0)
+		ft_echo(com->comm + 1);
+	else if (ft_strcmp("pwd", com->comm[0]) == 0)
+	{
+		pwd = ft_pwd(com->comm + 1, vars);
+		if (pwd)
+			ft_printf("%s\n", pwd);
+	}
+	else if (ft_strcmp("env", com->comm[0]) == 0)
+		ft_env(vars);
 	else
-		return (ft_readin2(file));
-	return (0);
+		return (0);
+	return (1);
 }
 
-int	ft_readout(char *file, int mode)
+int	ft_builtin1(t_command *com, t_vars *vars)
 {
-	int	fd;
-
-	if (mode == 1)
-		fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (ft_strcmp("cd", com->comm[0]) == 0)
+		ft_cd(vars, com->comm);
+	else if (ft_strcmp("export", com->comm[0]) == 0)
+		ft_export(vars, com->comm + 1, 0);
+	else if (ft_strcmp("unset", com->comm[0]) == 0)
+		ft_unset(com->comm + 1, vars);
+	else if (ft_strcmp("exit", com->comm[0]) == 0)
+		ft_exit(NULL, 0, vars);
 	else
-		fd = open(file, O_TRUNC | O_WRONLY | O_CREAT, 0644);
-	return (ft_checkfd(file, fd, 1));
-	return (0);
+		return (0);
+	return (1);
 }
-*/
-// ---------------------------------------------------------------------------------
 
-int	ft_checkfd(char *file, int fd, int final)
+int	ft_searchbuiltin(t_command *com)
 {
-	if (fd == -1)
-	{
-		perror(file);
-		return (-1);
-	}
-	if (dup2(fd, final) == -1)
-	{
-		perror("dup2");
-		return (-1);
-	}
-	if (close(fd) == -1)
-	{
-		perror("close");
-		return (-1);
-	}
+	if (ft_strcmp("cd", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("export", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("unset", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("exit", com->comm[0]) == 0)
+		return (1);
 	return (0);
 }
 
-int	ft_readin2(char *file)
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+void	ft_set_redir_2(t_input *input, t_vars *vars)
 {
-	int	fd;
+	int	i;
 
-	fd = open(file, O_RDONLY);
-	return (ft_checkfd(file, fd, 0));
+	i = 0;
+	while (input->word[i])
+	{
+		if (input->token[i] == 'i' && input->token[i + 1])
+			ft_read_in(input, vars, i + 1);
+		else if (input->token[i] == 'o')
+			ft_read_out(input, vars, i + 1);
+		else if (input->token[i] == 'a'  && input->token[i + 1])
+			ft_read_app(input, vars, i + 1);
+		else if (input->token[i] == 'h' && input->token[i + 1])
+		{
+			input->last_fd = ft_heredoc(input->word[i + 1]);
+			if (input->last_fd == -1)
+				ft_exit(NULL, 1, vars);
+		}
+	}
 }
 
-int	ft_readin3(void)
+int	ft_builtin_2(t_input *input, t_vars *vars) 
 {
-	int	fd;
+	char	*pwd;
 
-	fd = open(".here_doc.tmp", O_RDONLY);
-	return (ft_checkfd(".here_doc.tmp", fd, 0));
+	if (input->command[0]) 
+	{
+		if (ft_strcmp("echo", input->command[0]) == 0)
+			ft_echo(input->command[1]);
+		else if (ft_strcmp("pwd", input->command) == 0)
+		{
+			pwd = ft_pwd(input->command + 1, vars); // We pass the input into PWD?
+			if (pwd)
+				ft_printf("%s\n", pwd);
+		}
+		else if (ft_strcmp("env", input->command[0]) == 0)
+			ft_env(vars);
+		else
+			return (0);
+	}
+	return (1);
 }
 
-int	ft_readin(char *file, int mode)
+
+int	ft_searchbuiltin(t_command *com)
 {
-	if (mode >= 0)
-		return (ft_readin3());
+	if (ft_strcmp("cd", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("export", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("unset", com->comm[0]) == 0)
+		return (1);
+	else if (ft_strcmp("exit", com->comm[0]) == 0)
+		return (1);
+	return (0);
+}
+
+int	ft_builtin_n(t_input *input, t_vars *vars)
+{
+	if (!input->command)
+		ft_exit(NULL, 0, vars);
+	if (ft_strcmp("cd", input->command[0]) == 0)
+		ft_cd(vars, input->command);
+	else if (ft_strcmp("export", input->command[0]) == 0)
+			ft_export(vars, input->command + 1, 0);
+	else if (ft_strcmp("unset", input->command[0]) == 0)
+		ft_unset(input->command + 1, vars);
+	else if (ft_strcmp("exit", input->command[0]) == 0)
+		ft_exit(NULL, 0, vars);
 	else
-		return (ft_readin2(file));
-	return (0);
+		return (0);
+	return (1);
 }
 
-int	ft_readout(char *file, int mode)
+void ft_command_array(t_input *input, t_vars *vars) // NEED TO ADD EVERYTHING TO THE TRASH LIST
 {
-	int	fd;
+	int	i = 0;
+	int n;
+	int	pos = 0;
 
-	if (mode >= 0)
-		fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	else
-		fd = open(file, O_TRUNC | O_WRONLY | O_CREAT, 0644);
-	return (ft_checkfd(file, fd, 1));
-	//return (0); // Why this?
+	n = ft_tokken_counter(input, 'c');
+	if (n == 0)
+		return;
+	input->command = malloc(sizeof(char*) * (n + 1));
+	if (!input->command)
+		ft_exit(NULL, 1, vars);
+	while (i < n)
+	{
+		input->command[i] = ft_strdup(input->word[ft_search_tokken_2(input, 'c', &pos)]);
+		if (!input->command[i])
+			ft_exit(NULL, 1, vars);
+		ft_printf("%s\n", input->command[i]); // Debug
+		i++;
+	}
+	input->command[i] = NULL;
 }

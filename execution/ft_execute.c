@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/11 18:49:00 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 10:16:00 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_search_tokken_2(t_input *input, char tokken, int *start)
 	{
 		if (input->token[*start] == tokken)
 			return (*start); // Assuming input is always OK.
-		start++;
+		(*start)++;
 	}
 	return (-1);
 }
@@ -107,31 +107,55 @@ int	ft_search_tokken(t_input *input, char tokken)
 	return (-1);
 }
 
-int	tokken_counter(t_input *input, char tokken)
-{
-	int	i = 0;
-	int	count = 0;
-
-	while (input->word[i])
-	{
-		if (input->token[i] == tokken)
-			count++; // Assuming input is always OK.
-		i++;
-	}
-	return (count);
-}
-
-
+/*
 void	ft_exec2(t_input *input, t_vars *vars)
 {
 	int		pid;
 
-	if (ft_search_tokken(input, 'h') > 0)
+	if (ft_search_tokken(input, 'h') >= 0)
 	{
-		if (ft_heredoc(input->word[ft_search_tokken(input, 'h')] + 1) == -1) // Not sure about + 1;
+		if (ft_heredoc(input->word[ft_search_tokken(input, 'h') + 1]) == -1) 
 			ft_exit(NULL, 1, vars);
 	}
 
+	ft_command_array(input, vars);
+	if (!ft_builtin_n(input, vars))
+	{
+		ft_signal(WAIT);
+		pid = fork();
+		if (pid == -1)
+			perror("fork");
+		else if (pid == 0)
+		{
+			ft_child_2(input, vars);
+			ft_exit(NULL, vars->exit_status, vars);
+		}
+		else
+			ft_waitall(&pid, 1, vars);
+	}
+	if (ft_search_tokken(input, 'h') > 0)
+		unlink(".here_doc.tmp");
+}*/
+
+void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
+{
+	int		pid;
+	int		fd;
+	int		i;
+
+	input->last_fd = -1;
+	while (i < ft_input_count(input->word))
+	{
+		if (input->token[i] == 'h' && input->token[i + 1])
+		{
+			if (input->last_fd >= 0)
+				close(input->last_fd);
+			input->last_fd = ft_heredoc(input->word[i + 1]);
+			if (input->last_fd == -1)
+				ft_exit(NULL, 1, vars);
+		}
+		i++;
+	}
 	ft_command_array(input, vars);
 	if (!ft_builtin_n(input, vars))
 	{

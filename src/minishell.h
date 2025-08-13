@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/11 18:47:35 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:34:12 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,12 +189,21 @@ void		ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(int *pid, int len, t_vars *vars);
 
 // NEW EXECUTION UTILS
-int		ft_search_tokken(t_input *input, char tokken);
-int		ft_search_tokken_2(t_input *input, char tokken, int *start);
 void	ft_command_array(t_input *input, t_vars *vars);
 int		ft_builtin_n(t_input *input, t_vars *vars);
 void	ft_child_2(t_input *input, t_vars *vars);
 int		ft_builtin_2(t_input *input, t_vars *vars);
-void	ft_set_redir_2(t_input *input, t_vars *vars, int mode);
+void	ft_set_redir_2(t_input *input, t_vars *vars);
+
+// NEW EXECUTION UTILS 2
+int		ft_input_count(char **str_array);
+int		ft_tokken_counter(t_input *input, char tokken);
+int		ft_search_tokken(t_input *input, char tokken);
+int		ft_search_tokken_2(t_input *input, char tokken, int *pos);
+
+// NEW EXECUTION 3 (FILE DESCRIPTION)
+void	ft_read_in(t_input *input, t_vars *vars, int pos);
+void	ft_read_out(t_input *input, t_vars *vars, int pos);
+void	ft_read_app(t_input *input, t_vars *vars, int pos);
 
 #endif
