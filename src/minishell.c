@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:30:22 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:52:49 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,24 @@ void	ft_freecommand(t_command *command)
 	free(command);
 }
 
+void	ft_freeinput(t_input ***input, int np, t_vars *vars)
+{
+	int	i;
+
+	if ((**input)->token)
+		free((**input)->token);
+	if ((**input)->word)
+		ft_freestrarr(&(**input)->word, 0);
+	i = 0;
+	while (i < np + 1)
+	{
+		free(**input);
+		i++;
+	}
+	free(*input);
+	vars->input = NULL;
+}
+
 void	ft_define1(t_input ***input, t_vars *vars)
 {
 	vars->np = 0;
@@ -95,30 +113,43 @@ void	do_stuff(char *str, t_vars *vars)
 	char	**comm;
 	t_input	**input;
 	int	k = 0;
+	int	i = 0;
 	//t_lst	*ts;
 
 	vars->np = 0;
-	comm = ft_splitmini(str, ' ', vars);
-	while (comm[k])
+	//comm = NULL;//ft_splitmini(str, ' ', vars);
+	comm = ft_splitmini2(str, vars); //already protected inside
+	if (!comm) //parsing error always
+	{
+		add_history(str);
+		return ;
+	}
+	/*while (comm[k])
 	{
 		ft_printf("%s\n", comm[k]);
 		k++;
-	}
-	if (!comm)
-		ft_exit(NULL, 1, vars);
+	}*/
 	if (comm[0] == NULL)
 		return ((void)free(comm));
+	input = ft_inputstruct(comm, vars);
+	vars->input = input;
 	add_history(str);
-	// convert comm into t_input
-	// CHECK PARSING (PIPES, QUOTES AND REDIRECTS)
-	ft_define1(&input, vars);
+	//ft_define1(&input, vars);
 	k = 0;
-	while ((*input)->word[k])
+	while (input && k < vars->np + 1)
 	{
-		ft_printf("%s, %c\n", (*input)->word[k], (*input)->token[k]);
+		i = 0;
+		while ((input[k])->word[i])
+		{
+			ft_printf("%s, %c\n", (input[k])->word[i], (input[k])->token[i]);
+			i++;
+		}
 		k++;
 	}
-	ft_execute2(*input, vars);
+	if (input)
+		ft_freeinput(&input, vars->np, vars);
+	ft_freestrarr(&comm, 0);
+	ft_new_exec(*input, vars);
 	/*free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);

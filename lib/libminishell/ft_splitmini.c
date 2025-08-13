@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../src/minishell.h"
 #include <stdio.h>
-
+//ERASE THIS FILE
 static int	ft_words(char const *s, char sep)
 {
 	int	cont;

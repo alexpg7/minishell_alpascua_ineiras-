@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:17:18 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:52:07 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_input
 {
 	char	**word; // word[i] = "echo"		word[i] = ">>"
 	char	*token;	// token[i] = 'c'		token[i] = 'a'
-	char	**command;
+	char	**comm;
 	int		pid;
 	int		last_in;
 	int		last_out;
@@ -64,7 +64,7 @@ typedef struct s_vars
 	t_list		*env;
 	t_lst		*ts;
 	t_dollar	dollar;
-	t_input		*input;
+	t_input		**input;
 	t_command	*command;
 	int			np; //number of pipes
 	int			**pip; //pipes
@@ -88,7 +88,8 @@ t_lst		*ft_lstnew_lst(void *content, void **content_p);
 void		ft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void		ft_lstdelone_lst(t_lst *lst);
 void		ft_lstclear_lst(t_lst **lst);
-void		ft_freecommand(t_command *command);
+void		ft_freecommand(t_command *command);////////////ERASE
+void		ft_freeinput(t_input ***input, int np, t_vars *vars);
 void		ft_free_lst(void **ptr);
 void		ft_free_both(char *str1, char *str2);
 //void	ft_free_three(char *str1, char *str2, char *str3);
@@ -98,15 +99,22 @@ void		ft_signal(int code);
 void		ft_sigint_heredoc(int sig);
 void		ft_sigquit_heredoc(int sig);
 
-// SPLITMINI
+// SPLITMINI ///////////////////////////////////////////////
 char		**ft_splitmini(char const *s, char c, t_vars *vars);
 void		ft_jumpcom(char const **s, char sep);
 int			ft_special(char c);
 void		ft_nextword(const char **s, char sep);
 
 // SPLITMINI2
+char		**ft_splitmini2(char *str, t_vars *vars);
 
-// SEARCH DOLLAR
+// STRUCT INPUT
+t_input		**ft_inputstruct(char **comm, t_vars *vars);
+
+// CLEAN STRING
+char		*ft_cleanstring(char *comm, char token);
+
+// SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);
 char		*ft_removequotes(char *str);
 int			ft_varlen(char *str);
@@ -165,7 +173,7 @@ int			ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars);
 int			ft_searchbuiltin(t_command *com);
 int			**ft_freepip(int **arr, int len, int index);
 
-// CREATE COMMAND (struct command)
+// CREATE COMMAND (struct command) /////////////////////////////////////////////
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 int			ft_commandlen(char **comm);
 
