@@ -115,6 +115,11 @@ t_input		**ft_inputstruct(char **comm, t_vars *vars);
 
 // CLEAN STRING
 char		*ft_cleanstring(char *comm, char token, t_vars *vars);
+void		ft_nextvar(char *comm, int *i);
+int			ft_strcmpvar(char *var, char *name, int len);
+int			ft_isvar_clean(char *comm, int len, t_vars *vars);
+int			ft_varlen_clean(char *comm, t_vars *vars);
+int			ft_lenvars_clean(char *comm, t_vars *vars);
 
 // SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);
@@ -171,7 +176,7 @@ int			ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars);
 // EXEC LAST
 int			ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars);
 
-// EXECCUTION UTILS
+// EXECUTION UTILS
 int			ft_searchbuiltin(t_command *com);
 int			**ft_freepip(int **arr, int len, int index);
 

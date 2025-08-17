@@ -42,6 +42,7 @@ SRC = src/minishell.c \
 	lib/libminishell/createcommand_utils.c \
 	lib/libminishell/createcommand.c \
 	lib/libminishell/ft_cleanstring.c \
+	lib/libminishell/ft_lenvars.c \
 	lib/libminishell/ft_searchdollar.c \
 	lib/libminishell/ft_searchdollar_utils.c \
 	lib/libminishell/remove_quotes.c \
