@@ -41,9 +41,9 @@ void	ft_init(t_vars *vars, char **envp)
 	char	*aux;
 	int		i;
 
-	i = 1;
+	i = 0;
 	vars->input = NULL;
-	aux = ft_strjoin(envp[0], "");
+	aux = ft_strjoin("\"=\"", ""); //empty variable at the start
 	if (!aux)
 		ft_exit(NULL, 2, vars);
 	env = ft_lstnew(aux);

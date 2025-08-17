@@ -16,7 +16,7 @@ void	ft_env(t_vars *vars)
 {
 	t_list	*lst;
 
-	lst = vars->env;
+	lst = vars->env->next; //the first one is empty/auxiliar NOT TESTED YET
 	while (lst)
 	{
 		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
