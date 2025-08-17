@@ -34,7 +34,10 @@ static void	ft_subsenv(char *str, t_vars *vars)
 	while (env)
 	{
 		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
+		{
+			free(env->content);
 			env->content = str;
+		}
 		env = env->next;
 	}
 }
@@ -62,13 +65,17 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 	}
 	while (arg && *arg && ft_strchr(*arg, '=')) //in mode 0 (user), they should not be able to modify $?
 	{
+		//ft_printf("%s\n", *arg);
 		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{
 			arg++;
 			continue ;
 		}
 		if (ft_inenv(*arg, vars))
+		{
+			//ft_printf("IN\n");
 			ft_subsenv(*arg, vars);
+		}
 		else
 			ft_lstadd_back(&vars->env, ft_lstnew(*arg));
 		if (mode == 1)

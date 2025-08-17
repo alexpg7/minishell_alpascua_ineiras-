@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
 int	g_signal;
@@ -23,12 +22,12 @@ void	ft_newexit(t_vars *vars)
 	num = ft_itoa(vars->exit_status);
 	if (!num)
 		ft_exit(NULL, 1, vars);
-	com = ft_strjoin("?=", num);
+	com = ft_strjoin("?=", num); //protect
 	free(num);
 	if (!com)
 		ft_exit(NULL, 1, vars);
 	ft_export(vars, &com, 1);
-	free(com);
+	//free(com);
 }
 
 void	ft_printcom(t_command *comm)
@@ -130,7 +129,7 @@ void	do_stuff(char *str, t_vars *vars)
 	add_history(str);
 	for (int k = 0; (*input)->word[k]; k++)
 		ft_printf("%s\n", (*input)->word[k]);
-	ft_new_exec(*input, vars);
+	//ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
 	ft_freestrarr(&comm, 0);
