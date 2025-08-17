@@ -94,6 +94,7 @@ char	**ft_splitmini2(char *str, t_vars *vars)
 {
 	int		words;
 	int		i;
+	int		k;
 	int		j;
 	char	**ptr;
 
@@ -110,7 +111,8 @@ char	**ft_splitmini2(char *str, t_vars *vars)
 	{
 		while (ft_isspace(str[j]))
 			j++;
-		ptr[i] = ft_substr(str, j, ft_nextword2(str, &j));
+		k = j;
+		ptr[i] = ft_substr(str, k, ft_nextword2(str, &j));
 		if (!ptr[i])
 			return (ft_free(ptr, i));
 		i++;

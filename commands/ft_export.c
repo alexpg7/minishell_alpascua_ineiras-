@@ -65,7 +65,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		ft_env(vars);
 		return ;
 	}
-	while (arg && *arg && ft_strchr(*arg, '='))
+	while (arg && *arg && ft_strchr(*arg, '=')) //in mode 0 (user), they should not be able to modify $?
 	{
 		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{

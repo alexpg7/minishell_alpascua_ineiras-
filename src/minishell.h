@@ -107,6 +107,7 @@ void		ft_nextword(const char **s, char sep);
 
 // SPLITMINI2
 char		**ft_splitmini2(char *str, t_vars *vars);
+int			ft_nextword2(char *str, int *i);
 int			ft_isquote(char c);
 
 // STRUCT INPUT
