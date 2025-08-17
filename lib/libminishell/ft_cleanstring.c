@@ -69,17 +69,147 @@ int	ft_countquotes(char *comm)
 	return (count);
 }
 
+char	*ft_searchvar(char *comm, int len, t_vars *vars)
+{
+	t_list	*env;
+
+	env = vars->env;
+	while (env)
+	{
+		if (ft_strcmpvar(env->content, comm, len) == 0)
+			return (ft_strchr(env->content, '=') + 1);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+void	ft_copyvar(char **dest, char *src, int *i, t_vars *vars)
+{
+	int	len;
+	int	varlen;
+
+	if (src[*i + 1] == '?')
+		len = 1;
+	else
+	{
+		len = 0;
+		while (src[*i + 1 + len])
+		{
+			if (!ft_isalnum2(src[*i + 1 + len]))
+				break ;
+			len++;
+		}
+	}
+	varlen = ft_isvar_clean(&src[*i + 1], len, vars);
+	if (varlen)
+		ft_strlcpy(*dest, ft_searchvar(&src[*i + 1], len, vars), varlen + 1);
+	*dest = *dest + varlen;
+	*i = *i + len + 1;
+}
+
+char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
+{
+	if (ft_isquote(src[*i]) && src[*i - (*i != 0)] != '\\')
+	{
+		*i = *i + 1;
+		return (src[*i - 1]);
+	}
+	if (src[*i] == '$')
+		ft_copyvar(dest, src, i, vars);
+	else
+	{
+		**dest = src[*i];
+		*i = *i + 1;
+		*dest = *dest + 1;
+	}
+	return ('0');
+}
+
+char	ft_quoted1(char **dest, char *src, int *i)
+{
+	if (src[*i] == '\'' && src[*i - (*i != 0)] != '\\')
+	{
+		*i = *i + 1;
+		return ('0');
+	}
+	if (ft_isspecial2(&src[*i]))
+	{
+		**dest = ft_isspecial2(&src[*i]);
+		*dest = *dest + 1;
+		*i = *i + 2;
+	}
+	else
+	{
+		**dest = src[*i];
+		*i = *i + 1;
+		*dest = *dest + 1;
+	}
+	return ('\'');
+}
+
+char	ft_quoted2(char **dest, char *src, int *i, t_vars *vars)
+{
+	if (src[*i] == '\"' && src[*i - (*i != 0)] != '\\')
+	{
+		*i = *i + 1;
+		return ('0');
+	}
+	if (ft_isspecial2(&src[*i]))
+	{
+		**dest = ft_isspecial2(&src[*i]);
+		*dest = *dest + 1;
+		*i = *i + 2;
+	}
+	if (src[*i] == '$')
+		ft_copyvar(dest, src, i, vars);
+	else
+	{
+		**dest = src[*i];
+		*i = *i + 1;
+		*dest = *dest + 1;
+	}
+	return ('\"');
+}
+
+void	ft_copyclean(char *dest, char *src, t_vars *vars)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	c = '0';
+	while (src[i])
+	{
+		if (c == '0')
+		{
+			c = ft_unquoted(&dest, src, &i, vars);
+			continue ;
+		}
+		else if (c == '\'')
+		{
+			c = ft_quoted1(&dest, src, &i);
+			continue ;
+		}
+		else if (c == '\"')
+		{
+			c = ft_quoted2(&dest, src, &i, vars);
+			continue ;
+		}
+	}
+	*dest = '\0';
+}
+
 char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 {
-	int	quotes;
-	int	lenvars;
+	int		lendiff;
+	char	*ptr;
 
 	if (token != 'w' && token != 'c')
 		return (ft_strdup(comm));//protect
-	quotes = 2 * ft_countquotes(comm); //number of quotes
-	lenvars = ft_lenvars_clean(comm, vars); //difference when substituting vars
-	lenvars += -ft_countspecial(comm);//difference when substituting special chars
-	ft_printf("DIFFLEN: %i\n", lenvars);
-	ft_printf("QUOTES: %i\n", quotes);
-	return (ft_strdup(comm));//protect
+	lendiff = - 2 * ft_countquotes(comm); //number of quotes
+	lendiff = ft_lenvars_clean(comm, vars); //difference when substituting vars
+	lendiff += -ft_countspecial(comm);//difference when substituting special chars
+	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1)); // protect
+	ft_copyclean(ptr, comm, vars);
+	return (ptr);
 }

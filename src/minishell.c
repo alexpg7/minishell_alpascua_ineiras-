@@ -128,6 +128,8 @@ void	do_stuff(char *str, t_vars *vars)
 	input = ft_inputstruct(comm, vars);
 	vars->input = input;
 	add_history(str);
+	for (int k = 0; (*input)->word[k]; k++)
+		ft_printf("%s\n", (*input)->word[k]);
 	ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);

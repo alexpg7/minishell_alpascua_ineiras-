@@ -34,12 +34,7 @@ static void	ft_subsenv(char *str, t_vars *vars)
 	while (env)
 	{
 		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
-		{
-			free(env->content);
-			env->content = new_var(vars, str);
-			if (!env->content)
-				ft_exit(NULL, 1, vars);
-		}
+			env->content = str;
 		env = env->next;
 	}
 }
@@ -75,14 +70,14 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		if (ft_inenv(*arg, vars))
 			ft_subsenv(*arg, vars);
 		else
-			ft_lstadd_back(&vars->env, ft_lstnew(new_var(vars, *arg)));
+			ft_lstadd_back(&vars->env, ft_lstnew(*arg));
 		if (mode == 1)
 			break ;
 		arg++;
 	}
 }
 
-char	*new_var(t_vars *vars, char *arg)
+/*char	*new_var(t_vars *vars, char *arg)
 {
 	char	*str;
 	char	*str_ae;
@@ -107,4 +102,4 @@ char	*new_var(t_vars *vars, char *arg)
 		ft_exit(NULL, 2, vars);
 	ft_free_both(str, str_ae);
 	return (str_en);
-}
+}*/
