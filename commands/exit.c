@@ -24,11 +24,11 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 		free(input);
 	rl_clear_history();
 	ft_freeall(vars);
-	if (vars->np >= 1)
+	/*if (vars->np >= 1)
 	{
 		free(vars->pid);
 		ft_freepip(vars->pip, vars->np, vars->np + 1);
-	}
+	}*/
 	if (vars->envp)
 		ft_freestrarr(&vars->envp, 1);
 	ft_lstclear_lst(&vars->ts);

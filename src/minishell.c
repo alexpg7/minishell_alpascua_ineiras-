@@ -68,14 +68,14 @@ void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 {
 	int	i;
 
-	if ((**input)->token)
-		free((**input)->token);
-	if ((**input)->word)
-		ft_freestrarr(&(**input)->word, 0);
 	i = 0;
 	while (i < np + 1)
 	{
-		free(**input);
+		if ((*input)[i]->token)
+			free((*input)[i]->token);
+		if ((*input)[i]->word)
+			ft_freestrarr(&(*input)[i]->word, 0);
+		free((*input)[i]);
 		i++;
 	}
 	free(*input);
@@ -127,8 +127,9 @@ void	do_stuff(char *str, t_vars *vars)
 	input = ft_inputstruct(comm, vars);
 	vars->input = input;
 	add_history(str);
-	for (int k = 0; (*input)->word[k]; k++)
-		ft_printf("%s\n", (*input)->word[k]);
+	for (int k2 = 0; k2 < vars->np + 1; k2++){
+		for (int k = 0; (input)[k2]->word[k]; k++)
+			ft_printf("%s\n", (input)[k2]->word[k]);}
 	//ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
