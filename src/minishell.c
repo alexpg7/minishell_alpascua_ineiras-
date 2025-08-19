@@ -125,6 +125,7 @@ void	do_stuff(char *str, t_vars *vars)
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	input = ft_inputstruct(comm, vars);
+	ft_freestrarr(&comm, 0);
 	vars->input = input;
 	add_history(str);
 	for (int k2 = 0; k2 < vars->np + 1; k2++){
@@ -133,7 +134,6 @@ void	do_stuff(char *str, t_vars *vars)
 	//ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
-	ft_freestrarr(&comm, 0);
 	/*free(str);
 	if (vars->command)
 		ft_freecommand(vars->command);
