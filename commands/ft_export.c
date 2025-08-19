@@ -68,6 +68,9 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		//ft_printf("%s\n", *arg);
 		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 		{
+			ft_putstr_fd("export: not valid in this context:", 2);
+			ft_putstr_fd(*arg, 2);
+			ft_putchar_fd('\n', 2);
 			arg++;
 			continue ;
 		}
