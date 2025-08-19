@@ -2,6 +2,16 @@ NAME = libft.a
 FLAG = -Wall -Wextra -Werror
 OPTION = -MMD -c -I.
 INCLUDE = Makefile libft.h
+
+# Colors
+BRED = \033[1;31m
+BYEL = \033[1;33m
+BGREEN = \033[1;32m
+RED = \033[0;31m
+YEL = \033[0;33m
+GREEN = \033[0;32m
+NC = \033[0m
+
 SRC = get_next_line.c \
 	ft_isdigit.c \
 	ft_isalpha.c \
@@ -61,18 +71,21 @@ DEP = $(SRC:.c=.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
+	@echo "📚 ${BGREEN}Compiled ${BYEL}$(NAME)${NC}"
 
 -include $(DEP)
 
 %.o: %.c $(INCLUDE)
-	cc $(FLAG) $(OPTION) $< -o $@
+	@cc $(FLAG) $(OPTION) $< -o $@
 
 clean:
-	rm -f $(OBJ) $(DEP)
+	@rm -f $(OBJ) $(DEP)
+	@echo "🗑️  $(BRED)Removed $(YEL)$(OBJ)${NC}"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "🗑️  $(BRED)Removed $(BYEL)$(NAME)${NC}"
 
 re: fclean all
 

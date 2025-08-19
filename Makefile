@@ -4,6 +4,15 @@ OPTION = -MMD -c -I.
 # Paths
 LIBFT_PATH = lib/Libft
 
+# Colors
+BRED = \033[1;31m
+BYEL = \033[1;33m
+BGREEN = \033[1;32m
+RED = \033[0;31m
+YEL = \033[0;33m
+GREEN = \033[0;32m
+NC = \033[0m
+
 INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
 
 # Library files
@@ -56,31 +65,36 @@ all: $(NAME)
 
 # Rebuild Libft if any object file changes
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -C $(LIBFT_PATH)
 
 # Build the main program
 #$(NAME): $(OBJ) $(LIBFT) $(PRINTF)
 #	cc $(FLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(MINILIBX) -o $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(FLAGS) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(OBJ) $(FLAGS) $(LIBFT) -lreadline -o $(NAME)
+	@echo "😃 ${BGREEN}Compiled ${BYEL}$(NAME)${NC}"
 
 # Compile object files and generate .d files for dependencies
 %.o: %.c $(INCLUDE)
-	cc $(FLAGS) $(OPTION) $< -o $@
+	@cc $(FLAGS) $(OPTION) $< -o $@
 
 # Include the generated dependency files
 -include $(DEP)
 
 # Clean object and dependency files
 clean:
-	/bin/rm -f $(OBJ) $(DEP)
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@/bin/rm -f $(OBJ) $(DEP)
+	@$(MAKE) -C $(LIBFT_PATH) clean
+	@echo "🗑️  $(BRED)Removed $(YEL)$(OBJ)${NC}"
 
 # Full clean
-fclean: clean
-	/bin/rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
+fclean:
+	@/bin/rm -f $(OBJ) $(DEP)
+	@echo "🗑️  $(BRED)Removed $(YEL)$(OBJ)${NC}"
+	@$(MAKE) -C $(LIBFT_PATH) fclean
+	@/bin/rm -f $(NAME)
+	@echo "🗑️  $(BRED)Removed $(BYEL)$(NAME)${NC}"
 
 # Rebuild everything
 re: fclean all
