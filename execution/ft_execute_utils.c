@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 19:45:56 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:42:56 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 				ft_exit(NULL, 1, vars); 
 		}
 		i++;
-	close(input->last_in);
 	}
 	i = 0;
 	while (input->word[i])
@@ -162,25 +161,34 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 
 void ft_command_array(t_input *input, t_vars *vars) // NEED TO ADD EVERYTHING TO THE TRASH LIST
 {
-	int	i = 0;
+	int	i;
 	int n;
-	int	pos = 0;
+	int	pos;
 
 	n = ft_tokken_counter(input, 'c');
 	if (n == 0)
 		return;
 	i = 0;
+	pos = 0;
 	input->comm = malloc(sizeof(char*) * (n + 1));
 	if (!input->comm)
 		ft_exit(NULL, 1, vars);
-	while (i < n)
+	while (input->token[i])
 	{
+		if (input->token[i] == 'c')
+		{
+			input->comm[pos] = input->word[i];
+			pos++;
+		}
+		i++;
+	}
+	/*{
 		input->comm[i] = ft_strdup(input->word[ft_search_tokken_2(input, 'c', &pos)]);
 		if (!input->comm[i])
 			ft_exit(NULL, 1, vars);
 		pos += 1;
 		i++;
-	}
-	input->comm[i] = NULL;
+	}*/
+	input->comm[pos] = NULL;
 	i = 0;
 }

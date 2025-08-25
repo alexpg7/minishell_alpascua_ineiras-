@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 17:33:41 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:08:42 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ void	do_stuff(char *str, t_vars *vars)
 	ft_freestrarr(&comm, 0);
 	vars->input = input;
 	add_history(str);
-	for (int k2 = 0; k2 < vars->np + 1; k2++){
+	/*for (int k2 = 0; k2 < vars->np + 1; k2++){
 		for (int k = 0; (input)[k2]->word[k]; k++)
-			ft_printf("%s\n", (input)[k2]->word[k]);}
-	//ft_new_exec(*input, vars);
+			ft_printf("%s\n", (input)[k2]->word[k]);}*/
+	ft_new_exec(*input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
 	/*free(str);

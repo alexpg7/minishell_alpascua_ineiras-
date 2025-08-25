@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 19:53:18 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:34:15 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 			perror("fork");
 		else if (pid == 0)
 		{
-	
 			ft_child_2(input, vars);
 			ft_exit(NULL, vars->exit_status, vars);
 		}
