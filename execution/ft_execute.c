@@ -75,5 +75,5 @@ void	ft_execute2(t_input **input, t_vars *vars)
 	if (vars->np == 0)
 		ft_new_exec(*input, vars);
 	else
-		ft_new_execmore(input, vars); 
+		ft_new_execmore(input, vars);
 }

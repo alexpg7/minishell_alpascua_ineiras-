@@ -11,6 +11,20 @@
 /* ************************************************************************** */
 #include "../src/minishell.h"
 
+char	*ft_firstcom(t_input *input)
+{
+	int	i;
+
+	i = 0;
+	while (input->token[i])
+	{
+		if (input->token[i] == 'c')
+			return (input->word[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 int	exitstatus2(int status)
 {
 	status = (status >> 8) & 0xFF;
@@ -23,17 +37,17 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_putstr_fd("minishell: ", 2);
 	if (ex == 1)
 	{
-		ft_putstr_fd(vars->command[index].comm[0], 2);
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": command failed.\n", 2);
 	}
 	if (ex == 126)
 	{
-		ft_putstr_fd(vars->command[index].comm[0], 2);
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": could not access.\n", 2);
 	}
 	if (ex == 127)
 	{
-		ft_putstr_fd(vars->command[index].comm[0], 2);
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": command not found.\n", 2);
 	}
 }
