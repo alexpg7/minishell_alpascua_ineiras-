@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 17:08:08 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:56:03 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_newexit(t_vars *vars)
 	char	*com;
 
 	num = ft_itoa(vars->exit_status);
+	ft_freepip(vars->pip, vars->np, vars->np - 0);
 	if (!num)
 		ft_exit(NULL, 1, vars);
 	com = ft_strjoin("?=", num); //protect
@@ -51,7 +52,7 @@ void	ft_printcom(t_command *comm)
 	}
 }
 
-void	ft_freecommand(t_command *command)
+void	ft_freecommand(t_command *command)/////////////////////////
 {
 	int	i;
 
@@ -128,6 +129,8 @@ void	do_stuff(char *str, t_vars *vars)
 		return ((void)free(comm));
 	input = ft_inputstruct(comm, vars);
 	ft_freestrarr(&comm, 0);
+	if (!input)
+		return ;
 	vars->input = input;
 	add_history(str);
 	/*for (int k2 = 0; k2 < vars->np + 1; k2++){

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:23:51 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:24:11 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:22:01 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	ft_lstclear_lst(&vars->ts);
 	//if (vars->command)
 	//	ft_freecommand(vars->command);
+	//FREE PIP ALLOC
 	ft_lstclear(&vars->env, &free);
 	unlink(".here_doc.tmp");
 	if (ret == 2)

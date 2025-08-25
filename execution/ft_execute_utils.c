@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 16:59:12 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:36:24 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_searchbuiltin(t_command *com)
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
-int	ft_searchbuiltin(t_command *com)
+int	ft_searchbuiltin(t_command *com)//////
 {
 	if (ft_strcmp("cd", com->comm[0]) == 0)
 		return (1);
@@ -142,6 +142,8 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 		}
 		else if (ft_strcmp("env", input->comm[0]) == 0)
 			ft_env(vars);
+		else if (ft_strcmp("export", input->comm[0]) == 0)
+			ft_export(vars, input->comm + 1, 0);
 		else
 			return (0);
 	}
@@ -154,8 +156,6 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 		ft_exit(NULL, 0, vars);
 	if (ft_strcmp("cd", input->comm[0]) == 0)
 		ft_cd(vars, input->comm);
-	else if (ft_strcmp("export", input->comm[0]) == 0)
-		ft_export(vars, input->comm + 1, 0);
 	else if (ft_strcmp("unset", input->comm[0]) == 0)
 		ft_unset(input->comm + 1, vars);
 	else if (ft_strcmp("exit", input->comm[0]) == 0)

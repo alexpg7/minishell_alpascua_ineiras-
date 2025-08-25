@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 17:10:08 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:41:38 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_vars
 	t_command	*command;
 	int			np; //number of pipes
 	int			**pip; //pipes
-	int			*pid;
+	//int			*pid;
 	int			exit_status;
 	char		**envp;
 }	t_vars;
@@ -176,9 +176,9 @@ int			ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars);
 // EXEC LAST
 int			ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars);
 
-// EXECUTION UTILS
+// EXECUTION UTILS //////////////////////////////////////////
 int			ft_searchbuiltin(t_command *com);
-int			**ft_freepip(int **arr, int len, int index);
+//int			**ft_freepip(int **arr, int len, int index);
 
 // CREATE COMMAND (struct command) /////////////////////////////////////////////
 t_command	*ft_createcomm(char **comm, t_vars *vars);
@@ -195,12 +195,15 @@ int		exitstatus2(int status);
 void	ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
 
+void	ft_new_execmore(t_input **input, t_vars *vars);
+
 // NEW EXECUTION UTILS
 void	ft_command_array(t_input *input, t_vars *vars);
 int		ft_builtin_n(t_input *input, t_vars *vars);
 void	ft_child_2(t_input *input, t_vars *vars);
 int		ft_builtin_2(t_input *input, t_vars *vars);
 void	ft_set_redir_2(t_input *input, t_vars *vars);
+int			**ft_freepip(int **arr, int len, int index);
 
 // NEW EXECUTION UTILS 2
 int		ft_input_count(char **str_array);

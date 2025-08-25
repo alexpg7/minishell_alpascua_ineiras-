@@ -6,13 +6,13 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 16:27:17 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:41:09 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
 
-int	**ft_freepip(int **arr, int len, int index)
+/*int	**ft_freepip(int **arr, int len, int index)
 {
 	int	i;
 	int	**aux;
@@ -26,7 +26,7 @@ int	**ft_freepip(int **arr, int len, int index)
 	}
 	free(aux);
 	return (NULL);
-}
+}*/
 
 int	ft_input_count(char **str_array)
 {

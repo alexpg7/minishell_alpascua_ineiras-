@@ -37,6 +37,8 @@ int	ft_checkpipes(char **comm)
 		return (-1);
 	while (comm[i])
 	{
+		if (ft_nextcommand(comm, i + 1) == 0)
+			return (-1);
 		if (ft_strcmp(comm[i], "|") == 0)
 		{
 			count++;

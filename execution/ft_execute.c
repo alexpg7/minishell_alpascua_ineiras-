@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 17:16:21 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:41:50 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ void	ft_execute2(t_input **input, t_vars *vars)
 	if (vars->np == 0)
 		ft_new_exec(*input, vars);
 	else
-		ft_printf("next\n");
-		//ft_execmore(command, vars); 
+		ft_new_execmore(input, vars); 
 }
