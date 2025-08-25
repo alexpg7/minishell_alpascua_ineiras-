@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 16:08:42 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:08:08 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 			free((*input)[i]->token);
 		if ((*input)[i]->word)
 			ft_freestrarr(&(*input)[i]->word, 0);
+		if ((*input)[i]->comm)
+			free((*input)[i]->comm);
 		free((*input)[i]);
 		i++;
 	}
@@ -131,7 +133,7 @@ void	do_stuff(char *str, t_vars *vars)
 	/*for (int k2 = 0; k2 < vars->np + 1; k2++){
 		for (int k = 0; (input)[k2]->word[k]; k++)
 			ft_printf("%s\n", (input)[k2]->word[k]);}*/
-	ft_new_exec(*input, vars);
+	ft_execute2(input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
 	/*free(str);

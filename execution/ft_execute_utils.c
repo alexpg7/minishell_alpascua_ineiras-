@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 16:42:56 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:59:12 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 			input->last_in = ft_heredoc(input->word[i + 1]);
 			if (input->last_in == -1)
 				ft_exit(NULL, 1, vars); 
+			close(input->last_in);
+			input->last_in = open(".here_doc.tmp", O_RDONLY);
+			if (input->last_in == -1)
+				ft_exit(NULL, 1, vars);
+			dup2(input->last_in, STDIN_FILENO);
+			close(input->last_in);
 		}
 		i++;
 	}

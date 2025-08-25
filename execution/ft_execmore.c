@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmore.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:23:33 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:36 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:04:39 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../src/minishell.h"
 
-void	ft_waitall(int *pid, int len, t_vars *vars)
+void	ft_waitall(t_input **input, int len, t_vars *vars)
 {
 	int	i;
 
@@ -19,8 +20,8 @@ void	ft_waitall(int *pid, int len, t_vars *vars)
 	while (i < len)
 	{
 		ft_signal(WAIT);
-		if (pid[i] > 0)
-			waitpid(pid[i], &vars->exit_status, 0);
+		if (input[i]->pid > 0)
+			waitpid(input[i]->pid, &vars->exit_status, 0);
 		ft_signal(PROMPT);
 		unlink(".heredoc.tmp");
 		vars->exit_status = exitstatus2(vars->exit_status);

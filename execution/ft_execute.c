@@ -6,11 +6,30 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 16:34:15 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:16:21 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
+
+
+void	ft_waitall(t_input **input, int len, t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_signal(WAIT);
+		if (input[i]->pid > 0)
+			waitpid(input[i]->pid, &vars->exit_status, 0);
+		ft_signal(PROMPT);
+		unlink(".heredoc.tmp");
+		vars->exit_status = exitstatus2(vars->exit_status);
+		ft_printexit(vars->exit_status, i, vars);
+		i++;
+	}
+}
 
 void	ft_child_2(t_input *input, t_vars *vars)
 {
@@ -31,33 +50,30 @@ void	ft_child_2(t_input *input, t_vars *vars)
 
 void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
 {
-	int		pid;
-
 	ft_command_array(input, vars);
 	if (!ft_builtin_n(input, vars))
 	{
 		ft_signal(WAIT);
-		pid = fork();
-		if (pid == -1)
+		input->pid = fork();
+		if (input->pid == -1)
 			perror("fork");
-		else if (pid == 0)
+		else if (input->pid == 0)
 		{
 			ft_child_2(input, vars);
 			ft_exit(NULL, vars->exit_status, vars);
 		}
 		else
-			//ft_waitall(&pid, 1, vars);
-			wait(NULL);
+			ft_waitall(&input, 1, vars);
 	}
 	if (ft_search_tokken(input, 'h') > 0)
 		unlink(".here_doc.tmp");
 	//ft_freestrarr(&input->comm, 0); Free here if its not done outside.
 }
 
-void	ft_execute2(t_input *input, t_vars *vars)
+void	ft_execute2(t_input **input, t_vars *vars)
 {
 	if (vars->np == 0)
-		ft_new_exec(input, vars);
+		ft_new_exec(*input, vars);
 	else
 		ft_printf("next\n");
 		//ft_execmore(command, vars); 

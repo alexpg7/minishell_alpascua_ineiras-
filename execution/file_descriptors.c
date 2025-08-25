@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:25 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 16:44:58 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:13:08 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_write_out(t_input *input, t_vars *vars, int pos)
 
 void	ft_read_app(t_input *input, t_vars *vars, int pos)
 {
+	//comprobar si exite file y si hay permisos
 	input->last_out = open(input->word[pos], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (input->last_out == -1)
 		ft_exit(NULL, 1, vars);
@@ -36,6 +37,7 @@ void	ft_read_app(t_input *input, t_vars *vars, int pos)
 
 void	ft_read_in(t_input *input, t_vars *vars, int pos)
 {
+	//comprobar si exite file y si hay permisos
 	input->last_in = open(input->word[pos], O_RDONLY);
 	if (input->last_in == -1)
 		ft_exit(NULL, 1, vars);

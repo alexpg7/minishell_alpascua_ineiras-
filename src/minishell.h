@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/13 19:26:34 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:10:08 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void		ft_cd(t_vars *vars, char **argv);
 char		**ft_getenv(t_list *env);
 void		ft_unset(char **args, t_vars *vars);
 int			ft_strisalnum2(char *str);
-char		*new_var(t_vars *vars, char *arg);
+char		*new_var(t_vars *vars, char *arg);/////
 
 // UTILS & COMMANDS OF CD
 void		swap_pwd(t_vars *vars);
@@ -156,12 +156,12 @@ void		cd_double_point(t_vars *vars);
 // PROGRAMS
 void		ft_init(t_vars *vars, char **envp);
 
-// EXECUTION
+// EXECUTION ///////////////////////////////////////////////////
 int			ft_heredoc(char *lim);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
 void		ft_execmore(t_command *command, t_vars *vars);
-void		ft_waitall(int *pid, int len, t_vars *vars);
+//void		ft_waitall(t_input **input, int len, t_vars *vars);
 
 // EXIT STATUS
 int			exitstatus2(int status);
@@ -187,13 +187,13 @@ int			ft_commandlen(char **comm);
 
 
 // NEW EXECUTION
-void	ft_execute2(t_input *input, t_vars *vars);
+void	ft_execute2(t_input **input, t_vars *vars);
 void	ft_new_exec(t_input *input, t_vars *vars);
 int		ft_heredoc(char *lim);
 char	*ft_findpath(char *comm, char **envp, t_vars *vars);
 int		exitstatus2(int status);
 void	ft_execmore(t_command *command, t_vars *vars);
-void	ft_waitall(int *pid, int len, t_vars *vars);
+void		ft_waitall(t_input **input, int len, t_vars *vars);
 
 // NEW EXECUTION UTILS
 void	ft_command_array(t_input *input, t_vars *vars);
