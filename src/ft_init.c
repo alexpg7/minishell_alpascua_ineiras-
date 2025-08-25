@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:21 by alpascua          #+#    #+#             */
-/*   Updated: 2025/07/30 20:05:22 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:09:16 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->env = env;
 	vars->exit_status = 0;
 	vars->np = 0;
+	vars->pip = NULL;
 	//vars->command = NULL;
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)

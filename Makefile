@@ -103,4 +103,7 @@ re: fclean all
 val: all readline.supp
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
+val2: all readline.supp
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
+
 .PHONY: all, clean, fclean, re

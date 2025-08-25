@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:05:01 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 18:56:03 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:58:47 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_newexit(t_vars *vars)
 	char	*com;
 
 	num = ft_itoa(vars->exit_status);
-	ft_freepip(vars->pip, vars->np, vars->np - 0);
+	if (vars->pip)
+		ft_freepip(vars->pip, vars->np, vars->np - 0);
 	if (!num)
 		ft_exit(NULL, 1, vars);
 	com = ft_strjoin("?=", num); //protect
@@ -85,32 +86,6 @@ void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 	vars->input = NULL;
 }
 
-void	ft_define1(t_input ***input, t_vars *vars)
-{
-	vars->np = 0;
-	*input = (t_input **)malloc(sizeof(t_input *) * 1);
-	(**input)->word = (char **)malloc(sizeof(char *) * 9);
-	(**input)->token = (char *)malloc(sizeof(char) * 9);
-	(**input)->word[0] = ft_strdup("<");
-	(**input)->token[0] = 'i';
-	(**input)->word[1] = ft_strdup("readline.supp");
-	(**input)->token[1] = 'w';
-	(**input)->word[2] = ft_strdup("echo");
-	(**input)->token[2] = 'c';
-	(**input)->word[3] = ft_strdup("hola");
-	(**input)->token[3] = 'c';
-	(**input)->word[4] = ft_strdup(">");
-	(**input)->token[4] = 'o';
-	(**input)->word[5] = ft_strdup("out");
-	(**input)->token[5] = 'w';
-	(**input)->word[6] = ft_strdup(">>");
-	(**input)->token[6] = 'a';
-	(**input)->word[7] = ft_strdup("out2");
-	(**input)->token[7] = 'w';
-	(**input)->word[8] = NULL;
-	(**input)->token[8] = '\0';
-}
-
 void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
@@ -166,6 +141,7 @@ int	main(int narg, char **argv, char **envp)
 	ft_init(&vars, envp);
 	while (narg == 1 && argv[0])
 	{
+		ft_signal(PROMPT);
 		g_signal = 0;
 		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");
 		if (!vars.prompt)
