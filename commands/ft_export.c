@@ -56,33 +56,44 @@ int	ft_inenv(char *str, t_vars *vars)
 	return (0);
 }
 
+static void	ft_printerror(t_vars *vars, char *arg)
+{
+	ft_putstr_fd("export: not valid in this context: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putchar_fd('\n', 2);
+	vars->exit_status = 1;
+}
+
 void	ft_export(t_vars *vars, char **arg, int mode)
 {
 	if (!(*arg))
 	{
-		ft_env(vars);//UPDATE EXOIT STATUS IF SUCCESSFULL (NOT IF SUBS $?)
+		ft_env(vars);
 		return ;
 	}
-	while (arg && *arg && ft_strchr(*arg, '=')) //in mode 0 (user), they should not be able to modify $?
+	if (**arg != '?' && mode == 0)
+		vars->exit_status = 0;
+	while (arg && *arg) //in mode 0 (user), they should not be able to modify $?
 	{
-		//ft_printf("%s\n", *arg);
-		if (ft_strisalnum2(*arg) == 0 && **arg != '?')
+		if (**arg != '?' && mode == 0)
+			vars->exit_status = 0;
+		if (ft_strchr(*arg, '='))
 		{
-			ft_putstr_fd("export: not valid in this context:", 2);
-			ft_putstr_fd(*arg, 2);
-			ft_putchar_fd('\n', 2);
-			arg++;
-			continue ;
-		}
-		if (ft_inenv(*arg, vars))
-		{
-			//ft_printf("IN\n");
-			ft_subsenv(*arg, vars);
+			if (ft_strisalnum2(*arg) == 0 && **arg != '?')
+			{
+				ft_printerror(vars, *arg);
+				arg++;
+				continue ;
+			}
+			if (ft_inenv(*arg, vars))
+				ft_subsenv(*arg, vars);
+			else
+				ft_lstadd_back(&vars->env, ft_lstnew(*arg));
+			if (mode == 1)
+				break ;
 		}
 		else
-			ft_lstadd_back(&vars->env, ft_lstnew(*arg));
-		if (mode == 1)
-			break ;
+			ft_printerror(vars, *arg);
 		arg++;
 	}
 }

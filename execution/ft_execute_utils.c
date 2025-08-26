@@ -144,10 +144,7 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 				ft_printf("%s\n", pwd);
 		}
 		else if (ft_strcmp("env", input->comm[0]) == 0)
-		{
 			ft_env(vars);
-			vars->exit_status = 0;
-		}
 		else if (ft_strcmp("export", input->comm[0]) == 0)
 			ft_export(vars, input->comm + 1, 0);
 		else

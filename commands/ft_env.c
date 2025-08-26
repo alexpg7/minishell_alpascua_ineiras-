@@ -23,6 +23,7 @@ void	ft_env(t_vars *vars)
 			ft_printf("%s\n", (char *)lst->content);
 		lst = lst->next;
 	}
+	vars->exit_status = 0;
 }
 
 char	**ft_getenv(t_list *env)

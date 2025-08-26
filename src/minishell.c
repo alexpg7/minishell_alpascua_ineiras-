@@ -143,7 +143,7 @@ int	main(int narg, char **argv, char **envp)
 	{
 		ft_signal(PROMPT);
 		g_signal = 0;
-		vars.prompt = ft_strjoin(ft_pwd(&nul, &vars), "-> ");
+		vars.prompt = ft_strjoin(ft_new_pwd(), "-> ");
 		if (!vars.prompt)
 		{
 			perror("malloc");

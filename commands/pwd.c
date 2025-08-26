@@ -19,13 +19,14 @@ char	*ft_pwd(char **comm, t_vars *vars)
 	if (*comm != NULL)
 	{
 		ft_putstr_fd("pwd: too many arguments\n", 2);// exit status to 1
+		vars->exit_status = 1;
 		return (NULL);
 	}
 	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 	{
 		env = env->next;
-	}// what if it is not found? exit status 1
+	}
 	return (env->content + 4);
 }
 

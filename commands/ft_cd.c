@@ -39,11 +39,11 @@ static int	cd_move_dir(t_vars *vars, char **argv, char *content, char *path)
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 		env = env->next;
 	change_old_pwd(vars, env->content);
-	free(env->content);
+	//free(env->content);
 	chdir(path);
 	pwd = ft_new_pwd();
 	content = ft_strjoin("PWD=", pwd);
-	env->content = content;
+	ft_export(vars, &content, 1);
 	if (!env->content)
 		ft_exit(NULL, 1, vars);
 	closedir(directory);
@@ -100,7 +100,7 @@ void	ft_cd(t_vars *vars, char **argv)
 	else if (argc == 2)
 		cd_argc_2(vars, argv);
 	else if (argc == 3)
-		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);
+		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);// exit status = 1
 	else
-		ft_putendl_fd("cd: too many arguments", 2);
+		ft_putendl_fd("cd: too many arguments", 2);// exit status = 1
 }
