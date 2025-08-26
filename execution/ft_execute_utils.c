@@ -145,8 +145,6 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 		}
 		else if (ft_strcmp("env", input->comm[0]) == 0)
 			ft_env(vars);
-		else if (ft_strcmp("export", input->comm[0]) == 0)
-			ft_export(vars, input->comm + 1, 0);
 		else
 			return (0);
 	}
@@ -161,6 +159,8 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 		ft_cd(vars, input->comm);//update exit status
 	else if (ft_strcmp("unset", input->comm[0]) == 0)
 		ft_unset(input->comm + 1, vars);//update exit status
+	else if (ft_strcmp("export", input->comm[0]) == 0)
+			ft_export(vars, input->comm + 1, 0);
 	else if (ft_strcmp("exit", input->comm[0]) == 0)
 		ft_exit(NULL, 0, vars);
 	else

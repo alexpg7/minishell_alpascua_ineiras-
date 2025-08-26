@@ -86,9 +86,15 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 				continue ;
 			}
 			if (ft_inenv(*arg, vars))
+			{
+				ft_printf("FOUND %s\n", *arg);
 				ft_subsenv(*arg, vars);
+			}
 			else
+			{
+				ft_printf("NEW %s\n", *arg);
 				ft_lstadd_back(&vars->env, ft_lstnew(*arg));
+			}
 			if (mode == 1)
 				break ;
 		}
