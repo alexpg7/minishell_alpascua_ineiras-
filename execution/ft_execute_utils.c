@@ -103,7 +103,7 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 			ft_read_in(input, vars, i + 1);
 		else if (input->token[i] == 'h')
 		{
-			input->last_in = ft_heredoc(input->word[i + 1]);
+			input->last_in = ft_heredoc(input->word[i + 1]);// donmt create it here
 			if (input->last_in == -1)
 				ft_exit(NULL, 1, vars);
 			close(input->last_in);

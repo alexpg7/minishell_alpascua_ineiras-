@@ -96,7 +96,7 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 	{
 		perror("pipe");
 		ft_exit(NULL, 2, vars);
-	}
+	}//set redir heredoc
 	ft_new_execmore2(input[0], &vars->pip[0], 1, vars);
 	close(vars->pip[0][1]);
 	while (i < vars->np)
@@ -105,12 +105,12 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		{
 			perror("pipe");
 			ft_exit(NULL, 2, vars);
-		}
+		}//set redir heredoc
 		ft_new_execmore2(input[i], &vars->pip[i], 2, vars);
 		close(vars->pip[i][1]);
 		close(vars->pip[i - 1][0]);
 		i++;
-	}
+	}//set redir heredoc
 	ft_new_execmore2(input[vars->np], &vars->pip[vars->np - 1], 0, vars);
 	close(vars->pip[vars->np - 1][0]);
 	ft_waitall(input, vars->np + 1, vars);

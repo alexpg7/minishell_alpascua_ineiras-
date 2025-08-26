@@ -22,7 +22,7 @@ char	*ft_pwd(char **comm, t_vars *vars)
 		vars->exit_status = 1;
 		return (NULL);
 	}
-	env = vars->env;
+	env = vars->env;//getcwd, not search PWD
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 	{
 		env = env->next;
