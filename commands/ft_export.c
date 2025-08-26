@@ -60,7 +60,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 {
 	if (!(*arg))
 	{
-		ft_env(vars);
+		ft_env(vars);//UPDATE EXOIT STATUS IF SUCCESSFULL (NOT IF SUBS $?)
 		return ;
 	}
 	while (arg && *arg && ft_strchr(*arg, '=')) //in mode 0 (user), they should not be able to modify $?

@@ -133,7 +133,10 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 	if (input->comm[0])
 	{
 		if (ft_strcmp("echo", input->comm[0]) == 0)
+		{
 			ft_echo(input->comm + 1);
+			vars->exit_status = 0;
+		}
 		else if (ft_strcmp("pwd", input->comm[0]) == 0)
 		{
 			pwd = ft_pwd(input->comm + 1, vars); // We pass the input into PWD?
@@ -141,13 +144,15 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 				ft_printf("%s\n", pwd);
 		}
 		else if (ft_strcmp("env", input->comm[0]) == 0)
+		{
 			ft_env(vars);
+			vars->exit_status = 0;
+		}
 		else if (ft_strcmp("export", input->comm[0]) == 0)
 			ft_export(vars, input->comm + 1, 0);
 		else
 			return (0);
 	}
-	vars->exit_status = 0;
 	return (1);
 }
 
@@ -156,14 +161,13 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 	if (!input->comm)
 		ft_exit(NULL, 0, vars);
 	if (ft_strcmp("cd", input->comm[0]) == 0)
-		ft_cd(vars, input->comm);
+		ft_cd(vars, input->comm);//update exit status
 	else if (ft_strcmp("unset", input->comm[0]) == 0)
-		ft_unset(input->comm + 1, vars);
+		ft_unset(input->comm + 1, vars);//update exit status
 	else if (ft_strcmp("exit", input->comm[0]) == 0)
 		ft_exit(NULL, 0, vars);
 	else
 		return (0);
-	vars->exit_status = 0;
 	return (1);
 }
 
