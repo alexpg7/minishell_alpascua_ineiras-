@@ -106,12 +106,12 @@ void	do_stuff(char *str, t_vars *vars)
 	}
 	if (comm[0] == NULL)
 		return ((void)free(comm));
+	add_history(str);
 	input = ft_inputstruct(comm, vars);
 	ft_freestrarr(&comm, 0);
 	if (!input)
 		return ;
 	vars->input = input;
-	add_history(str);
 	/*for (int k2 = 0; k2 < vars->np + 1; k2++){
 		for (int k = 0; (input)[k2]->word[k]; k++)
 			ft_printf("%s\n", (input)[k2]->word[k]);}*/
