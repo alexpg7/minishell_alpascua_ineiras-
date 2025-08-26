@@ -105,7 +105,7 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 		{
 			input->last_in = ft_heredoc(input->word[i + 1]);
 			if (input->last_in == -1)
-				ft_exit(NULL, 1, vars); 
+				ft_exit(NULL, 1, vars);
 			close(input->last_in);
 			input->last_in = open(".here_doc.tmp", O_RDONLY);
 			if (input->last_in == -1)
@@ -126,11 +126,11 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 	}
 }
 
-int	ft_builtin_2(t_input *input, t_vars *vars) 
+int	ft_builtin_2(t_input *input, t_vars *vars)
 {
 	char	*pwd;
 
-	if (input->comm[0]) 
+	if (input->comm[0])
 	{
 		if (ft_strcmp("echo", input->comm[0]) == 0)
 			ft_echo(input->comm + 1);
@@ -147,6 +147,7 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 		else
 			return (0);
 	}
+	vars->exit_status = 0;
 	return (1);
 }
 
@@ -162,6 +163,7 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 		ft_exit(NULL, 0, vars);
 	else
 		return (0);
+	vars->exit_status = 0;
 	return (1);
 }
 
