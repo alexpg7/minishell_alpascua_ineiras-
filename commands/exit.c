@@ -44,5 +44,7 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	}
 	if (vars->input)
 		ft_freeinput(&vars->input, vars->np, vars);
+	if (vars->pip)
+		ft_freepip(vars->pip, vars->np, vars->np + 1);
 	exit(ret);
 }

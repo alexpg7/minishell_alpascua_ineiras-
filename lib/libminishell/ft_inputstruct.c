@@ -137,6 +137,7 @@ void	ft_fillinput(t_input ***input, char **comm, t_vars *vars)
 	{
 		size = ft_comsize(comm);
 		(*input)[i] = (t_input *)malloc(sizeof(t_input)); // protect
+		(*input)[i]->comm = NULL;
 		(*input)[i]->word = (char **)malloc(sizeof(char *) * (size + 1)); // protect
 		(*input)[i]->token = (char *)malloc(sizeof(char) * (size + 1)); // protect
 		ft_copycommand((*input + i), comm, size, vars);

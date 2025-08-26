@@ -21,7 +21,10 @@ void	ft_newexit(t_vars *vars)
 
 	num = ft_itoa(vars->exit_status);
 	if (vars->pip)
-		ft_freepip(vars->pip, vars->np, vars->np - 0);
+	{
+		ft_freepip(vars->pip, vars->np, vars->np + 1);
+		vars->pip = NULL;
+	}
 	if (!num)
 		ft_exit(NULL, 1, vars);
 	com = ft_strjoin("?=", num); //protect
@@ -83,6 +86,7 @@ void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 		i++;
 	}
 	free(*input);
+	*input = NULL;
 	vars->input = NULL;
 }
 

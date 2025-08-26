@@ -24,7 +24,7 @@ void	ft_waitall(t_input **input, int len, t_vars *vars)
 		if (input[i]->pid > 0)
 			waitpid(input[i]->pid, &vars->exit_status, 0);
 		ft_signal(PROMPT);
-		unlink(".heredoc.tmp");
+		unlink(".here_doc.tmp");
 		vars->exit_status = exitstatus2(vars->exit_status);
 		ft_printexit(vars->exit_status, i, vars);
 		i++;

@@ -37,6 +37,8 @@ int	ft_writefile(char *lim, int fd)
 			return (fd);
 		}
 	}
+	if (g_signal == SIGINT)
+		unlink(".here_doc.tmp");
 	ft_signal(WAIT);
 	return (fd);
 }
