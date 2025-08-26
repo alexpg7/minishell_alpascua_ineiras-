@@ -131,6 +131,7 @@ void	do_stuff(char *str, t_vars *vars)
 int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
+	char	*prompt;
 	char	*nul;
 	t_vars	vars;
 
@@ -143,7 +144,9 @@ int	main(int narg, char **argv, char **envp)
 	{
 		ft_signal(PROMPT);
 		g_signal = 0;
-		vars.prompt = ft_strjoin(ft_new_pwd(), "-> ");
+		prompt = getcwd(NULL, 0);
+		vars.prompt = ft_strjoin(prompt, "-> ");
+		free(prompt);
 		if (!vars.prompt)
 		{
 			perror("malloc");
