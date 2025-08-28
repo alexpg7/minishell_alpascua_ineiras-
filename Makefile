@@ -1,5 +1,6 @@
 NAME = minishell
 FLAGS = -Wall -Wextra -Werror
+SAN = -Wall -Wextra -Werror -fsanitize=address
 OPTION = -MMD -c -I.
 # Paths
 LIBFT_PATH = lib/Libft
@@ -105,5 +106,10 @@ val: all readline.supp
 
 val2: all readline.supp
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
+
+san:
+	@$(CC) $(OBJ) $(SAN) $(LIBFT) -lreadline -o $(NAME)
+	@echo "😃 ${BGREEN}Compiled (sanitize) ${BYEL}$(NAME)${NC}"
+	@touch src/minishell.c
 
 .PHONY: all, clean, fclean, re

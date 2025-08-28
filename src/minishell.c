@@ -19,12 +19,12 @@ void	ft_newexit(t_vars *vars)
 	char	*num;
 	char	*com;
 
-	num = ft_itoa(vars->exit_status);
 	if (vars->pip)
 	{
 		ft_freepip(vars->pip, vars->np, vars->np + 1);
 		vars->pip = NULL;
 	}
+	num = ft_itoa(vars->exit_status);
 	if (!num)
 		ft_exit(NULL, 1, vars);
 	com = ft_strjoin("?=", num); //protect
@@ -136,12 +136,10 @@ int	main(int narg, char **argv, char **envp)
 {
 	char	*input;
 	char	*prompt;
-	char	*nul;
 	t_vars	vars;
 
 	g_signal = PROMPT;
 	ft_signal(PROMPT);
-	nul = NULL;
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
 	while (narg == 1 && argv[0])

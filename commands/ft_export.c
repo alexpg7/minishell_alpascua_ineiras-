@@ -36,7 +36,10 @@ static void	ft_subsenv(char *str, t_vars *vars)
 		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
 		{
 			free(env->content);
-			env->content = str;
+			if (*str != '?')
+				env->content = ft_strdup(str);// protect
+			else
+				env->content = str;
 		}
 		env = env->next;
 	}
@@ -86,15 +89,9 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 				continue ;
 			}
 			if (ft_inenv(*arg, vars))
-			{
-				ft_printf("FOUND %s\n", *arg);
 				ft_subsenv(*arg, vars);
-			}
 			else
-			{
-				ft_printf("NEW %s\n", *arg);
-				ft_lstadd_back(&vars->env, ft_lstnew(*arg));
-			}
+				ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(*arg)));//protect x2
 			if (mode == 1)
 				break ;
 		}
