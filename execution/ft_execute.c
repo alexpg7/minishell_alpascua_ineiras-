@@ -12,6 +12,26 @@
 
 #include "../src/minishell.h"
 
+void	ft_makeheredoc(t_input *input, t_vars *vars)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	while (input->token[i])
+	{
+		if (input->token[i] == 'h')
+		{
+			if (access(".here_doc.tmp", F_OK) == 0)
+				unlink(".here_doc.tmp");
+			fd = ft_heredoc(input->word[i + 1]);
+			if (fd == -1)
+				ft_exit(NULL, 1, vars);
+			close(fd); // protect
+		}
+		i++;
+	}
+}
 
 void	ft_waitall(t_input **input, int len, t_vars *vars)
 {
@@ -51,10 +71,10 @@ void	ft_child_2(t_input *input, t_vars *vars)
 void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
 {
 	ft_command_array(input, vars);
+	ft_makeheredoc(input, vars);
 	if (!ft_builtin_n(input, vars))
 	{
 		ft_signal(WAIT);
-		ft_openheredoc(vars, input);
 		input->pid = fork();
 		if (input->pid == -1)
 			perror("fork");

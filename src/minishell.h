@@ -196,6 +196,7 @@ void	ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
 
 void	ft_new_execmore(t_input **input, t_vars *vars);
+void	ft_makeheredoc(t_input *input, t_vars *vars);
 
 // NEW EXECUTION UTILS
 void	ft_command_array(t_input *input, t_vars *vars);
