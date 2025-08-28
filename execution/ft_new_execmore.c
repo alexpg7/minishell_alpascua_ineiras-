@@ -113,7 +113,7 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		close(vars->pip[i - 1][0]);
 		i++;
 	}
-	ft_makeheredoc(input[0], vars);
+	ft_makeheredoc(input[vars->np], vars);
 	ft_new_execmore2(input[vars->np], &vars->pip[vars->np - 1], 0, vars);
 	close(vars->pip[vars->np - 1][0]);
 	ft_waitall(input, vars->np + 1, vars);
