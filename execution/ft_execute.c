@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/25 18:41:50 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:31:03 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 	if (!ft_builtin_n(input, vars))
 	{
 		ft_signal(WAIT);
+		ft_openheredoc(vars, input);
 		input->pid = fork();
 		if (input->pid == -1)
 			perror("fork");
