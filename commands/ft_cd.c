@@ -98,6 +98,7 @@ void	ft_cd(t_vars *vars, char **argv)
 {
 	int	argc;
 
+	vars->exit_status = 0;
 	argc = count_args(argv);
 	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 		ft_cd_not_args(vars);
