@@ -19,7 +19,8 @@ INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
 
-#  execution/ft_execmore.c \
+#  commands/ft_cd3.c \
+	execution/ft_execmore.c \
 	execution/ft_execute_first.c \
 	execution/ft_execute_between.c \
 	execution/ft_execute_last.c \
@@ -39,8 +40,9 @@ SRC = src/minishell.c \
 	commands/pwd.c \
 	commands/ft_cd.c \
 	commands/ft_cd2.c \
-	commands/ft_cd3.c \
 	commands/ft_cd_utils.c \
+	commands/ft_cd_utils2.c \
+	commands/ft_cd_utils3.c \
 	commands/ft_echo.c \
 	commands/ft_env.c \
 	commands/ft_export.c \
