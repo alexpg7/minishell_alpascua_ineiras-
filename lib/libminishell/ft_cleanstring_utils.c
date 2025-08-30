@@ -14,7 +14,7 @@
 
 static void	ft_countspecial2(char *comm, int *count, int *i, char *c)
 {
-	if (ft_isquote(comm[*i]) && comm[*i - (i != 0)] != '\\')
+	if (ft_isquote(comm[*i]) && comm[*i - (*i != 0)] != '\\')
 	{
 		if (*c == '0')
 			*c = comm[*i];
