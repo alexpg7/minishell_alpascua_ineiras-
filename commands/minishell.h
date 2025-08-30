@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 14:07:47 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:57:40 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_vars
 	//int			*pid;
 	int			exit_status;
 	char		**envp;
-	char		*here;
 }	t_vars;
 
 typedef enum e_shell_state
@@ -144,6 +143,16 @@ void		ft_unset(char **args, t_vars *vars);
 int			ft_strisalnum2(char *str);
 char		*new_var(t_vars *vars, char *arg);/////
 
+// UTILS & COMMANDS OF CD
+void		swap_pwd(t_vars *vars);
+void		change_old_pwd(t_vars *vars, char *old_pwd);
+void		change_pwd(t_vars *vars, char *pwd);
+int			count_args(char **argv);
+char		*minus_dir(char *dir, t_vars *vars);
+void		ft_putendl_fd2(char *s, int fd, char *var);
+int			ft_free_minus_one(char *str);
+void		cd_double_point(t_vars *vars);
+
 // New CD COMMANDS
 void	ft_cd(t_vars *vars, char **argv);
 void	ft_cd_not_args(t_vars *vars);
@@ -157,17 +166,13 @@ char		*ft_getenv_var(t_vars *vars, char *var_name);
 int  		ft_setenv_var(t_vars *vars, char *pwd, char *var_name);
 void		ft_path_fail(t_vars *vars, char *pwd, char *error_m);
 void		ft_create_var(t_vars *vars, char *pwd, char *var_name);
-int			count_args(char **argv);
-char		*minus_dir(char *dir, t_vars *vars);
-void		ft_putendl_fd2(char *s, int fd, char *var);
-int			ft_free_minus_one(char *str);
 
 
 // PROGRAMS
 void		ft_init(t_vars *vars, char **envp);
 
 // EXECUTION ///////////////////////////////////////////////////
-//int			ft_heredoc(char *lim, int tag);
+int			ft_heredoc(char *lim);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
 void		ft_execmore(t_command *command, t_vars *vars);
@@ -194,37 +199,39 @@ int			ft_searchbuiltin(t_command *com);
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 int			ft_commandlen(char **comm);
 
-// NEW EXECUTION
-void		ft_execute2(t_input **input, t_vars *vars);
-void		ft_new_exec(t_input *input, t_vars *vars);
-int			ft_heredoc(char *lim, char *path);
-char		*ft_sufix(char *path, int tag);
-char		*ft_findpath(char *comm, char **envp, t_vars *vars);
-int			exitstatus2(int status);
-void		ft_execmore(t_command *command, t_vars *vars);
-void		ft_waitall(t_input **input, int len, t_vars *vars);
 
-void		ft_new_execmore(t_input **input, t_vars *vars);
-void		ft_makeheredoc(t_input *input, int tag, t_vars *vars);
+
+// NEW EXECUTION
+void	ft_execute2(t_input **input, t_vars *vars);
+void	ft_new_exec(t_input *input, t_vars *vars);
+int		ft_heredoc(char *lim);
+char	*ft_findpath(char *comm, char **envp, t_vars *vars);
+int		exitstatus2(int status);
+void	ft_execmore(t_command *command, t_vars *vars);
+void	ft_waitall(t_input **input, int len, t_vars *vars);
+
+void	ft_new_execmore(t_input **input, t_vars *vars);
+
+void ft_openheredoc(t_vars *vars, t_input *input);
 
 // NEW EXECUTION UTILS
-void		ft_command_array(t_input *input, t_vars *vars);
-int			ft_builtin_n(t_input *input, t_vars *vars);
-void		ft_child_2(t_input *input, char *here, t_vars *vars);
-int			ft_builtin_2(t_input *input, t_vars *vars);
-void		ft_set_redir_2(t_input *input, char *path, t_vars *vars);
+void	ft_command_array(t_input *input, t_vars *vars);
+int		ft_builtin_n(t_input *input, t_vars *vars);
+void	ft_child_2(t_input *input, t_vars *vars);
+int		ft_builtin_2(t_input *input, t_vars *vars);
+void	ft_set_redir_2(t_input *input, t_vars *vars);
 int			**ft_freepip(int **arr, int len, int index);
 
 // NEW EXECUTION UTILS 2
-int			ft_input_count(char **str_array);
-int			ft_tokken_counter(t_input *input, char tokken);
-int			ft_search_tokken(t_input *input, char tokken);
-int			ft_search_tokken_2(t_input *input, char tokken, int *pos);
+int		ft_input_count(char **str_array);
+int		ft_tokken_counter(t_input *input, char tokken);
+int		ft_search_tokken(t_input *input, char tokken);
+int		ft_search_tokken_2(t_input *input, char tokken, int *pos);
 
 // NEW EXECUTION 3 (FILE DESCRIPTION)
-void		ft_read_in(t_input *input, t_vars *vars, int pos);
-void		ft_write_out(t_input *input, t_vars *vars, int pos);
-void		ft_read_app(t_input *input, t_vars *vars, int pos);
+void	ft_read_in(t_input *input, t_vars *vars, int pos);
+void	ft_write_out(t_input *input, t_vars *vars, int pos);
+void	ft_read_app(t_input *input, t_vars *vars, int pos);
 
 // EXECUTION WITH PIPES
 
