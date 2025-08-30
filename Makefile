@@ -60,6 +60,8 @@ SRC = src/minishell.c \
 	lib/libminishell/ft_inputstruct.c \
 	lib/libminishell/ft_inputstruct_utils.c \
 	lib/libminishell/ft_cleanstring.c \
+	lib/libminishell/ft_cleanstring_utils.c \
+	lib/libminishell/ft_cleanstring_utils2.c \
 	lib/libminishell/ft_lenvars.c \
 	lib/libminishell/trashlist.c \
 

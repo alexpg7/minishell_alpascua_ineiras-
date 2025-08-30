@@ -12,121 +12,6 @@
 
 #include "../../src/minishell.h"
 
-int	ft_isspecial2(char *c)
-{
-	if (c[1] == '\0')
-		return (0);
-	if (*c == '\\')
-	{
-		if (c[1] == 'n')
-			return ('\n');
-		else if (c[1] == 't')
-			return ('\t');
-		else if (c[1] == 'r')
-			return ('\r');
-		else if (c[1] == 'f')
-			return ('\f');
-		else if (c[1] == 'v')
-			return ('\v');
-	}
-	return (0);
-}
-
-int	ft_countspecial(char *comm)
-{
-	int		i;
-	int		count;
-	char	c;
-
-	i = 0;
-	count = 0;
-	c = '0';
-	while (comm[i])
-	{
-		if (ft_isquote(comm[i]) && comm[i - (i != 0)] != '\\')
-		{
-			if (c == '0')
-				c = comm[i];
-			else if (c == comm[i])
-				c = '0';
-			i++;
-			continue ;
-		}
-		if (ft_isspecial2(&comm[i]) && c != '0')
-		{
-			count++;
-			i++;
-			if (comm[i])
-				i++;
-		}
-		else
-			i++;
-	}
-	return (count);
-}
-
-int	ft_countquotes(char *comm)
-{
-	int		i;
-	int		count;
-	char	c;
-
-	i = 0;
-	count = 0;
-	while (comm[i])
-	{
-		if (ft_isquote(comm[i]) && comm[i - (i != 0)] != '\\')
-		{
-			count++;
-			c = comm[i];
-			i++;
-			while (comm[i] && !(comm[i] == c && comm[i - (i != 0)] != '\\'))
-				i++;
-		}
-		if (comm[i])
-			i++;
-	}
-	return (count);
-}
-
-char	*ft_searchvar(char *comm, int len, t_vars *vars)
-{
-	t_list	*env;
-
-	env = vars->env;
-	while (env)
-	{
-		if (ft_strcmpvar(env->content, comm, len) == 0)
-			return (ft_strchr(env->content, '=') + 1);
-		env = env->next;
-	}
-	return (NULL);
-}
-
-void	ft_copyvar(char **dest, char *src, int *i, t_vars *vars)
-{
-	int	len;
-	int	varlen;
-
-	if (src[*i + 1] == '?')
-		len = 1;
-	else
-	{
-		len = 0;
-		while (src[*i + 1 + len])
-		{
-			if (!ft_isalnum2(src[*i + 1 + len]))
-				break ;
-			len++;
-		}
-	}
-	varlen = ft_isvar_clean(&src[*i + 1], len, vars);
-	if (varlen)
-		ft_strlcpy(*dest, ft_searchvar(&src[*i + 1], len, vars), varlen + 1);
-	*dest = *dest + varlen;
-	*i = *i + len + 1;
-}
-
 char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
 {
 	if (ft_isquote(src[*i]) && src[*i - (*i != 0)] != '\\')
@@ -232,9 +117,9 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 			ft_exit(NULL, 2, vars);
 		return (dupcomm);
 	}
-	lendiff = - 2 * ft_countquotes(comm); //number of quotes
-	lendiff = ft_lenvars_clean(comm, vars); //difference when substituting vars
-	lendiff += -ft_countspecial(comm);//difference when substituting special chars
+	lendiff = -2 * ft_countquotes(comm);
+	lendiff = ft_lenvars_clean(comm, vars);
+	lendiff += -ft_countspecial(comm);
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1));
 	if (!ptr)
 		ft_exit(NULL, 2, vars);

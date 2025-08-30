@@ -128,6 +128,11 @@ int			ft_strcmpvar(char *var, char *name, int len);
 int			ft_isvar_clean(char *comm, int len, t_vars *vars);
 int			ft_varlen_clean(char *comm, t_vars *vars);
 int			ft_lenvars_clean(char *comm, t_vars *vars);
+int			ft_isspecial2(char *c);
+int			ft_countspecial(char *comm);
+int			ft_countquotes(char *comm);
+char		*ft_searchvar(char *comm, int len, t_vars *vars);
+void		ft_copyvar(char **dest, char *src, int *i, t_vars *vars);
 
 // SEARCH DOLLAR /////////////////////////////////////////
 char		*ft_searchdollar(char *str, t_vars *vars);
