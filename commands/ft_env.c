@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:23:22 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:23 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:09:26 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_env(t_vars *vars)
 {
 	t_list	*lst;
 
-	lst = vars->env->next; //the first one is empty/auxiliar NOT TESTED YET
+	lst = vars->env->next;
 	while (lst)
 	{
 		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)

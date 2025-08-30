@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:22:34 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:01 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:05:42 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char	*ft_pwd(char **comm, t_vars *vars)
 
 	if (*comm != NULL)
 	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);// exit status to 1
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 		vars->exit_status = 1;
 		return (NULL);
 	}
-	env = vars->env;//getcwd, not search PWD
+	env = vars->env;
 	while (env && ft_strncmp(env->content, "PWD=", 4) != 0)
 	{
 		env = env->next;

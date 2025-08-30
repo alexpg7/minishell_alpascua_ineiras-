@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:28:03 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/06 15:52:37 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:35:15 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_subsenv(char *str, t_vars *vars)
 		{
 			free(env->content);
 			if (*str != '?')
-				env->content = ft_strdup(str);// protect
+				env->content = ft_strdup(str);
 			else
 				env->content = str;
 		}
@@ -76,7 +76,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 	}
 	if (**arg != '?' && mode == 0)
 		vars->exit_status = 0;
-	while (arg && *arg) //in mode 0 (user), they should not be able to modify $?
+	while (arg && *arg)
 	{
 		if (**arg != '?' && mode == 0)
 			vars->exit_status = 0;
@@ -91,7 +91,7 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 			if (ft_inenv(*arg, vars))
 				ft_subsenv(*arg, vars);
 			else
-				ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(*arg)));//protect x2
+				ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(*arg)));
 			if (mode == 1)
 				break ;
 		}
@@ -100,30 +100,3 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 		arg++;
 	}
 }
-
-/*char	*new_var(t_vars *vars, char *arg)
-{
-	char	*str;
-	char	*str_ae;
-	char	*str_en;
-
-	if (!arg)
-		return (NULL);
-	str = ft_strdup_eq(arg);
-	if (!str)
-		ft_exit(NULL, 2, vars);
-	str_ae = ft_strdup(ft_strchr(arg, '=') + 1);
-	if (!str_ae)
-		ft_exit(NULL, 2, vars);
-	str_ae = ft_searchdollar(str_ae, vars);
-	if (!str_ae)
-		ft_exit(NULL, 2, vars);
-	str_ae = ft_removequotes(str_ae);
-	if (!str_ae)
-		ft_exit(NULL, 2, vars);
-	str_en = ft_strjoin(str, str_ae);
-	if (!str_en)
-		ft_exit(NULL, 2, vars);
-	ft_free_both(str, str_ae);
-	return (str_en);
-}*/

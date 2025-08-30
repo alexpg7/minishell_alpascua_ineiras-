@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 17:17:19 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/30 17:26:01 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../src/minishell.h"
 
@@ -5,7 +16,7 @@ static char	*ft_set_path(t_vars *vars, char *path, char **argv)
 {
 	char	*pwd;
 
-	pwd =  ft_new_pwd();
+	pwd = ft_new_pwd();
 	if (!pwd)
 		ft_exit(NULL, 1, vars);
 	if (ft_strncmp(argv[1], "/", 1) == 0 && ft_strlen(argv[1]) == 1)
@@ -63,7 +74,7 @@ void	ft_cd_two_arg(t_vars *vars, char **argv)
 		ft_putendl_fd2("cd: not such file or directory: ", 2, argv[1]);
 }
 
-void  ft_cd_not_args(t_vars *vars)
+void	ft_cd_not_args(t_vars *vars)
 {
 	char	*home;
 	char	*pwd;
@@ -73,25 +84,17 @@ void  ft_cd_not_args(t_vars *vars)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
 		vars->exit_status = 1;
-		return;
+		return ;
 	}
 	pwd = ft_new_pwd();
 	if (!pwd)
 		ft_exit(NULL, 1, vars);
-	if (chdir(home + 5) == - 1)
+	if (chdir(home + 5) == -1)
 	{
 		ft_path_fail(vars, pwd, "wrong path set" );
-		return;
+		return ;
 	}
-	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
-		ft_create_var(vars, pwd, "OLDPWD=");
-	free(pwd);
-	pwd = ft_new_pwd();
-	if (!pwd)
-		ft_exit(NULL, 1, vars);
-	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
-		ft_create_var(vars, pwd, "PWD=");
-	free(pwd);
+	ft_set_both(vars, pwd);
 }
 
 void	ft_cd(t_vars *vars, char **argv)

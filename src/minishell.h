@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 16:55:16 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:21:58 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int		ft_cd_move_dir(t_vars *vars, char **argv, char *path);
 void	ft_swap_pwd(t_vars *vars);
 void	ft_cd_double_point(t_vars *vars);
 
+
 // New CD UTILS
 char		*ft_getenv_var(t_vars *vars, char *var_name);
 int  		ft_setenv_var(t_vars *vars, char *pwd, char *var_name);
@@ -174,6 +175,7 @@ char		*minus_dir(char *dir, t_vars *vars);
 void		ft_putendl_fd2(char *s, int fd, char *var);
 int			ft_free_minus_one(char *str);
 void		ft_cd_point(t_vars *vars);
+void		ft_set_both(t_vars *vars, char *pwd);
 
 
 // PROGRAMS

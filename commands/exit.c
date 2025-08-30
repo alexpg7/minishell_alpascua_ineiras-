@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:23:51 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/25 18:22:01 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:26:24 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,9 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 		free(input);
 	rl_clear_history();
 	ft_freeall(vars);
-	/*if (vars->np >= 1)
-	{
-		free(vars->pid);
-		ft_freepip(vars->pip, vars->np, vars->np + 1);
-	}*/
 	if (vars->envp)
 		ft_freestrarr(&vars->envp, 1);
 	ft_lstclear_lst(&vars->ts);
-	//if (vars->command)
-	//	ft_freecommand(vars->command);
-	//FREE PIP ALLOC
 	ft_lstclear(&vars->env, &free);
 	i = 0;
 	while (++i < vars->np)

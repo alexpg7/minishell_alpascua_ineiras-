@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd_utils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 17:10:32 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/30 17:23:03 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../src/minishell.h"
 
@@ -31,13 +42,29 @@ void	ft_free_both(char *str1, char *str2)
 		free(str2);
 }
 
-void	ft_free_three(char *str1, char *str2, char *str3)
+void	ft_set_both(t_vars *vars, char *pwd)
 {
-	if (str1)
-		free(str1);
-	if (str2)
-		free(str2);
-	if (str3)
-		free(str3);
+	if (!pwd)
+		ft_exit(NULL, 1, vars);
+	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
+		ft_create_var(vars, pwd, "OLDPWD=");
+	free(pwd);
+	pwd = ft_new_pwd();
+	if (!pwd)
+		ft_exit(NULL, 1, vars);
+	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
+		ft_create_var(vars, pwd, "PWD=");
+	free(pwd);
 }
 
+void	ft_cd_point(t_vars *vars)
+{
+	char	*pwd;
+
+	pwd = ft_new_pwd();
+	if (!pwd)
+		ft_exit(NULL, 1, vars);
+	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
+		ft_create_var(vars, pwd, "PWD=");
+	free(pwd);
+}

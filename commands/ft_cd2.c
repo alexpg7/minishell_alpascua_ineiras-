@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 17:17:02 by ineiras-          #+#    #+#             */
+/*   Updated: 2025/08/30 17:22:42 by ineiras-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../src/minishell.h"
 
@@ -27,31 +38,23 @@ void	ft_cd_double_point(t_vars *vars)
 
 void	ft_swap_pwd(t_vars *vars)
 {
-    char    *pwd;
-    char    *old_pwd;
+	char	*pwd;
+	char	*old_pwd;
 
-    pwd = NULL;
-    old_pwd = ft_getenv_var(vars, "OLDPWD=");
-    if (!old_pwd)
-    {
-        ft_path_fail(vars, pwd, "cd: OLDPWD not set");
-        return;
-    }
-    pwd = ft_new_pwd();
-    if (!pwd)
-        ft_exit(NULL, 1, vars);
-    if (chdir(old_pwd + 7) == - 1)
-    {
-        ft_path_fail(vars, pwd, "wrong path set");
-        return;
-    }
-    if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
-        ft_create_var(vars, pwd, "OLDPWD=");
-    free(pwd);
-    pwd = ft_new_pwd();
-    if (!pwd)
-        ft_exit(NULL, 1, vars);
-    if (ft_setenv_var(vars, pwd, "PWD=") != 0)
-         ft_create_var(vars, pwd, "PWD=");
-    free(pwd);
+	pwd = NULL;
+	old_pwd = ft_getenv_var(vars, "OLDPWD=");
+	if (!old_pwd)
+	{
+		ft_path_fail(vars, pwd, "cd: OLDPWD not set");
+		return ;
+	}
+	pwd = ft_new_pwd();
+	if (!pwd)
+		ft_exit(NULL, 1, vars);
+	if (chdir (old_pwd + 7) == -1)
+	{
+		ft_path_fail(vars, pwd, "wrong path set");
+		return ;
+	}
+	ft_set_both(vars, pwd);
 }
