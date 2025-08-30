@@ -46,6 +46,7 @@ SRC = src/minishell.c \
 	commands/ft_echo.c \
 	commands/ft_env.c \
 	commands/ft_export.c \
+	commands/ft_export_utils.c \
 	commands/ft_unset.c \
 	execution/ft_heredoc.c \
 	execution/ft_execute.c \

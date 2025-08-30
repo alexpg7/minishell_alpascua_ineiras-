@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 17:44:54 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:07:52 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char		*ft_pwd(char **comm, t_vars *vars);
 char		*ft_new_pwd(void);
 void		ft_env(t_vars *vars);
 void		ft_export(t_vars *vars, char **arg, int mode);
+void		ft_printerror(t_vars *vars, char *arg);
 void		ft_echo(char **args);
 void		ft_cd(t_vars *vars, char **argv);
 char		**ft_getenv(t_list *env);
