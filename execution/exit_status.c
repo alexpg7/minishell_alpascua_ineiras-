@@ -35,7 +35,7 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 {
 	if (ex != 0)
 		ft_putstr_fd("minishell: ", 2);
-	if (ex == 1)
+	if (ex == 1 || ex == 2)
 	{
 		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": command failed.\n", 2);
