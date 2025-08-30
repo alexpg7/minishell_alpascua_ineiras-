@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:28:03 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/30 17:35:15 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:04:23 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,8 @@ int	ft_inenv(char *str, t_vars *vars)
 	return (0);
 }
 
-static void	ft_printerror(t_vars *vars, char *arg)
+static void	exp_logic(t_vars *vars, char **arg, int mode)
 {
-	ft_putstr_fd("export: not valid in this context: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putchar_fd('\n', 2);
-	vars->exit_status = 1;
-}
-
-void	ft_export(t_vars *vars, char **arg, int mode)
-{
-	if (!(*arg))
-	{
-		ft_env(vars);
-		return ;
-	}
-	if (**arg != '?' && mode == 0)
-		vars->exit_status = 0;
 	while (arg && *arg)
 	{
 		if (**arg != '?' && mode == 0)
@@ -99,4 +84,16 @@ void	ft_export(t_vars *vars, char **arg, int mode)
 			ft_printerror(vars, *arg);
 		arg++;
 	}
+}
+
+void	ft_export(t_vars *vars, char **arg, int mode)
+{
+	if (!(*arg))
+	{
+		ft_env(vars);
+		return ;
+	}
+	if (**arg != '?' && mode == 0)
+		vars->exit_status = 0;
+	exp_logic(vars, arg, mode);
 }
