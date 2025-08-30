@@ -50,4 +50,9 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": command not found.\n", 2);
 	}
+	if (ex == 130)
+	{
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
+		ft_putstr_fd(": process interrupted.\n", 2);
+	}
 }
