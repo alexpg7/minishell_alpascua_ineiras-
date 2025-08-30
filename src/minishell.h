@@ -185,39 +185,37 @@ int			ft_searchbuiltin(t_command *com);
 t_command	*ft_createcomm(char **comm, t_vars *vars);
 int			ft_commandlen(char **comm);
 
-
-
 // NEW EXECUTION
-void	ft_execute2(t_input **input, t_vars *vars);
-void	ft_new_exec(t_input *input, t_vars *vars);
-int		ft_heredoc(char *lim, char *path);
-char	*ft_sufix(char *path, int tag);
-char	*ft_findpath(char *comm, char **envp, t_vars *vars);
-int		exitstatus2(int status);
-void	ft_execmore(t_command *command, t_vars *vars);
+void		ft_execute2(t_input **input, t_vars *vars);
+void		ft_new_exec(t_input *input, t_vars *vars);
+int			ft_heredoc(char *lim, char *path);
+char		*ft_sufix(char *path, int tag);
+char		*ft_findpath(char *comm, char **envp, t_vars *vars);
+int			exitstatus2(int status);
+void		ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
 
-void	ft_new_execmore(t_input **input, t_vars *vars);
-void	ft_makeheredoc(t_input *input, int tag, t_vars *vars);
+void		ft_new_execmore(t_input **input, t_vars *vars);
+void		ft_makeheredoc(t_input *input, int tag, t_vars *vars);
 
 // NEW EXECUTION UTILS
-void	ft_command_array(t_input *input, t_vars *vars);
-int		ft_builtin_n(t_input *input, t_vars *vars);
-void	ft_child_2(t_input *input, char *here, t_vars *vars);
-int		ft_builtin_2(t_input *input, t_vars *vars);
-void	ft_set_redir_2(t_input *input, char *path, t_vars *vars);
+void		ft_command_array(t_input *input, t_vars *vars);
+int			ft_builtin_n(t_input *input, t_vars *vars);
+void		ft_child_2(t_input *input, char *here, t_vars *vars);
+int			ft_builtin_2(t_input *input, t_vars *vars);
+void		ft_set_redir_2(t_input *input, char *path, t_vars *vars);
 int			**ft_freepip(int **arr, int len, int index);
 
 // NEW EXECUTION UTILS 2
-int		ft_input_count(char **str_array);
-int		ft_tokken_counter(t_input *input, char tokken);
-int		ft_search_tokken(t_input *input, char tokken);
-int		ft_search_tokken_2(t_input *input, char tokken, int *pos);
+int			ft_input_count(char **str_array);
+int			ft_tokken_counter(t_input *input, char tokken);
+int			ft_search_tokken(t_input *input, char tokken);
+int			ft_search_tokken_2(t_input *input, char tokken, int *pos);
 
 // NEW EXECUTION 3 (FILE DESCRIPTION)
-void	ft_read_in(t_input *input, t_vars *vars, int pos);
-void	ft_write_out(t_input *input, t_vars *vars, int pos);
-void	ft_read_app(t_input *input, t_vars *vars, int pos);
+void		ft_read_in(t_input *input, t_vars *vars, int pos);
+void		ft_write_out(t_input *input, t_vars *vars, int pos);
+void		ft_read_app(t_input *input, t_vars *vars, int pos);
 
 // EXECUTION WITH PIPES
 

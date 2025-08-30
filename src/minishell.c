@@ -27,15 +27,16 @@ void	ft_newexit(t_vars *vars)
 	num = ft_itoa(vars->exit_status);
 	if (!num)
 		ft_exit(NULL, 1, vars);
-	com = ft_strjoin("?=", num); //protect
+	com = ft_strjoin("?=", num);
+	if (!com)
+		ft_exit(num, 2, vars);
 	free(num);
 	if (!com)
 		ft_exit(NULL, 1, vars);
 	ft_export(vars, &com, 1);
-	//free(com);
 }
 
-void	ft_printcom(t_command *comm)
+/*void	ft_printcom(t_command *comm)
 {
 	int	i;
 	int	j;
@@ -67,7 +68,7 @@ void	ft_freecommand(t_command *command)/////////////////////////
 		i++;
 	}
 	free(command);
-}
+}*/
 
 void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 {
@@ -94,12 +95,10 @@ void	do_stuff(char *str, t_vars *vars)
 {
 	char	**comm;
 	t_input	**input;
-	//t_lst	*ts;
 
 	vars->np = 0;
-	//comm = NULL;//ft_splitmini(str, ' ', vars);
-	comm = ft_splitmini2(str, vars); //already protected inside
-	if (!comm) //parsing error always
+	comm = ft_splitmini2(str, vars);
+	if (!comm)
 	{
 		add_history(str);
 		return ;
@@ -112,24 +111,29 @@ void	do_stuff(char *str, t_vars *vars)
 	if (!input)
 		return ;
 	vars->input = input;
-	/*for (int k2 = 0; k2 < vars->np + 1; k2++){
-		for (int k = 0; (input)[k2]->word[k]; k++)
-			ft_printf("%s\n", (input)[k2]->word[k]);}*/
 	ft_execute2(input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
-	/*free(str);
-	if (vars->command)
-		ft_freecommand(vars->command);
-	vars->command = ft_createcomm(comm, vars);
-	ts = ft_lstnew_lst(NULL, (void **)comm);
-	if (!ts)
-		ft_exit(NULL, ft_freestrarr(&comm, 2), vars);
-	ft_lstadd_back_lst(&vars->ts, ts);
-	ft_execute(vars->command, vars);
-	ft_freecommand(vars->command);
-	vars->command = NULL;*/
 	ft_newexit(vars);
+}
+
+static void	ft_main1(char *prompt, char *input, t_vars *vars)
+{
+	ft_signal(PROMPT);
+	g_signal = 0;
+	prompt = getcwd(NULL, 0);
+	vars->prompt = ft_strjoin(prompt, "-> ");
+	free(prompt);
+	if (!vars->prompt)
+	{
+		perror("malloc");
+		ft_exit(NULL, 1, vars);
+	}
+	input = readline(vars->prompt);
+	if (!input)
+		ft_exit(input, 0, vars);
+	do_stuff(input, vars);
+	free(vars->prompt);
 }
 
 int	main(int narg, char **argv, char **envp)
@@ -142,23 +146,9 @@ int	main(int narg, char **argv, char **envp)
 	ft_signal(PROMPT);
 	ft_printf("Welcome to minishell\n");
 	ft_init(&vars, envp);
+	prompt = NULL;
+	input = NULL;
 	while (narg == 1 && argv[0])
-	{
-		ft_signal(PROMPT);
-		g_signal = 0;
-		prompt = getcwd(NULL, 0);
-		vars.prompt = ft_strjoin(prompt, "-> ");
-		free(prompt);
-		if (!vars.prompt)
-		{
-			perror("malloc");
-			ft_exit(NULL, 1, &vars);
-		}
-		input = readline(vars.prompt);
-		if (!input)
-			ft_exit(input, 0, &vars);
-		do_stuff(input, &vars);
-		free(vars.prompt);
-	}
+		ft_main1(prompt, input, &vars);
 	return (0);
 }

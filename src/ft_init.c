@@ -22,8 +22,9 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->exit_status = 0;
 	vars->np = 0;
 	vars->pip = NULL;
-	vars->here = ft_strdup(".here_doc_000.tmp"); // protect
-	//vars->command = NULL;
+	vars->here = ft_strdup(".here_doc_000.tmp");
+	if (!vars->here)
+		ft_exit(NULL, 2, vars);
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)
 		ft_exit(NULL, 2, vars);
@@ -45,7 +46,7 @@ void	ft_init(t_vars *vars, char **envp)
 
 	i = 0;
 	vars->input = NULL;
-	aux = ft_strjoin("\"=\"", ""); //empty variable at the start
+	aux = ft_strjoin("\"=\"", "");
 	if (!aux)
 		ft_exit(NULL, 2, vars);
 	env = ft_lstnew(aux);
