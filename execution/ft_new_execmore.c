@@ -38,22 +38,22 @@ void	ft_pipandclose(int **pip, int fd, t_vars *vars)
 	{
 		if (dup2(pip[0][1], 1) == -1)
 			ft_exit(NULL, 1, vars);
-		if (close(pip[0][0]) == -1)
-			ft_exit(NULL, 1, vars);
+		close(pip[0][0]);
+		close(pip[0][1]);
 	}
 	if (fd == 2)
 	{
 		if (dup2(pip[-1][0], 0) == -1)
 			ft_exit(NULL, 1, vars);
-		if (close(pip[-1][1]) == -1)
-			ft_exit(NULL, 1, vars);
+		close(pip[-1][1]);
+		close(pip[-1][0]);
 	}
 	if (fd == 0)
 	{
 		if (dup2(pip[0][0], 0) == -1)
 			ft_exit(NULL, 1, vars);
-		if (close(pip[0][1]) == -1)
-			ft_exit(NULL, 1, vars);
+		close(pip[0][1]);
+		close(pip[0][0]);
 	}
 }
 
@@ -111,9 +111,10 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		perror("pipe");
 		ft_exit(NULL, 2, vars);
 	}
+	ft_printf("FD: %i, %i\n", vars->pip[0][0], vars->pip[0][1]);
 	ft_makeheredoc(input[0], 0, vars);
 	ft_new_execmore2(0, &vars->pip[0], 1, vars);
-	if (close(vars->pip[0][1]) == -1)
+	if (close(vars->pip[0][1]) == -42)
 	{
 		perror("close");
 		ft_exit(NULL, 1, vars);
@@ -121,7 +122,7 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 	ft_while_execmore(input, vars->np, vars);
 	ft_makeheredoc(input[vars->np], vars->np, vars);
 	ft_new_execmore2(vars->np, &vars->pip[vars->np - 1], 0, vars);
-	if (close(vars->pip[vars->np - 1][0]) == -1)
+	if (close(vars->pip[vars->np - 1][0]) == -42)
 	{
 		perror("close");
 		ft_exit(NULL, 1, vars);
