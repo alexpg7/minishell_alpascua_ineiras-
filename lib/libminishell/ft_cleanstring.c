@@ -27,7 +27,7 @@ int	ft_isspecial2(char *c)
 		else if (c[1] == 'f')
 			return ('\f');
 		else if (c[1] == 'v')
-			return ('\v'); //MAKE ANOTHER FUNCTION TO COUNT \" AND ALWAYS INTERPRET IT
+			return ('\v');
 	}
 	return (0);
 }

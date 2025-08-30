@@ -10,17 +10,19 @@ void	ft_cd_double_point(t_vars *vars)
 	if (!pwd)
 		ft_exit(NULL, 1, vars);
 	if (!ft_getenv_var(vars, "PWD="))
-      ft_create_var(vars, pwd, "PWD=");
+		ft_create_var(vars, pwd, "PWD=");
 	new_pwd = minus_dir(pwd, vars);
 	if (!new_pwd)
-    {
-        free(pwd);
+	{
+		free(pwd);
 		ft_exit(NULL, 1, vars);
-    }
-    chdir(new_pwd);
-    if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
-        ft_create_var(vars, pwd, "OLDPWD=");
-    ft_free_both(pwd, new_pwd);
+	}
+	chdir(new_pwd);
+	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
+		ft_create_var(vars, pwd, "OLDPWD=");
+	if (!ft_setenv_var(vars, new_pwd, "PWD="))
+		ft_create_var(vars, new_pwd, "PWD=");
+	ft_free_both(pwd, new_pwd);
 }
 
 void	ft_swap_pwd(t_vars *vars)

@@ -135,9 +135,10 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 		}
 		else if (ft_strcmp("pwd", input->comm[0]) == 0)
 		{
-			pwd = ft_pwd(input->comm + 1, vars); // We pass the input into PWD?
+			pwd = ft_new_pwd(); // We pass the input into PWD?
 			if (pwd)
 				ft_printf("%s\n", pwd);
+			free(pwd);
 		}
 		else if (ft_strcmp("env", input->comm[0]) == 0)
 			ft_env(vars);

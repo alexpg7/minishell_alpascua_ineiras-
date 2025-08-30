@@ -80,7 +80,7 @@ void  ft_cd_not_args(t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	if (chdir(home + 5) == - 1)
 	{
-		ft_path_fail(vars, pwd, "wrong path set;" );
+		ft_path_fail(vars, pwd, "wrong path set" );
 		return;
 	}
 	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
