@@ -50,6 +50,7 @@ SRC = src/minishell.c \
 	execution/ft_heredoc.c \
 	execution/ft_execute.c \
 	execution/ft_new_execmore.c \
+	execution/ft_new_execmore_utils.c \
 	execution/file_descriptors.c \
 	execution/ft_execute_utils.c \
 	execution/ft_execute_utils2.c \

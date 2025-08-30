@@ -29,7 +29,8 @@ void	ft_makeheredoc(t_input *input, int tag, t_vars *vars)
 			fd = ft_heredoc(input->word[i + 1], path);
 			if (fd == -1)
 				ft_exit(NULL, 1, vars);
-			close(fd); // protect
+			if (close(fd) == -1)
+				ft_exit(NULL, 1, vars);
 		}
 		i++;
 	}
@@ -70,7 +71,7 @@ void	ft_child_2(t_input *input, char *here, t_vars *vars)
 	}
 }
 
-void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
+void	ft_new_exec(t_input *input, t_vars *vars)
 {
 	ft_command_array(input, vars);
 	ft_makeheredoc(input, 0, vars);
@@ -90,7 +91,6 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 	}
 	if (ft_search_tokken(input, 'h') > 0)
 		unlink(ft_sufix(vars->here, 0));
-	//ft_freestrarr(&input->comm, 0); Free here if its not done outside.
 }
 
 void	ft_execute2(t_input **input, t_vars *vars)

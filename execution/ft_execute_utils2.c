@@ -12,25 +12,9 @@
 
 #include "../src/minishell.h"
 
-/*int	**ft_freepip(int **arr, int len, int index)
-{
-	int	i;
-	int	**aux;
-
-	i = 0;
-	aux = arr;
-	while (i < len && i < index - 1)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(aux);
-	return (NULL);
-}*/
-
 int	ft_input_count(char **str_array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str_array[i])
@@ -40,13 +24,15 @@ int	ft_input_count(char **str_array)
 
 int	ft_tokken_counter(t_input *input, char tokken)
 {
-	int	i = 0;
-	int	count = 0;
+	int	i;
+	int	count;
 
+	i = 0;
+	count = 0;
 	while (input->word[i])
 	{
 		if (input->token[i] == tokken)
-			count++; // Assuming input is always OK.
+			count++;
 		i++;
 	}
 	return (count);
@@ -57,7 +43,7 @@ int	ft_search_tokken_2(t_input *input, char tokken, int *pos)
 	while (input->word[*pos])
 	{
 		if (input->token[*pos] == tokken)
-			return (*pos); // Assuming input is always OK.
+			return (*pos);
 		(*pos)++;
 	}
 	return (-1);
@@ -65,12 +51,13 @@ int	ft_search_tokken_2(t_input *input, char tokken, int *pos)
 
 int	ft_search_tokken(t_input *input, char tokken)
 {
-	int	i = 0;
-	
+	int	i;
+
+	i = 0;
 	while (input->word[i])
 	{
 		if (input->token[i] == tokken)
-			return (i); // Assuming input is always OK.
+			return (i);
 		i++;
 	}
 	return (-1);

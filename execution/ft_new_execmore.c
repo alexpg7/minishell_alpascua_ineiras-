@@ -1,39 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_new_execmore.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 17:46:08 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/30 17:46:10 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
-
-int	**ft_freepip(int **arr, int len, int index)
-{
-	int	i;
-	int	**aux;
-
-	i = 0;
-	aux = arr;
-	while (i < len && i < index - 1)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(aux);
-	return (NULL);
-}
-
-static int	**ft_pipalloc(int len)
-{
-	int	i;
-	int	**ptr;
-
-	i = 0;
-	ptr = (int **)malloc(sizeof(int *) * len);
-	if (!ptr)
-		return (NULL);
-	while (i < len)
-	{
-		ptr[i] = (int *)malloc(sizeof(int) * 2);
-		if (!ptr[i])
-			return (ft_freepip(ptr, len, i + 1));
-		i++;
-	}
-	return (ptr);
-}
 
 void	ft_child_3(t_input *input, char *here, t_vars *vars)
 {
@@ -55,7 +32,32 @@ void	ft_child_3(t_input *input, char *here, t_vars *vars)
 	}
 }
 
-void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars) // Allways assuming that string is correct.
+void	ft_pipandclose(int **pip, int fd, t_vars *vars)
+{
+	if (fd == 1 || fd == 2)
+	{
+		if (dup2(pip[0][1], 1) == -1)
+			ft_exit(NULL, 1, vars);
+		if (close(pip[0][0]) == -1)
+			ft_exit(NULL, 1, vars);
+	}
+	if (fd == 2)
+	{
+		if (dup2(pip[-1][0], 0) == -1)
+			ft_exit(NULL, 1, vars);
+		if (close(pip[-1][1]) == -1)
+			ft_exit(NULL, 1, vars);
+	}
+	if (fd == 0)
+	{
+		if (dup2(pip[0][0], 0) == -1)
+			ft_exit(NULL, 1, vars);
+		if (close(pip[0][1]) == -1)
+			ft_exit(NULL, 1, vars);
+	}
+}
+
+void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars)
 {
 	t_input	*input;
 
@@ -64,34 +66,43 @@ void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars) // Allways assum
 	ft_signal(WAIT);
 	input->pid = fork();
 	if (input->pid == -1)
-		perror("fork");//ft_exit?
+	{
+		perror("fork");
+		ft_exit(NULL, 1, vars);
+	}
 	else if (input->pid == 0)
 	{
-		if (fd == 1 || fd == 2)
-		{
-			dup2(pip[0][1], 1);//protect
-			close(pip[0][0]);//protect
-		}
-		if (fd == 2)
-		{
-			dup2(pip[-1][0], 0);//protect
-			close(pip[-1][1]);
-		}
-		if (fd == 0)
-		{
-			dup2(pip[0][0], 0);//protect
-			close(pip[0][1]);//protect
-		}
+		ft_pipandclose(pip, fd, vars);
 		ft_child_3(input, ft_sufix(vars->here, num), vars);
 		ft_exit(NULL, vars->exit_status, vars);
 	}
 }
 
-void	ft_new_execmore(t_input **input, t_vars *vars)
+void	ft_while_execmore(t_input **input, int np, t_vars *vars)
 {
 	int	i;
 
 	i = 1;
+	while (i < np)
+	{
+		if (pipe(vars->pip[i]) == -1)
+		{
+			perror("pipe");
+			ft_exit(NULL, 2, vars);
+		}
+		ft_makeheredoc(input[i], i, vars);
+		ft_new_execmore2(i, &vars->pip[i], 2, vars);
+		if (close(vars->pip[i][1]) == -1 || close(vars->pip[i - 1][0]) == -1)
+		{
+			perror("close");
+			ft_exit(NULL, 1, vars);
+		}
+		i++;
+	}
+}
+
+void	ft_new_execmore(t_input **input, t_vars *vars)
+{
 	vars->pip = ft_pipalloc(vars->np);
 	if (!vars->np)
 		ft_exit(NULL, 2, vars);
@@ -102,22 +113,18 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 	}
 	ft_makeheredoc(input[0], 0, vars);
 	ft_new_execmore2(0, &vars->pip[0], 1, vars);
-	close(vars->pip[0][1]);
-	while (i < vars->np)
+	if (close(vars->pip[0][1]) == -1)
 	{
-		if (pipe(vars->pip[i]) == -1)
-		{
-			perror("pipe");
-			ft_exit(NULL, 2, vars);
-		}
-		ft_makeheredoc(input[i], i, vars);
-		ft_new_execmore2(i, &vars->pip[i], 2, vars);
-		close(vars->pip[i][1]);
-		close(vars->pip[i - 1][0]);
-		i++;
+		perror("close");
+		ft_exit(NULL, 1, vars);
 	}
+	ft_while_execmore(input, vars->np, vars);
 	ft_makeheredoc(input[vars->np], vars->np, vars);
 	ft_new_execmore2(vars->np, &vars->pip[vars->np - 1], 0, vars);
-	close(vars->pip[vars->np - 1][0]);
+	if (close(vars->pip[vars->np - 1][0]) == -1)
+	{
+		perror("close");
+		ft_exit(NULL, 1, vars);
+	}
 	ft_waitall(input, vars->np + 1, vars);
 }

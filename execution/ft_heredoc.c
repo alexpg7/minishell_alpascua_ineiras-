@@ -12,6 +12,13 @@
 
 #include "../src/minishell.h"
 
+static void	ft_message(char *lim)
+{
+	ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
+	ft_putstr_fd(lim, 2);
+	ft_putstr_fd("\"\n", 2);
+}
+
 char	*ft_sufix(char *path, int tag)
 {
 	path[10] = '0' + (tag / 100) % 10;
@@ -27,9 +34,7 @@ int	ft_writefile(char *lim, char *path, int fd)
 	text = readline("heredoc> ");
 	if (!text)
 	{
-		ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
-		ft_putstr_fd(lim, 2);
-		ft_putstr_fd("\"\n", 2);
+		ft_message(lim);
 		return (fd);
 	}
 	while (ft_strcmp(lim, text) != 0 && g_signal != SIGINT)
@@ -39,9 +44,7 @@ int	ft_writefile(char *lim, char *path, int fd)
 		text = readline("heredoc> ");
 		if (!text)
 		{
-			ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
-			ft_putstr_fd(lim, 2);
-			ft_putstr_fd("\"\n", 2);
+			ft_message(lim);
 			return (fd);
 		}
 	}

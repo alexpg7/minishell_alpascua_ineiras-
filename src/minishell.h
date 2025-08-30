@@ -157,17 +157,16 @@ int			ft_strisalnum2(char *str);
 char		*new_var(t_vars *vars, char *arg);/////
 
 // New CD COMMANDS
-void	ft_cd(t_vars *vars, char **argv);
-void	ft_cd_not_args(t_vars *vars);
-void	ft_cd_two_arg(t_vars *vars, char **argv);
-int		ft_cd_move_dir(t_vars *vars, char **argv, char *path);
-void	ft_swap_pwd(t_vars *vars);
-void	ft_cd_double_point(t_vars *vars);
-
+void		ft_cd(t_vars *vars, char **argv);
+void		ft_cd_not_args(t_vars *vars);
+void		ft_cd_two_arg(t_vars *vars, char **argv);
+int			ft_cd_move_dir(t_vars *vars, char **argv, char *path);
+void		ft_swap_pwd(t_vars *vars);
+void		ft_cd_double_point(t_vars *vars);
 
 // New CD UTILS
 char		*ft_getenv_var(t_vars *vars, char *var_name);
-int  		ft_setenv_var(t_vars *vars, char *pwd, char *var_name);
+int			ft_setenv_var(t_vars *vars, char *pwd, char *var_name);
 void		ft_path_fail(t_vars *vars, char *pwd, char *error_m);
 void		ft_create_var(t_vars *vars, char *pwd, char *var_name);
 int			count_args(char **argv);
@@ -176,7 +175,6 @@ void		ft_putendl_fd2(char *s, int fd, char *var);
 int			ft_free_minus_one(char *str);
 void		ft_cd_point(t_vars *vars);
 void		ft_set_both(t_vars *vars, char *pwd);
-
 
 // PROGRAMS
 void		ft_init(t_vars *vars, char **envp);
@@ -218,9 +216,10 @@ char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
 void		ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
-
 void		ft_new_execmore(t_input **input, t_vars *vars);
 void		ft_makeheredoc(t_input *input, int tag, t_vars *vars);
+int			**ft_freepip(int **arr, int len, int index);
+int			**ft_pipalloc(int len);
 
 // NEW EXECUTION UTILS
 void		ft_command_array(t_input *input, t_vars *vars);
