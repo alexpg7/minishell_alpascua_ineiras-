@@ -111,7 +111,6 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		perror("pipe");
 		ft_exit(NULL, 2, vars);
 	}
-	ft_printf("FD: %i, %i\n", vars->pip[0][0], vars->pip[0][1]);
 	ft_makeheredoc(input[0], 0, vars);
 	ft_new_execmore2(0, &vars->pip[0], 1, vars);
 	if (close(vars->pip[0][1]) == -42)
