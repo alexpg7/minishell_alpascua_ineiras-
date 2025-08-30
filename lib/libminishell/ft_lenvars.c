@@ -41,12 +41,10 @@ int	ft_isvar_clean(char *comm, int len, t_vars *vars)
 int	ft_varlen_clean(char *comm, t_vars *vars)
 {
 	int	i;
-	int	vallen;
 
 	i = 0;
-	vallen = 0;
 	if (comm[0] == '?')
-		return (ft_isvar_clean(comm + 1, 1, vars));
+		return (ft_isvar_clean(comm, 1, vars) - 1);
 	//first, search the var len
 	while (comm[i])
 	{
@@ -54,8 +52,7 @@ int	ft_varlen_clean(char *comm, t_vars *vars)
 			break ;
 		i++;
 	}
-	vallen = ft_isvar_clean(comm, i, vars);
-	return (vallen - i);
+	return (ft_isvar_clean(comm, i, vars) - i);
 }
 
 int	ft_lenvars_clean(char *comm, t_vars *vars)
