@@ -12,10 +12,36 @@
 
 #include "../../src/minishell.h"
 
+static int	ft_nextword3(char *str, int *i, int k, char *c)
+{
+	if (*c == '0' && ft_isop(str[*i]))
+		return (*i - k);
+	else if (*c == '0' && ft_isquote(str[*i]) && str[*i - (*i != 0)] != '\\')
+	{
+		if (str[*i - (*i != 0)] != '\\')
+		{
+			*c = str[*i];
+			*i = *i + 1;
+		}
+	}
+	else if (*c == '0' && !ft_isspace(str[*i]))
+		*i = *i + 1;
+	else if (*c == '0' && ft_isspace(str[*i]))
+		return (*i - k);
+	else if (*c != '0')
+	{
+		if (str[*i] == *c && str[*i - (*i != 0)] != '\\')
+			*c = '0';
+		*i = *i + 1;
+	}
+	return (-42);
+}
+
 int	ft_nextword2(char *str, int *i)
 {
 	char	c;
 	int		k;
+	int		ret;
 
 	c = '0';
 	k = *i;
@@ -23,26 +49,9 @@ int	ft_nextword2(char *str, int *i)
 		return (*i - k);
 	while (str[*i])
 	{
-		if (c == '0' && ft_isop(str[*i]))
-			return (*i - k);
-		else if (c == '0' && ft_isquote(str[*i]) && str[*i - (*i != 0)] != '\\')
-		{
-			if (str[*i - (*i != 0)] != '\\')
-			{
-				c = str[*i];
-				*i = *i + 1;
-			}
-		}
-		else if (c == '0' && !ft_isspace(str[*i]))
-			*i = *i + 1;
-		else if (c == '0' && ft_isspace(str[*i]))
-			return (*i - k);
-		else if (c != '0')
-		{
-			if (str[*i] == c && str[*i - (*i != 0)] != '\\')
-				c = '0';
-			*i = *i + 1;
-		}
+		ret = ft_nextword3(str, i, k, &c);
+		if (ret != -42)
+			return (ret);
 	}
 	if (c != '0')
 	{

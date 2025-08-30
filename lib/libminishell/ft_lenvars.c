@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lenvars.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 17:02:42 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/30 17:02:45 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../src/minishell.h"
 
 void	ft_nextvar(char *comm, int *i)
@@ -45,7 +57,6 @@ int	ft_varlen_clean(char *comm, t_vars *vars)
 	i = 0;
 	if (comm[0] == '?')
 		return (ft_isvar_clean(comm, 1, vars) - 1);
-	//first, search the var len
 	while (comm[i])
 	{
 		if (!ft_isalnum2(comm[i]))
@@ -68,11 +79,11 @@ int	ft_lenvars_clean(char *comm, t_vars *vars)
 			ft_nextword2(comm, &i);
 		else if (comm[i] == '$')
 		{
-			len += ft_varlen_clean(&comm[i + 1], vars) - 1; // - 1 because of the '$'
+			len += ft_varlen_clean(&comm[i + 1], vars) - 1;
 			ft_nextvar(comm, &i);
 		}
 		if (comm[i])
 			i++;
 	}
-	return len;
+	return (len);
 }
