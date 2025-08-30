@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
+/*   ft_cd_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:24:34 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/04 18:26:00 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:54:45 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,16 @@ int	ft_free_minus_one(char *str)
 	free(str);
 	str = NULL;
 	return (-1);
+}
+
+void ft_cd_point(t_vars *vars)
+{
+	char	*pwd;
+
+	pwd = ft_new_pwd();
+	if (!pwd)
+		ft_exit(NULL, 1, vars);
+	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
+		ft_create_var(vars, pwd, "PWD=");
+	free(pwd);
 }

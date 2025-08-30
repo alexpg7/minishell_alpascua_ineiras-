@@ -56,7 +56,7 @@ void	ft_cd_two_arg(t_vars *vars, char **argv)
 	else if (ft_strcmp(argv[1], "-") == 0)
 		ft_swap_pwd(vars);
 	else if (ft_strcmp(argv[1], ".") == 0)
-		;
+		ft_cd_point(vars);
 	else if (ft_strcmp(argv[1], "..") == 0)
 		ft_cd_double_point(vars);
 	else if (ft_cd_move_dir(vars, argv, path) == -1)

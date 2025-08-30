@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 14:07:47 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:55:16 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int			count_args(char **argv);
 char		*minus_dir(char *dir, t_vars *vars);
 void		ft_putendl_fd2(char *s, int fd, char *var);
 int			ft_free_minus_one(char *str);
+void		ft_cd_point(t_vars *vars);
 
 
 // PROGRAMS
