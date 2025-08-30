@@ -12,7 +12,15 @@
 
 #include "../src/minishell.h"
 
-int	ft_writefile(char *lim, int fd)
+char	*ft_sufix(char *path, int tag)
+{
+	path[10] = '0' + (tag / 100) % 10;
+	path[11] = '0' + (tag / 10) % 10;
+	path[12] = '0' + (tag % 10);
+	return (path);
+}
+
+int	ft_writefile(char *lim, char *path, int fd)
 {
 	char	*text;
 
@@ -38,21 +46,21 @@ int	ft_writefile(char *lim, int fd)
 		}
 	}
 	if (g_signal == SIGINT)
-		unlink(".here_doc.tmp");
+		unlink(path);
 	ft_signal(WAIT);
 	return (fd);
 }
 
-int	ft_heredoc(char *lim)
+int	ft_heredoc(char *lim, char *path)
 {
 	int	fd;
 
 	ft_signal(HEREDOC);
-	fd = open(".here_doc.tmp", O_WRONLY | O_APPEND | O_CREAT, 0644);
+	fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		perror(".here_doc.tmp");
+		perror(path);
 		return (-1);
 	}
-	return (ft_writefile(lim, fd));
+	return (ft_writefile(lim, path, fd));
 }

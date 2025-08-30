@@ -22,6 +22,7 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->exit_status = 0;
 	vars->np = 0;
 	vars->pip = NULL;
+	vars->here = ft_strdup(".here_doc_000.tmp"); // protect
 	//vars->command = NULL;
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)

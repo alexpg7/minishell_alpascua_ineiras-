@@ -71,6 +71,7 @@ typedef struct s_vars
 	//int			*pid;
 	int			exit_status;
 	char		**envp;
+	char		*here;
 }	t_vars;
 
 typedef enum e_shell_state
@@ -157,7 +158,7 @@ void		cd_double_point(t_vars *vars);
 void		ft_init(t_vars *vars, char **envp);
 
 // EXECUTION ///////////////////////////////////////////////////
-int			ft_heredoc(char *lim);
+//int			ft_heredoc(char *lim, int tag);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
 void		ft_execmore(t_command *command, t_vars *vars);
@@ -189,21 +190,22 @@ int			ft_commandlen(char **comm);
 // NEW EXECUTION
 void	ft_execute2(t_input **input, t_vars *vars);
 void	ft_new_exec(t_input *input, t_vars *vars);
-int		ft_heredoc(char *lim);
+int		ft_heredoc(char *lim, char *path);
+char	*ft_sufix(char *path, int tag);
 char	*ft_findpath(char *comm, char **envp, t_vars *vars);
 int		exitstatus2(int status);
 void	ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
 
 void	ft_new_execmore(t_input **input, t_vars *vars);
-void	ft_makeheredoc(t_input *input, t_vars *vars);
+void	ft_makeheredoc(t_input *input, int tag, t_vars *vars);
 
 // NEW EXECUTION UTILS
 void	ft_command_array(t_input *input, t_vars *vars);
 int		ft_builtin_n(t_input *input, t_vars *vars);
-void	ft_child_2(t_input *input, t_vars *vars);
+void	ft_child_2(t_input *input, char *here, t_vars *vars);
 int		ft_builtin_2(t_input *input, t_vars *vars);
-void	ft_set_redir_2(t_input *input, t_vars *vars);
+void	ft_set_redir_2(t_input *input, char *path, t_vars *vars);
 int			**ft_freepip(int **arr, int len, int index);
 
 // NEW EXECUTION UTILS 2

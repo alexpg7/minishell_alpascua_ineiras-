@@ -12,19 +12,21 @@
 
 #include "../src/minishell.h"
 
-void	ft_makeheredoc(t_input *input, t_vars *vars)
+void	ft_makeheredoc(t_input *input, int tag, t_vars *vars)
 {
-	int	i;
-	int	fd;
+	int		i;
+	int		fd;
+	char	*path;
 
 	i = 0;
+	path = ft_sufix(vars->here, tag);
 	while (input->token[i])
 	{
 		if (input->token[i] == 'h')
 		{
-			if (access(".here_doc.tmp", F_OK) == 0)
-				unlink(".here_doc.tmp");
-			fd = ft_heredoc(input->word[i + 1]);
+			if (access(path, F_OK) == 0)
+				unlink(ft_sufix(vars->here, tag));
+			fd = ft_heredoc(input->word[i + 1], path);
 			if (fd == -1)
 				ft_exit(NULL, 1, vars);
 			close(fd); // protect
@@ -44,18 +46,18 @@ void	ft_waitall(t_input **input, int len, t_vars *vars)
 		if (input[i]->pid > 0)
 			waitpid(input[i]->pid, &vars->exit_status, 0);
 		ft_signal(PROMPT);
-		unlink(".here_doc.tmp");
+		unlink(ft_sufix(vars->here, i));
 		vars->exit_status = exitstatus2(vars->exit_status);
 		ft_printexit(vars->exit_status, i, vars);
 		i++;
 	}
 }
 
-void	ft_child_2(t_input *input, t_vars *vars)
+void	ft_child_2(t_input *input, char *here, t_vars *vars)
 {
 	char	*path;
 
-	ft_set_redir_2(input, vars);
+	ft_set_redir_2(input, here, vars);
 	vars->exit_status = 0;
 	if (!ft_builtin_2(input, vars))
 	{
@@ -71,7 +73,7 @@ void	ft_child_2(t_input *input, t_vars *vars)
 void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string is correct.
 {
 	ft_command_array(input, vars);
-	ft_makeheredoc(input, vars);
+	ft_makeheredoc(input, 0, vars);
 	if (!ft_builtin_n(input, vars))
 	{
 		ft_signal(WAIT);
@@ -80,14 +82,14 @@ void	ft_new_exec(t_input *input, t_vars *vars) // Allways assuming that string i
 			perror("fork");
 		else if (input->pid == 0)
 		{
-			ft_child_2(input, vars);
+			ft_child_2(input, ft_sufix(vars->here, 0), vars);
 			ft_exit(NULL, vars->exit_status, vars);
 		}
 		else
 			ft_waitall(&input, 1, vars);
 	}
 	if (ft_search_tokken(input, 'h') > 0)
-		unlink(".here_doc.tmp");
+		unlink(ft_sufix(vars->here, 0));
 	//ft_freestrarr(&input->comm, 0); Free here if its not done outside.
 }
 

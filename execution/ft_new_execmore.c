@@ -35,11 +35,11 @@ static int	**ft_pipalloc(int len)
 	return (ptr);
 }
 
-void	ft_child_3(t_input *input, t_vars *vars)
+void	ft_child_3(t_input *input, char *here, t_vars *vars)
 {
 	char	*path;
 
-	ft_set_redir_2(input, vars);
+	ft_set_redir_2(input, here, vars);
 	vars->exit_status = 0;
 	if (!ft_builtin_n(input, vars))
 	{
@@ -55,8 +55,11 @@ void	ft_child_3(t_input *input, t_vars *vars)
 	}
 }
 
-void	ft_new_execmore2(t_input *input, int **pip, int fd, t_vars *vars) // Allways assuming that string is correct.
+void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars) // Allways assuming that string is correct.
 {
+	t_input	*input;
+
+	input = vars->input[num];
 	ft_command_array(input, vars);
 	ft_signal(WAIT);
 	input->pid = fork();
@@ -79,7 +82,7 @@ void	ft_new_execmore2(t_input *input, int **pip, int fd, t_vars *vars) // Allway
 			dup2(pip[0][0], 0);//protect
 			close(pip[0][1]);//protect
 		}
-		ft_child_3(input, vars);
+		ft_child_3(input, ft_sufix(vars->here, num), vars);
 		ft_exit(NULL, vars->exit_status, vars);
 	}
 }
@@ -97,8 +100,8 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		perror("pipe");
 		ft_exit(NULL, 2, vars);
 	}
-	ft_makeheredoc(input[0], vars);
-	ft_new_execmore2(input[0], &vars->pip[0], 1, vars);
+	ft_makeheredoc(input[0], 0, vars);
+	ft_new_execmore2(0, &vars->pip[0], 1, vars);
 	close(vars->pip[0][1]);
 	while (i < vars->np)
 	{
@@ -107,14 +110,14 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 			perror("pipe");
 			ft_exit(NULL, 2, vars);
 		}
-		ft_makeheredoc(input[i], vars);
-		ft_new_execmore2(input[i], &vars->pip[i], 2, vars);
+		ft_makeheredoc(input[i], i, vars);
+		ft_new_execmore2(i, &vars->pip[i], 2, vars);
 		close(vars->pip[i][1]);
 		close(vars->pip[i - 1][0]);
 		i++;
 	}
-	ft_makeheredoc(input[vars->np], vars);
-	ft_new_execmore2(input[vars->np], &vars->pip[vars->np - 1], 0, vars);
+	ft_makeheredoc(input[vars->np], vars->np, vars);
+	ft_new_execmore2(vars->np, &vars->pip[vars->np - 1], 0, vars);
 	close(vars->pip[vars->np - 1][0]);
 	ft_waitall(input, vars->np + 1, vars);
 }

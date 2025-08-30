@@ -20,6 +20,8 @@ void	ft_freeall(t_vars *vars)
 
 void	ft_exit(char *input, int ret, t_vars *vars)
 {
+	int	i;
+
 	if (input)
 		free(input);
 	rl_clear_history();
@@ -36,7 +38,10 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	//	ft_freecommand(vars->command);
 	//FREE PIP ALLOC
 	ft_lstclear(&vars->env, &free);
-	unlink(".here_doc.tmp");
+	i = 0;
+	while (++i < vars->np)
+		unlink(ft_sufix(vars->here, i));
+	free(vars->here);
 	if (ret == 2)
 	{
 		ft_putstr_fd("malloc error\n", 2);

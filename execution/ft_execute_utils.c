@@ -89,7 +89,7 @@ int	ft_searchbuiltin(t_command *com)//////
 	return (0);
 }
 
-void	ft_set_redir_2(t_input *input, t_vars *vars)
+void	ft_set_redir_2(t_input *input, char *path, t_vars *vars)
 {
 	int	i;
 
@@ -103,7 +103,7 @@ void	ft_set_redir_2(t_input *input, t_vars *vars)
 			ft_read_in(input, vars, i + 1);
 		else if (input->token[i] == 'h')
 		{
-			input->last_in = open(".here_doc.tmp", O_RDONLY);
+			input->last_in = open(path, O_RDONLY);
 			if (input->last_in == -1)
 				ft_exit(NULL, 1, vars);
 			dup2(input->last_in, STDIN_FILENO);
