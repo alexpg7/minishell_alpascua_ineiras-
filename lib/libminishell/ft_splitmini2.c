@@ -1,33 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_splitmini2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 14:54:38 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/30 14:54:40 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../src/minishell.h"
-
-int	ft_isop(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
-}
-
-int	ft_isquote(char c)
-{
-	if (c == '\"' || c == '\'')
-		return (1);
-	return (0);
-}
-
-int	ft_checkop(char *str, int *i)
-{
-	if (ft_isop(str[*i]))
-	{
-		if (str[*i] == '>' || str[*i] == '<')
-		{
-			if (str[*i] == str[*i + 1])
-				*i = *i + 1;
-		}
-		*i = *i + 1;
-		return (1);
-	}
-	return (0);
-}
 
 int	ft_nextword2(char *str, int *i)
 {
@@ -90,18 +73,13 @@ int	ft_countwords2(char *str)
 	return (count);
 }
 
-char	**ft_splitmini2(char *str, t_vars *vars)
+char	**ft_splitmini2_2(int words, char *str, t_vars *vars)
 {
-	int		words;
 	int		i;
-	int		k;
 	int		j;
+	int		k;
 	char	**ptr;
 
-	vars->np = 0;
-	words = ft_countwords2(str);
-	if (words == -1)
-		return (NULL);
 	ptr = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!ptr)
 		ft_exit(NULL, 2, vars);
@@ -119,4 +97,15 @@ char	**ft_splitmini2(char *str, t_vars *vars)
 	}
 	ptr[i] = NULL;
 	return (ptr);
+}
+
+char	**ft_splitmini2(char *str, t_vars *vars)
+{
+	int	words;
+
+	vars->np = 0;
+	words = ft_countwords2(str);
+	if (words == -1)
+		return (NULL);
+	return (ft_splitmini2_2(words, str, vars));
 }

@@ -54,7 +54,9 @@ SRC = src/minishell.c \
 	execution/exit_status.c \
 	execution/ft_findpath.c \
 	lib/libminishell/ft_splitmini2.c \
+	lib/libminishell/ft_splitmini2_utils.c \
 	lib/libminishell/ft_inputstruct.c \
+	lib/libminishell/ft_inputstruct_utils.c \
 	lib/libminishell/ft_cleanstring.c \
 	lib/libminishell/ft_lenvars.c \
 	lib/libminishell/trashlist.c \

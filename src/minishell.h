@@ -109,10 +109,17 @@ void		ft_nextword(const char **s, char sep);
 // SPLITMINI2
 char		**ft_splitmini2(char *str, t_vars *vars);
 int			ft_nextword2(char *str, int *i);
+int			ft_isop(char c);
 int			ft_isquote(char c);
+int			ft_checkop(char *str, int *i);
 
 // STRUCT INPUT
 t_input		**ft_inputstruct(char **comm, t_vars *vars);
+int			ft_isredir(char *str);
+int			ft_nextcommand(char **comm, int i);
+int			ft_checkpipes(char **comm);
+int			ft_checkredirs(char **comm);
+int			ft_comsize(char **comm);
 
 // CLEAN STRING
 char		*ft_cleanstring(char *comm, char token, t_vars *vars);

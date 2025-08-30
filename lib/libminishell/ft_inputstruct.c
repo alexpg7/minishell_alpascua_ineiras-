@@ -1,90 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_inputstruct.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 14:10:49 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/30 14:10:51 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../src/minishell.h"
-
-int	ft_isredir(char *str)
-{
-	if (!str)
-		return (0);
-	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
-			|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0)
-	{
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_nextcommand(char **comm, int i)
-{
-	while (comm[i])
-	{
-		if (ft_isredir(comm[i]))
-			i = i + 2;
-		else if (ft_strcmp(comm[i], "|") != 0)
-			return (1);
-		else
-			return (0);
-	}
-	return (0);
-}
-
-int	ft_checkpipes(char **comm)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	if (ft_strcmp(comm[0], "|") == 0)
-		return (-1);
-	if (ft_nextcommand(comm, 0) == 0)
-			return (-1);
-	while (comm[i])
-	{
-		if (ft_strcmp(comm[i], "|") == 0)
-		{
-			count++;
-			if (ft_nextcommand(comm, i + 1) == 0)
-				return (-1);
-		}
-		i++;
-	}
-	return (count);
-}
-
-int	ft_checkredirs(char **comm)
-{
-	int	i;
-
-	i = 0;
-	while (comm[i])
-	{
-		if (ft_isredir(comm[i]))
-		{
-			if (comm[i + 1])
-			{
-				if (ft_isredir(comm[i + 1]) || ft_strcmp(comm[i + 1], "|") == 0)
-					return (-1);
-			}
-			else
-				return (-1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	ft_comsize(char **comm)
-{
-	int	i;
-
-	i = 0;
-	while (comm[i])
-	{
-		if (ft_strcmp(comm[i], "|") == 0)
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 char	ft_redirtoken(char *comm)
 {
@@ -118,29 +44,39 @@ void	ft_copycommand(t_input **input, char **comm, int size, t_vars *vars)
 			flag = 0;
 			(*input)->token[i] = 'w';
 		}
-		else if (flag  == 0)
+		else if (flag == 0)
 			(*input)->token[i] = 'c';
-		(*input)->word[i] = ft_cleanstring(comm[i], (*input)->token[i], vars); // protect AND CLEAN STRING (looking at token)
+		(*input)->word[i] = ft_cleanstring(comm[i], (*input)->token[i], vars);
 		i++;
 	}
 	(*input)->word[i] = NULL;
 	(*input)->token[i] = '\0';
 }
 
+static void	ft_fillinput2(t_input ***input, char **comm, int i, t_vars *vars)
+{
+	int	size;
+
+	size = ft_comsize(comm);
+	(*input)[i] = (t_input *)malloc(sizeof(t_input));
+	if (!(*input)[i])
+		ft_exit(NULL, 2, vars);
+	(*input)[i]->comm = NULL;
+	(*input)[i]->word = (char **)malloc(sizeof(char *) * (size + 1));
+	(*input)[i]->token = (char *)malloc(sizeof(char) * (size + 1));
+	if (!(*input)[i]->word || !(*input)[i]->token)
+		ft_exit(NULL, 2, vars);
+	ft_copycommand((*input + i), comm, size, vars);
+}
+
 void	ft_fillinput(t_input ***input, char **comm, t_vars *vars)
 {
 	int	i;
-	int	size;
 
 	i = 0;
 	while (i < vars->np + 1)
 	{
-		size = ft_comsize(comm);
-		(*input)[i] = (t_input *)malloc(sizeof(t_input)); // protect
-		(*input)[i]->comm = NULL;
-		(*input)[i]->word = (char **)malloc(sizeof(char *) * (size + 1)); // protect
-		(*input)[i]->token = (char *)malloc(sizeof(char) * (size + 1)); // protect
-		ft_copycommand((*input + i), comm, size, vars);
+		ft_fillinput2(input, comm, i, vars);
 		while (*comm)
 		{
 			if (ft_strcmp(*comm, "|") == 0)
@@ -159,7 +95,6 @@ t_input	**ft_inputstruct(char **comm, t_vars *vars)
 	t_input	**input;
 	int		np;
 
-	//input->command = NULL;
 	if (ft_checkredirs(comm) == -1)
 	{
 		ft_putstr_fd("parsing error: wrong redirecitons\n", 2);

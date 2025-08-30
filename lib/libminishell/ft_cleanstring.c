@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cleanstring.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/30 13:58:38 by alpascua          #+#    #+#             */
+/*   Updated: 2025/08/30 13:58:42 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../src/minishell.h"
 
 int	ft_isspecial2(char *c)
@@ -6,8 +18,16 @@ int	ft_isspecial2(char *c)
 		return (0);
 	if (*c == '\\')
 	{
-		if (c[1] == 'n') // EXTENSIBLE TO MORE CHARACTERS
+		if (c[1] == 'n')
 			return ('\n');
+		else if (c[1] == 't')
+			return ('\t');
+		else if (c[1] == 'r')
+			return ('\r');
+		else if (c[1] == 'f')
+			return ('\f');
+		else if (c[1] == 'v')
+			return ('\v'); //MAKE ANOTHER FUNCTION TO COUNT \" AND ALWAYS INTERPRET IT
 	}
 	return (0);
 }
@@ -203,13 +223,21 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 {
 	int		lendiff;
 	char	*ptr;
+	char	*dupcomm;
 
 	if (token != 'w' && token != 'c')
-		return (ft_strdup(comm));//protect
+	{
+		dupcomm = ft_strdup(comm);
+		if (!dupcomm)
+			ft_exit(NULL, 2, vars);
+		return (dupcomm);
+	}
 	lendiff = - 2 * ft_countquotes(comm); //number of quotes
 	lendiff = ft_lenvars_clean(comm, vars); //difference when substituting vars
 	lendiff += -ft_countspecial(comm);//difference when substituting special chars
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1)); // protect
+	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1));
+	if (!ptr)
+		ft_exit(NULL, 2, vars);
 	ft_copyclean(ptr, comm, vars);
 	return (ptr);
 }
