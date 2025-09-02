@@ -59,33 +59,6 @@ int	ft_inenv(char *str, t_vars *vars)
 	return (0);
 }
 
-/*static void	exp_logic(t_vars *vars, char **arg, int mode)
-{
-	while (arg && *arg)
-	{
-		if (**arg != '?' && mode == 0)
-			vars->exit_status = 0;
-		if (ft_strchr(*arg, '='))
-		{
-			if (ft_strisalnum2(*arg) == 0 && **arg != '?')
-			{
-				ft_printerror(vars, *arg);
-				arg++;
-				continue ;
-			}
-			if (ft_inenv(*arg, vars))
-				ft_subsenv(*arg, vars);
-			else
-				ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(*arg)));
-			if (mode == 1)
-				break ;
-		}
-		else
-			ft_printerror(vars, *arg);
-		arg++;
-	}
-}*/
-
 static void	exp_logic(t_vars *vars, char **arg, int mode)
 {
 	while (arg && *arg)

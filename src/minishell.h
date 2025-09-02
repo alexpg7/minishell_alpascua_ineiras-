@@ -166,15 +166,6 @@ void		ft_init(t_vars *vars, char **envp);
 int			exitstatus2(int status);
 void		ft_printexit(int ex, int index, t_vars *vars);
 
-// EXEC FIRST
-int			ft_execfirst(t_command *comm, int *pid, int **pip, t_vars *vars);
-
-// EXEC BETWEEN
-int			ft_execbetween(t_command *comm, int *pid, int **pip, t_vars *vars);
-
-// EXEC LAST
-int			ft_execlast(t_command *comm, int *pid, int **pip, t_vars *vars);
-
 // NEW EXECUTION
 void		ft_execute2(t_input **input, t_vars *vars);
 void		ft_new_exec(t_input *input, t_vars *vars);
@@ -182,7 +173,6 @@ int			ft_heredoc(char *lim, char *path);
 char		*ft_sufix(char *path, int tag);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);
-void		ft_execmore(t_command *command, t_vars *vars);
 void		ft_waitall(t_input **input, int len, t_vars *vars);
 void		ft_new_execmore(t_input **input, t_vars *vars);
 void		ft_makeheredoc(t_input *input, int tag, t_vars *vars);
