@@ -19,3 +19,17 @@ void	ft_printerror(t_vars *vars, char *arg)
 	ft_putchar_fd('\n', 2);
 	vars->exit_status = 1;
 }
+
+void	ft_env_export(t_vars *vars)
+{
+	t_list	*lst;
+
+	lst = vars->env->next;
+	while (lst)
+	{
+		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
+			ft_printf("%s\n", (char *)lst->content);
+		lst = lst->next;
+	}
+	vars->exit_status = 0;
+}

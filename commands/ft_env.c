@@ -19,8 +19,11 @@ void	ft_env(t_vars *vars)
 	lst = vars->env->next;
 	while (lst)
 	{
-		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
-			ft_printf("%s\n", (char *)lst->content);
+		if (ft_strchr(lst->content, '='))
+		{
+			if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
+				ft_printf("%s\n", (char *)lst->content);
+		}
 		lst = lst->next;
 	}
 	vars->exit_status = 0;

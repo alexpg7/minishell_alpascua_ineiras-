@@ -33,7 +33,7 @@ static void	ft_subsenv(char *str, t_vars *vars)
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
+		if (ft_strncmp(str, env->content, ft_varlen2(str) + 0) == 0)
 		{
 			free(env->content);
 			if (*str != '?')
@@ -52,14 +52,14 @@ int	ft_inenv(char *str, t_vars *vars)
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen2(str) + 1) == 0)
+		if (ft_strncmp(str, env->content, ft_varlen2(str) + 0) == 0)
 			return (1);
 		env = env->next;
 	}
 	return (0);
 }
 
-static void	exp_logic(t_vars *vars, char **arg, int mode)
+/*static void	exp_logic(t_vars *vars, char **arg, int mode)
 {
 	while (arg && *arg)
 	{
@@ -84,13 +84,40 @@ static void	exp_logic(t_vars *vars, char **arg, int mode)
 			ft_printerror(vars, *arg);
 		arg++;
 	}
+}*/
+
+static void	exp_logic(t_vars *vars, char **arg, int mode)
+{
+	while (arg && *arg)
+	{
+		if (**arg != '?' && mode == 0)
+			vars->exit_status = 0;
+		if (ft_strisalnum2(*arg) == 1 || **arg == '?')
+		{
+			if (ft_strisalnum2(*arg) == 0 && **arg != '?')
+			{
+				ft_printerror(vars, *arg);
+				arg++;
+				continue ;
+			}
+			if (ft_inenv(*arg, vars))
+				ft_subsenv(*arg, vars);
+			else
+				ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(*arg)));
+			if (mode == 1)
+				break ;
+		}
+		else
+			ft_printerror(vars, *arg);
+		arg++;
+	}
 }
 
 void	ft_export(t_vars *vars, char **arg, int mode)
 {
 	if (!(*arg))
 	{
-		ft_env(vars);
+		ft_env_export(vars);
 		return ;
 	}
 	if (**arg != '?' && mode == 0)
