@@ -28,6 +28,10 @@ int	ft_isspecial2(char *c)
 			return ('\f');
 		else if (c[1] == 'v')
 			return ('\v');
+		else if (c[1] == '\"')
+			return ('\"');
+		else if (c[1] == '\'')
+			return ('\'');
 	}
 	return (0);
 }

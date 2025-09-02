@@ -19,7 +19,7 @@ char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
 		*i = *i + 1;
 		return (src[*i - 1]);
 	}
-	if (src[*i] == '$')
+	else if (src[*i] == '$')
 		ft_copyvar(dest, src, i, vars);
 	else
 	{
@@ -37,7 +37,7 @@ char	ft_quoted1(char **dest, char *src, int *i)
 		*i = *i + 1;
 		return ('0');
 	}
-	if (ft_isspecial2(&src[*i]))
+	else if (ft_isspecial2(&src[*i]))
 	{
 		**dest = ft_isspecial2(&src[*i]);
 		*dest = *dest + 1;
@@ -59,13 +59,13 @@ char	ft_quoted2(char **dest, char *src, int *i, t_vars *vars)
 		*i = *i + 1;
 		return ('0');
 	}
-	if (ft_isspecial2(&src[*i]))
+	else if (ft_isspecial2(&src[*i]))
 	{
 		**dest = ft_isspecial2(&src[*i]);
 		*dest = *dest + 1;
 		*i = *i + 2;
 	}
-	if (src[*i] == '$')
+	else if (src[*i] == '$')
 		ft_copyvar(dest, src, i, vars);
 	else
 	{
