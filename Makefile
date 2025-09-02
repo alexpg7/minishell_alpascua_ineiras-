@@ -19,19 +19,6 @@ INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
 
-#  commands/ft_cd3.c \
-	execution/ft_execmore.c \
-	execution/ft_execute_first.c \
-	execution/ft_execute_between.c \
-	execution/ft_execute_last.c \
-	lib/libminishell/ft_splitmini.c \
-	lib/libminishell/ft_splitmini_utils.c \
-	lib/libminishell/createcommand_utils.c \
-	lib/libminishell/createcommand.c \
-	lib/libminishell/ft_searchdollar.c \
-	lib/libminishell/ft_searchdollar_utils.c \
-	lib/libminishell/remove_quotes.c \
-# Source and object files
 SRC = src/minishell.c \
 	src/ft_init.c \
 	src/signals.c  \
