@@ -12,30 +12,14 @@
 
 #include "../src/minishell.h"
 
-static int	ft_echonext(char **args, int i)
-{
-	char	c;
-
-	if (!args[i + 1])
-		return (0);
-	c = args[i + 1][0];
-	if (c == '|' || c == '<' || c == '>')
-		return (0);
-	else
-		return (1);
-}
-
 static void	ft_echo_util(char **args, int *i, int *flag, int mode)
 {
 	if (*flag == 1)
 		ft_putchar_fd(' ', 1);
 	ft_printf("%s", args[*i]);
 	*flag = 1;
-	if (!ft_echonext(args, *i))
-	{
-		if (mode != 1)
-			ft_putchar_fd('\n', 1);
-	}
+	if (args[*i + 1] == NULL && mode != 1)
+		ft_putchar_fd('\n', 1);
 }
 
 void	ft_echo(char **args)
@@ -48,8 +32,11 @@ void	ft_echo(char **args)
 	mode = 0;
 	flag = 0;
 	if (!args[i])
+	{
+		ft_putchar_fd('\n', 1);
 		return ;
-	if (ft_strncmp(args[i], "-n", 2) == 0 && ft_strlen(args[i]) == 2)
+	}
+	if (ft_strcmp(args[i], "-n") == 0)
 	{
 		i++;
 		mode = 1;
