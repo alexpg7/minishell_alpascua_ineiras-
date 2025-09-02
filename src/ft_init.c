@@ -37,6 +37,34 @@ void	ft_init2(t_vars *vars, t_list *env)
 	ft_lstadd_back(&vars->env, new);
 }
 
+char	*ft_shlvl(char *envp, t_vars *vars)
+{
+	int		num;
+	char	*aux;
+	char	*ret;
+
+	num = ft_atoi(ft_strchr(envp, '=') + 1);
+	aux = ft_itoa(num + 1);
+	if (!aux)
+		ft_exit(NULL, 2, vars);
+	ret = ft_strjoin("SHLVL=", aux);
+	free(aux);
+	if (!ret)
+		ft_exit(NULL, 2, vars);
+	return (ret);
+}
+
+void	ft_init1(t_list **env, t_vars *vars, char **aux)
+{
+	vars->input = NULL;
+	*aux = ft_strjoin("\"=\"", "");
+	if (!(*aux))
+		ft_exit(NULL, 2, vars);
+	*env = ft_lstnew(*aux);
+	if (!(*env))
+		ft_exit(NULL, 2, vars);
+}
+
 void	ft_init(t_vars *vars, char **envp)
 {
 	t_list	*env;
@@ -45,16 +73,13 @@ void	ft_init(t_vars *vars, char **envp)
 	int		i;
 
 	i = 0;
-	vars->input = NULL;
-	aux = ft_strjoin("\"=\"", "");
-	if (!aux)
-		ft_exit(NULL, 2, vars);
-	env = ft_lstnew(aux);
-	if (!env)
-		ft_exit(NULL, 2, vars);
+	ft_init1(&env, vars, &aux);
 	while (envp[i])
 	{
-		aux = ft_strjoin(envp[i], "");
+		if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
+			aux = ft_shlvl(envp[i], vars);
+		else
+			aux = ft_strjoin(envp[i], "");
 		if (!aux)
 			ft_exit(NULL, 2, vars);
 		new = ft_lstnew(aux);
