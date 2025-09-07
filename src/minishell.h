@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 18:07:52 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/07 11:15:35 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void		ft_printexit(int ex, int index, t_vars *vars);
 // NEW EXECUTION
 void		ft_execute2(t_input **input, t_vars *vars);
 void		ft_new_exec(t_input *input, t_vars *vars);
-int			ft_heredoc(char *lim, char *path);
+int			ft_heredoc(char *lim, char *path, t_vars *vars);
 char		*ft_sufix(char *path, int tag);
 char		*ft_findpath(char *comm, char **envp, t_vars *vars);
 int			exitstatus2(int status);

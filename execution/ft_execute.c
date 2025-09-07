@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:18:40 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/27 19:31:03 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/07 11:14:35 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_makeheredoc(t_input *input, int tag, t_vars *vars)
 		{
 			if (access(path, F_OK) == 0)
 				unlink(ft_sufix(vars->here, tag));
-			fd = ft_heredoc(input->word[i + 1], path);
+			fd = ft_heredoc(input->word[i + 1], path, vars);
 			if (fd == -1)
 				ft_exit(NULL, 1, vars);
 			if (close(fd) == -1)
@@ -83,6 +83,8 @@ void	ft_new_exec(t_input *input, t_vars *vars)
 			perror("fork");
 		else if (input->pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			ft_child_2(input, ft_sufix(vars->here, 0), vars);
 			ft_exit(NULL, vars->exit_status, vars);
 		}

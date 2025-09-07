@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_execmore.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:46:08 by alpascua          #+#    #+#             */
-/*   Updated: 2025/08/30 17:46:10 by alpascua         ###   ########.fr       */
+/*   Updated: 2025/09/07 11:08:25 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars)
 	}
 	else if (input->pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+    	signal(SIGQUIT, SIG_DFL);
 		ft_pipandclose(pip, fd, vars);
 		ft_child_3(input, ft_sufix(vars->here, num), vars);
 		ft_exit(NULL, vars->exit_status, vars);
@@ -127,4 +129,5 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	}
 	ft_waitall(input, vars->np + 1, vars);
+	ft_signal(PROMPT);
 }
