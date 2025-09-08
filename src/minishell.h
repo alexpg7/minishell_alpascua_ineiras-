@@ -131,6 +131,7 @@ char		*ft_pwd(char **comm, t_vars *vars);
 char		*ft_new_pwd(void);
 void		ft_env(t_vars *vars);
 void		ft_export(t_vars *vars, char **arg, int mode);
+int			ft_varlen2(char *str);
 void		ft_env_export(t_vars *vars);
 void		ft_printerror(t_vars *vars, char *arg);
 void		ft_echo(char **args);

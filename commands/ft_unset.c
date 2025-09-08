@@ -28,16 +28,21 @@ int	ft_strisalnum2(char *str)
 	return (1);
 }
 
-static void	ft_delete_env2(char *var, int len, t_vars *vars)
+static void	ft_delete_env2(char *var, t_vars *vars)
 {
 	t_list	*prev;
 	t_list	*env;
+	int		len1;
+	int		len2;
 
 	prev = vars->env;
 	env = vars->env->next;
 	while (env)
 	{
-		if (ft_strncmp(var, env->content, len) == 0)
+		len1 = ft_varlen2(var);
+		len2 = ft_varlen2(env->content);
+		len1 = len1 * (len1 > len2) + len2 * (len1 <= len2);
+		if (ft_strncmp(var, env->content, len1) == 0)
 		{
 			prev->next = env->next;
 			ft_lstdelone(env, &free);
@@ -50,10 +55,8 @@ static void	ft_delete_env2(char *var, int len, t_vars *vars)
 
 static void	ft_delete_env(char *var, t_vars *vars)
 {
-	int		len;
 	t_list	*env;
 
-	len = ft_strlen(var);
 	if (!ft_strisalnum2(var))
 	{
 		ft_putstr_fd("unset: ", 2);
@@ -62,13 +65,7 @@ static void	ft_delete_env(char *var, t_vars *vars)
 		return ;
 	}
 	env = vars->env;
-	if (ft_strncmp(env->content, var, len) == 0)
-	{
-		vars->env = env->next;
-		ft_lstdelone(env, &free);
-		return ;
-	}
-	ft_delete_env2(var, len, vars);
+	ft_delete_env2(var, vars);
 }
 
 void	ft_unset(char **args, t_vars *vars)

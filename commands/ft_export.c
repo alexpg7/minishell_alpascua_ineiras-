@@ -12,7 +12,7 @@
 
 #include "../src/minishell.h"
 
-static int	ft_varlen2(char *str)
+int	ft_varlen2(char *str)
 {
 	int	i;
 
@@ -29,11 +29,16 @@ static int	ft_varlen2(char *str)
 static void	ft_subsenv(char *str, t_vars *vars)
 {
 	t_list	*env;
+	int		len1;
+	int		len2;
 
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen2(str) + 0) == 0)
+		len1 = ft_varlen2(env->content);
+		len2 = ft_varlen2(str);
+		len1 = len1 * (len1 > len2) + len2 * (len1 <= len2);
+		if (ft_strncmp(str, env->content, len1) == 0)
 		{
 			free(env->content);
 			if (*str != '?')
@@ -48,11 +53,16 @@ static void	ft_subsenv(char *str, t_vars *vars)
 int	ft_inenv(char *str, t_vars *vars)
 {
 	t_list	*env;
+	int		len1;
+	int		len2;
 
 	env = vars->env;
 	while (env)
 	{
-		if (ft_strncmp(str, env->content, ft_varlen2(str) + 0) == 0)
+		len1 = ft_varlen2(env->content);
+		len2 = ft_varlen2(str);
+		len1 = len1 * (len1 > len2) + len2 * (len1 <= len2);
+		if (ft_strncmp(str, env->content, len1) == 0)
 			return (1);
 		env = env->next;
 	}
