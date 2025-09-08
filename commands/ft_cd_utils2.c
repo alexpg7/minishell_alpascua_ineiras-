@@ -66,5 +66,7 @@ void	ft_cd_point(t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
 		ft_create_var(vars, pwd, "PWD=");
+	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
+		ft_create_var(vars, pwd, "OLDPWD=");
 	free(pwd);
 }
