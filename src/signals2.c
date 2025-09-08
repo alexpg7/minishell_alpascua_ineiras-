@@ -17,9 +17,3 @@ void	ft_sigint_heredoc(int sig)
 	g_signal = sig;
 	ioctl(0, TIOCSTI, "\n");
 }
-
-void	ft_sigquit_heredoc(int sig)
-{
-	g_signal = sig;
-	rl_replace_line("", 0);
-}

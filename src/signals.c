@@ -21,11 +21,6 @@ void	ft_sigint_prompt(int sig)
 	rl_redisplay();
 }
 
-void	ft_sigquit_prompt(int sig)
-{
-	g_signal = sig;
-}
-
 void	ft_sigint_wait(int sig)
 {
 	g_signal = sig;
@@ -42,7 +37,7 @@ void	ft_signal(int code)
 	if (code == PROMPT)
 	{
 		signal(SIGINT, &ft_sigint_prompt);
-		signal(SIGQUIT, &ft_sigquit_prompt);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (code == WAIT)
 	{
@@ -52,6 +47,6 @@ void	ft_signal(int code)
 	else if (code == HEREDOC)
 	{
 		signal(SIGINT, &ft_sigint_heredoc);
-		signal(SIGQUIT, &ft_sigquit_heredoc);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

@@ -95,7 +95,6 @@ void		ft_free_both(char *str1, char *str2);
 // SIGNALS
 void		ft_signal(int code);
 void		ft_sigint_heredoc(int sig);
-void		ft_sigquit_heredoc(int sig);
 
 // SPLITMINI2
 char		**ft_splitmini2(char *str, t_vars *vars);
