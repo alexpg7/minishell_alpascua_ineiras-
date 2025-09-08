@@ -48,6 +48,7 @@ static void	ft_printerr(char *name, char *error)
 
 void	ft_printexit(int ex, int index, t_vars *vars)
 {
+
 	if (ex == 1 || ex == 2)
 		ft_printerr(ft_firstcom(vars->input[index]), "command failed.");
 	if (ex == 126)

@@ -50,7 +50,7 @@ char	*minus_dir(char *dir, t_vars *vars)
 	size = ft_strlen(dir) - 1;
 	if (size <= 5 || slash_count(dir) == 1)
 	{
-		content = ft_strjoin("PWD=", "/");
+		content = ft_strjoin("", "/");
 		if (!content)
 			ft_exit(NULL, 1, vars);
 		return (content);
