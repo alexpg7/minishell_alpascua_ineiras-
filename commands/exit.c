@@ -22,6 +22,8 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 {
 	int	i;
 
+	//if narg == 1 or 2, do, else error.
+	//return as exit status the first argument, if NaN exit=2
 	if (input)
 		free(input);
 	rl_clear_history();
@@ -36,7 +38,7 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	free(vars->here);
 	if (ret == 2)
 	{
-		ft_putstr_fd("malloc error\n", 2);
+		ft_putstr_fd("malloc error\n", 2);//remove from all files
 		exit(1);
 	}
 	if (vars->input)

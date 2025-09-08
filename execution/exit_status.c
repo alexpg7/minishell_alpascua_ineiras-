@@ -37,38 +37,25 @@ int	exitstatus2(int status)
 	return (status);
 }
 
-static void	ft_printexit2(int ex, int index, t_vars *vars)
+static void	ft_printerr(char *name, char *error)
 {
-	if (ex == 130)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": process interrupted.\n", 2);
-	}
-	if (ex == 131)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": process quitted.\n", 2);
-	}
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(name, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
 }
 
 void	ft_printexit(int ex, int index, t_vars *vars)
 {
-	if (ex != 0)
-		ft_putstr_fd("minishell: ", 2);
 	if (ex == 1 || ex == 2)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": command failed.\n", 2);
-	}
+		ft_printerr(ft_firstcom(vars->input[index]), "command failed.");
 	if (ex == 126)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": could not access.\n", 2);
-	}
+		ft_printerr(ft_firstcom(vars->input[index]), "could not access.");
 	if (ex == 127)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": command not found.\n", 2);
-	}
-	ft_printexit2(ex, index, vars);
+		ft_printerr(ft_firstcom(vars->input[index]), "command not found.");
+	if (ex == 130)
+		ft_printerr(ft_firstcom(vars->input[index]), "process interrupted.");
+	if (ex == 131)
+		ft_printerr(ft_firstcom(vars->input[index]), "process quitted.");
 }
