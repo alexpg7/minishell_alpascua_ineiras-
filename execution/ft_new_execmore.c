@@ -90,7 +90,7 @@ void	ft_while_execmore(t_input **input, int np, t_vars *vars)
 		if (pipe(vars->pip[i]) == -1)
 		{
 			perror("pipe");
-			ft_exit(NULL, 2, vars);
+			ft_exit(NULL, 1, vars);
 		}
 		ft_makeheredoc(input[i], i, vars);
 		ft_new_execmore2(i, &vars->pip[i], 2, vars);
@@ -107,11 +107,11 @@ void	ft_new_execmore(t_input **input, t_vars *vars)
 {
 	vars->pip = ft_pipalloc(vars->np);
 	if (!vars->np)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	if (pipe(vars->pip[0]) == -1)
 	{
 		perror("pipe");
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	}
 	ft_makeheredoc(input[0], 0, vars);
 	ft_new_execmore2(0, &vars->pip[0], 1, vars);

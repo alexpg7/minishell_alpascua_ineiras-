@@ -91,7 +91,7 @@ char	**ft_splitmini2_2(int words, char *str, t_vars *vars)
 
 	ptr = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!ptr)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	i = 0;
 	j = 0;
 	while (i < words)

@@ -29,7 +29,7 @@ void	ft_newexit(t_vars *vars)
 		ft_exit(NULL, 1, vars);
 	com = ft_strjoin("?=", num);
 	if (!com)
-		ft_exit(num, 2, vars);
+		ft_exit(num, 1, vars);
 	free(num);
 	if (!com)
 		ft_exit(NULL, 1, vars);

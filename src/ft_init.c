@@ -24,13 +24,13 @@ void	ft_init2(t_vars *vars, t_list *env)
 	vars->pip = NULL;
 	vars->here = ft_strdup(".here_doc_000.tmp");
 	if (!vars->here)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	vars->ts = ft_lstnew_lst(NULL, NULL);
 	if (!vars->ts)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	aux = ft_strjoin("?=0", "");
 	if (!aux)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	new = ft_lstnew(aux);
 	if (!new)
 		ft_lstclear(&vars->env, &free);
@@ -46,11 +46,11 @@ char	*ft_shlvl(char *envp, t_vars *vars)
 	num = ft_atoi(ft_strchr(envp, '=') + 1);
 	aux = ft_itoa(num + 1);
 	if (!aux)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	ret = ft_strjoin("SHLVL=", aux);
 	free(aux);
 	if (!ret)
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	return (ret);
 }
 
@@ -59,10 +59,10 @@ void	ft_init1(t_list **env, t_vars *vars, char **aux)
 	vars->input = NULL;
 	*aux = ft_strjoin("\"=\"", "");
 	if (!(*aux))
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 	*env = ft_lstnew(*aux);
 	if (!(*env))
-		ft_exit(NULL, 2, vars);
+		ft_exit(NULL, 1, vars);
 }
 
 void	ft_init(t_vars *vars, char **envp)
@@ -81,7 +81,7 @@ void	ft_init(t_vars *vars, char **envp)
 		else
 			aux = ft_strjoin(envp[i], "");
 		if (!aux)
-			ft_exit(NULL, 2, vars);
+			ft_exit(NULL, 1, vars);
 		new = ft_lstnew(aux);
 		if (!new)
 			ft_lstclear(&env, &free);
