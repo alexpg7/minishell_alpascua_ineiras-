@@ -17,7 +17,7 @@ static void	ft_message(char *lim, t_vars *vars)
 	ft_putstr_fd("warning: heredoc finished with EOF instead of \"", 2);
 	ft_putstr_fd(lim, 2);
 	ft_putstr_fd("\"\n", 2);
-	vars->exit_status = 130;
+	vars->exit_status = 0;
 }
 
 char	*ft_sufix(char *path, int tag)

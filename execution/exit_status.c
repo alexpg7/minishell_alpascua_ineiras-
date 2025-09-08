@@ -37,6 +37,20 @@ int	exitstatus2(int status)
 	return (status);
 }
 
+static void	ft_printexit2(int ex, int index, t_vars *vars)
+{
+	if (ex == 130)
+	{
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
+		ft_putstr_fd(": process interrupted.\n", 2);
+	}
+	if (ex == 131)
+	{
+		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
+		ft_putstr_fd(": process quitted.\n", 2);
+	}
+}
+
 void	ft_printexit(int ex, int index, t_vars *vars)
 {
 	if (ex != 0)
@@ -56,9 +70,5 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
 		ft_putstr_fd(": command not found.\n", 2);
 	}
-	if (ex == 130)
-	{
-		ft_putstr_fd(ft_firstcom(vars->input[index]), 2);
-		ft_putstr_fd(": process interrupted.\n", 2);
-	}
+	ft_printexit2(ex, index, vars);
 }
