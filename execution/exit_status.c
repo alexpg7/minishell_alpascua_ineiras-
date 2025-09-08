@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../src/minishell.h"
 
 char	*ft_firstcom(t_input *input)
@@ -29,7 +28,7 @@ char	*ft_firstcom(t_input *input)
 
 int	exitstatus2(int status)
 {
-	int sig;
+	int	sig;
 
 	sig = status & 0x7F;
 	if (sig != 0)

@@ -73,7 +73,7 @@ void	ft_new_execmore2(int num, int **pip, int fd, t_vars *vars)
 	else if (input->pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-    	signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		ft_pipandclose(pip, fd, vars);
 		ft_child_3(input, ft_sufix(vars->here, num), vars);
 		ft_exit(NULL, vars->exit_status, vars);
