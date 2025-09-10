@@ -70,20 +70,28 @@ int	ft_lenvars_clean(char *comm, t_vars *vars)
 {
 	int		i;
 	int		len;
+	char	c;
 
 	i = 0;
 	len = 0;
+	c = '0';
 	while (comm[i])
 	{
-		if (comm[i] == '\'' && comm[i - (i != 0)] != '\\')
+		if (comm[i] == '\'' && c == '0' && comm[i - (i != 0)] != '\\')
 			ft_nextword2(comm, &i);
 		else if (comm[i] == '$')
 		{
 			len += ft_varlen_clean(&comm[i + 1], vars) - 1;
 			ft_nextvar(comm, &i);
 		}
-		if (comm[i])
+		else if (comm[i])
+		{
+			if (comm[i] == '\"' && comm[i - (i != 0)] != '\\' && c == '0')
+				c = '\"';
+			else if (comm[i] == '\"' && comm[i - (i != 0)] != '\\' && c == '\"')
+				c = '0';
 			i++;
+		}
 	}
 	return (len);
 }
