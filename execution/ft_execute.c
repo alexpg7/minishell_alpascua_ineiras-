@@ -64,7 +64,6 @@ void	ft_child_2(t_input *input, char *here, t_vars *vars)
 	{
 		vars->envp = ft_getenv(vars->env);
 		path = ft_findpath(input->comm[0], vars->envp, vars);
-		ft_printf("%s\n", path);
 		if (!vars->envp || !path)
 			ft_exit(path, NULL, vars->exit_status, vars);
 		if (execve(path, input->comm, vars->envp) == -1)

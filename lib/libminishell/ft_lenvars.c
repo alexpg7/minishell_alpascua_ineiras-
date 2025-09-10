@@ -86,10 +86,8 @@ int	ft_lenvars_clean(char *comm, t_vars *vars)
 		}
 		else if (comm[i])
 		{
-			if (comm[i] == '\"' && comm[i - (i != 0)] != '\\' && c == '0')
-				c = '\"';
-			else if (comm[i] == '\"' && comm[i - (i != 0)] != '\\' && c == '\"')
-				c = '0';
+			if (comm[i] == '\"' && comm[i - (i != 0)] != '\\')
+				c = '\"' * (c == '0') + '0' * (c == '\"');
 			i++;
 		}
 	}

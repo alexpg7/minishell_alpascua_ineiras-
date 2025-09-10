@@ -96,5 +96,3 @@ void	ft_exitbuiltin(char *ptr, char **args, int ret, t_vars *vars)
 	ft_putstr_fd("exit\n", 2);
 	ft_exit(ptr, args, ret, vars);
 }
-
-

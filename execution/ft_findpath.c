@@ -53,22 +53,12 @@ static char	*ft_checkpath(char **paths, char *comm, int *ret)
 	return (NULL);
 }
 
-char	*ft_findpath(char *comm, char **envp, t_vars *vars)
+static char	*ft_findpath2(char *comm2, char **envp, t_vars *vars)
 {
-	char	**path;
-	char	*ptr;
-	char	*comm2;
 	int		ret;
+	char	*ptr;
+	char	**path;
 
-	comm2 = ft_strdup(comm);//protect
-	if (access(comm2, F_OK) == 0)
-	{
-		if (access(comm2, X_OK) == 0)
-			return (comm2);
-		else
-			vars->exit_status = 126;
-		return (NULL);
-	}
 	ret = 0;
 	path = ft_split(ft_path2(envp), ':');
 	if (!path)
@@ -79,4 +69,22 @@ char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 		ft_exit(comm2, NULL, ret, vars);
 	free(comm2);
 	return (ptr);
+}
+
+char	*ft_findpath(char *comm, char **envp, t_vars *vars)
+{
+	char	*comm2;
+
+	comm2 = ft_strdup(comm);
+	if (!comm2)
+		ft_exit(NULL, NULL, 1, vars);
+	if (access(comm2, F_OK) == 0)
+	{
+		if (access(comm2, X_OK) == 0)
+			return (comm2);
+		else
+			vars->exit_status = 126;
+		return (NULL);
+	}
+	return (ft_findpath2(comm2, envp, vars));
 }
