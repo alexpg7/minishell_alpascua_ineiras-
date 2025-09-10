@@ -28,9 +28,9 @@ void	ft_makeheredoc(t_input *input, int tag, t_vars *vars)
 				unlink(ft_sufix(vars->here, tag));
 			fd = ft_heredoc(input->word[i + 1], path, vars);
 			if (fd == -1)
-				ft_exit(NULL, 1, vars);
+				ft_exit(NULL, NULL, 1, vars);
 			if (close(fd) == -1)
-				ft_exit(NULL, 1, vars);
+				ft_exit(NULL, NULL, 1, vars);
 		}
 		i++;
 	}
@@ -65,9 +65,9 @@ void	ft_child_2(t_input *input, char *here, t_vars *vars)
 		vars->envp = ft_getenv(vars->env);
 		path = ft_findpath(input->comm[0], vars->envp, vars);
 		if (!vars->envp || !path)
-			ft_exit(path, vars->exit_status, vars);
+			ft_exit(path, NULL, vars->exit_status, vars);
 		if (execve(path, input->comm, vars->envp) == -1)
-			ft_exit(path, 1, vars);
+			ft_exit(path, NULL, 1, vars);
 	}
 }
 
@@ -86,7 +86,7 @@ void	ft_new_exec(t_input *input, t_vars *vars)
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			ft_child_2(input, ft_sufix(vars->here, 0), vars);
-			ft_exit(NULL, vars->exit_status, vars);
+			ft_exit(NULL, NULL, vars->exit_status, vars);
 		}
 		else
 			ft_waitall(&input, 1, vars);

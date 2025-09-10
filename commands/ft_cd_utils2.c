@@ -20,7 +20,7 @@ void	ft_create_var(t_vars *vars, char *pwd, char *var_name)
 	if (!tmp)
 	{
 		free(pwd);
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	}
 	ft_export(vars, &tmp, 1);
 	free(tmp);
@@ -45,13 +45,13 @@ void	ft_free_both(char *str1, char *str2)
 void	ft_set_both(t_vars *vars, char *pwd)
 {
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
 		ft_create_var(vars, pwd, "OLDPWD=");
 	free(pwd);
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
 		ft_create_var(vars, pwd, "PWD=");
 	free(pwd);
@@ -63,7 +63,7 @@ void	ft_cd_point(t_vars *vars)
 
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
 		ft_create_var(vars, pwd, "PWD=");
 	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)

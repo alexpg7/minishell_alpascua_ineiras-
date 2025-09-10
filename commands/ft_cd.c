@@ -18,7 +18,7 @@ static char	*ft_set_path(t_vars *vars, char *path, char **argv)
 
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_strncmp(argv[1], "/", 1) == 0 && ft_strlen(argv[1]) == 1)
 		path = ft_strjoin("", argv[1]);
 	else if (ft_strncmp(argv[1], "/", 1) == 0 && ft_strlen(argv[1]) > 1)
@@ -36,20 +36,20 @@ int	ft_cd_move_dir(t_vars *vars, char **argv, char *path)
 
 	path = ft_set_path(vars, path, argv);
 	if (!path)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	directory = opendir(path);
 	if (!directory)
 		return (ft_free_minus_one(path));
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "OLDPWD=") != 0)
 		ft_create_var(vars, pwd, "OLDPWD=");
 	chdir(path);
 	ft_free_both(path, pwd);
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (ft_setenv_var(vars, pwd, "PWD=") != 0)
 		ft_create_var(vars, pwd, "PWD=");
 	closedir(directory);
@@ -88,7 +88,7 @@ void	ft_cd_not_args(t_vars *vars)
 	}
 	pwd = ft_new_pwd();
 	if (!pwd)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	if (chdir(home + 5) == -1)
 	{
 		ft_path_fail(vars, pwd, "wrong path set" );

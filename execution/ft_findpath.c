@@ -70,10 +70,10 @@ char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 	ret = 0;
 	path = ft_split(ft_path2(envp), ':');
 	if (!path)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	ptr = ft_checkpath(path, comm, &ret);
 	ft_freestrarr(&path, 1);
 	if (ret != 0)
-		ft_exit(NULL, ret, vars);
+		ft_exit(NULL, NULL, ret, vars);
 	return (ptr);
 }

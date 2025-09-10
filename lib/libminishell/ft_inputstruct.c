@@ -60,12 +60,12 @@ static void	ft_fillinput2(t_input ***input, char **comm, int i, t_vars *vars)
 	size = ft_comsize(comm);
 	(*input)[i] = (t_input *)malloc(sizeof(t_input));
 	if (!(*input)[i])
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	(*input)[i]->comm = NULL;
 	(*input)[i]->word = (char **)malloc(sizeof(char *) * (size + 1));
 	(*input)[i]->token = (char *)malloc(sizeof(char) * (size + 1));
 	if (!(*input)[i]->word || !(*input)[i]->token)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	ft_copycommand((*input + i), comm, size, vars);
 }
 
@@ -111,7 +111,7 @@ t_input	**ft_inputstruct(char **comm, t_vars *vars)
 	if (!input)
 	{
 		ft_freestrarr(&comm, 0);
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	}
 	ft_fillinput(&input, comm, vars);
 	return (input);

@@ -18,12 +18,10 @@ void	ft_freeall(t_vars *vars)
 		free(vars->prompt);
 }
 
-void	ft_exit(char *input, int ret, t_vars *vars)
+void	ft_exit2(char *input, int ret, t_vars *vars)
 {
 	int	i;
 
-	//if narg == 1 or 2, do, else error.
-	//return as exit status the first argument, if NaN exit=2
 	if (input)
 		free(input);
 	rl_clear_history();
@@ -36,14 +34,62 @@ void	ft_exit(char *input, int ret, t_vars *vars)
 	while (++i < vars->np)
 		unlink(ft_sufix(vars->here, i));
 	free(vars->here);
-	if (ret == 2)
-	{
-		ft_putstr_fd("malloc error\n", 2);//remove from all files
-		exit(1);
-	}
 	if (vars->input)
 		ft_freeinput(&vars->input, vars->np, vars);
 	if (vars->pip)
 		ft_freepip(vars->pip, vars->np, vars->np + 1);
 	exit(ret);
+}
+
+int	ft_checknum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_atoi255(char *str)
+{
+	int	num;
+
+	num = ft_atoi(str);
+	num = num % 255;
+	return (num);
+}
+
+void	ft_exit(char *input, char **args, int ret, t_vars *vars)
+{
+	int	num;
+
+	if (args == NULL)
+		ft_exit2(input, ret, vars);
+	else if (args[0] != NULL)
+	{
+		if (args[1] == NULL)
+		{
+			if (ft_checknum(args[0]) == 1)
+			{
+				num = ft_atoi255(args[0]);
+				ft_exit2(input, num, vars);
+			}
+			else
+			{
+				ft_putstr_fd("exit: not a valid argument.\n", 2);
+				ft_exit2(input, 2, vars);
+			}
+		}
+		else
+			ft_putstr_fd("exit: too many arguments.\n", 2);
+	}
 }

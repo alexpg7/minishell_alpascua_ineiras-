@@ -26,13 +26,13 @@ void	ft_newexit(t_vars *vars)
 	}
 	num = ft_itoa(vars->exit_status);
 	if (!num)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	com = ft_strjoin("?=", num);
 	if (!com)
-		ft_exit(num, 1, vars);
+		ft_exit(num, NULL, 1, vars);
 	free(num);
 	if (!com)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	ft_export(vars, &com, 1);
 }
 
@@ -127,11 +127,11 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	if (!vars->prompt)
 	{
 		perror("malloc");
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	}
 	input = readline(vars->prompt);
 	if (!input)
-		ft_exit(input, 0, vars);
+		ft_exit(input, NULL, 0, vars);
 	do_stuff(input, vars);
 	free(vars->prompt);
 }

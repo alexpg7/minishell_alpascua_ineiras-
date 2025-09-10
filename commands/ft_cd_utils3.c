@@ -52,14 +52,14 @@ char	*minus_dir(char *dir, t_vars *vars)
 	{
 		content = ft_strjoin("", "/");
 		if (!content)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 		return (content);
 	}
 	while (dir[size - i] && ft_strncmp(&dir[size - i], "/", 1) != 0)
 		i++;
 	content = malloc(sizeof(char) * (size + 1));
 	if (!content)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	ft_strlcpy(content, dir, (size - i + 1));
 	return (content);
 }

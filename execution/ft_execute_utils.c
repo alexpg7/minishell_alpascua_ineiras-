@@ -18,14 +18,14 @@ void	ft_openheredoc(char *path, t_input *input, int i, t_vars *vars)
 	{
 		input->last_in = open(path, O_RDONLY);
 		if (input->last_in == -1)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 		if (dup2(input->last_in, STDIN_FILENO) == -1)
 		{
 			close(input->last_in);
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 		}
 		if (close(input->last_in) == -1)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 	}
 }
 
@@ -84,7 +84,7 @@ int	ft_builtin_2(t_input *input, t_vars *vars)
 int	ft_builtin_n(t_input *input, t_vars *vars)
 {
 	if (!input->comm)
-		ft_exit(NULL, 0, vars);
+		ft_exit(NULL, NULL, 0, vars);
 	if (ft_strcmp("cd", input->comm[0]) == 0)
 		ft_cd(vars, input->comm);
 	else if (ft_strcmp("unset", input->comm[0]) == 0)
@@ -92,7 +92,7 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 	else if (ft_strcmp("export", input->comm[0]) == 0)
 		ft_export(vars, input->comm + 1, 0);
 	else if (ft_strcmp("exit", input->comm[0]) == 0)
-		ft_exit(NULL, 0, vars);
+		ft_exit(NULL, input->comm + 1, 0, vars);
 	else
 		return (0);
 	return (1);
@@ -111,7 +111,7 @@ void	ft_command_array(t_input *input, t_vars *vars)
 	pos = 0;
 	input->comm = malloc(sizeof(char *) * (n + 1));
 	if (!input->comm)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	while (input->token[i])
 	{
 		if (input->token[i] == 'c')

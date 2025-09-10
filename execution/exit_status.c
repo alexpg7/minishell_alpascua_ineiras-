@@ -48,15 +48,16 @@ static void	ft_printerr(char *name, char *error)
 
 void	ft_printexit(int ex, int index, t_vars *vars)
 {
-
 	if (ex == 1 || ex == 2)
 		ft_printerr(ft_firstcom(vars->input[index]), "command failed.");
-	if (ex == 126)
+	else if (ex == 126)
 		ft_printerr(ft_firstcom(vars->input[index]), "could not access.");
-	if (ex == 127)
+	else if (ex == 127)
 		ft_printerr(ft_firstcom(vars->input[index]), "command not found.");
-	if (ex == 130)
+	else if (ex == 130)
 		ft_printerr(ft_firstcom(vars->input[index]), "process interrupted.");
-	if (ex == 131)
+	else if (ex == 131)
 		ft_printerr(ft_firstcom(vars->input[index]), "process quitted.");
+	else if (ex != 0)
+		ft_printerr(ft_firstcom(vars->input[index]), "signal recieved.");
 }

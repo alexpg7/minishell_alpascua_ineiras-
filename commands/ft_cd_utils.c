@@ -26,7 +26,7 @@ int	ft_setenv_var(t_vars *vars, char *pwd, char *var_name)
 		free(env->content);
 		env->content = ft_strjoin(var_name, pwd);
 		if (!env->content)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 		return (0);
 	}
 	return (1);

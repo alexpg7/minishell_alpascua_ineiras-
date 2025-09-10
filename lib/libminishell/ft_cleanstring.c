@@ -114,7 +114,7 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 	{
 		dupcomm = ft_strdup(comm);
 		if (!dupcomm)
-			ft_exit(NULL, 1, vars);
+			ft_exit(NULL, NULL, 1, vars);
 		return (dupcomm);
 	}
 	lendiff = -2 * ft_countquotes(comm);
@@ -122,7 +122,7 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 	lendiff += -ft_countspecial(comm);
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1));
 	if (!ptr)
-		ft_exit(NULL, 1, vars);
+		ft_exit(NULL, NULL, 1, vars);
 	ft_copyclean(ptr, comm, vars);
 	return (ptr);
 }
