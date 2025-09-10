@@ -92,4 +92,6 @@ void	ft_exit(char *input, char **args, int ret, t_vars *vars)
 		else
 			ft_putstr_fd("exit: too many arguments.\n", 2);
 	}
+	else
+		ft_exit2(input, ret, vars);
 }
