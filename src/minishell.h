@@ -125,7 +125,8 @@ char		*ft_searchvar(char *comm, int len, t_vars *vars);
 void		ft_copyvar(char **dest, char *src, int *i, t_vars *vars);
 
 // COMMANDS
-void		ft_exit(char *input, char **args, int ret, t_vars *vars);
+void		ft_exit(char *ptr, char **args, int ret, t_vars *vars);
+void		ft_exitbuiltin(char *ptr, char **args, int ret, t_vars *vars);
 char		*ft_pwd(char **comm, t_vars *vars);
 char		*ft_new_pwd(void);
 void		ft_env(t_vars *vars);

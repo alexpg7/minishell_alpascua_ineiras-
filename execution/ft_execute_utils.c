@@ -92,7 +92,7 @@ int	ft_builtin_n(t_input *input, t_vars *vars)
 	else if (ft_strcmp("export", input->comm[0]) == 0)
 		ft_export(vars, input->comm + 1, 0);
 	else if (ft_strcmp("exit", input->comm[0]) == 0)
-		ft_exit(NULL, input->comm + 1, 0, vars);
+		ft_exitbuiltin(NULL, input->comm + 1, 0, vars);
 	else
 		return (0);
 	return (1);
