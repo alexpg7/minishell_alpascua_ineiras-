@@ -59,7 +59,7 @@ int	ft_atoi255(char *str)
 	int	num;
 
 	num = ft_atoi(str);
-	num = num % 255;
+	num = num % 256;
 	return (num);
 }
 
