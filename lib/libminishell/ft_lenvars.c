@@ -79,7 +79,7 @@ int	ft_lenvars_clean(char *comm, t_vars *vars)
 	{
 		if (comm[i] == '\'' && c == '0' && comm[i - (i != 0)] != '\\')
 			ft_nextword2(comm, &i);
-		else if (comm[i] == '$')
+		else if (comm[i] == '$' && ft_isalnum2(comm[i + 1]))
 		{
 			len += ft_varlen_clean(&comm[i + 1], vars) - 1;
 			ft_nextvar(comm, &i);
