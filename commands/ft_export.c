@@ -75,7 +75,7 @@ static void	exp_logic(t_vars *vars, char **arg, int mode)
 	{
 		if (**arg != '?' && mode == 0)
 			vars->exit_status = 0;
-		if (ft_strisalnum2(*arg) == 1 || **arg == '?')
+		if (ft_strisalnum2(*arg) == 1 || (**arg == '?' && mode == 1))
 		{
 			if (ft_strisalnum2(*arg) == 0 && **arg != '?')
 			{
