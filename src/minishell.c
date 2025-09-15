@@ -122,6 +122,8 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	ft_signal(PROMPT);
 	g_signal = 0;
 	prompt = getcwd(NULL, 0);
+	if (!prompt)
+		ft_exit(NULL, NULL, 1, vars);
 	vars->prompt = ft_strjoin(prompt, "-> ");
 	free(prompt);
 	if (!vars->prompt)
@@ -131,7 +133,7 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	}
 	input = readline(vars->prompt);
 	if (!input)
-		ft_exit(input, NULL, 0, vars);
+		ft_exitbuiltin(input, NULL, vars->exit_status, vars);
 	do_stuff(input, vars);
 	free(vars->prompt);
 }
