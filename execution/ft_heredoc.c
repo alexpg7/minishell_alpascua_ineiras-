@@ -31,6 +31,7 @@ char	*ft_sufix(char *path, int tag)
 int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 {
 	char	*text;
+	char	*aux;
 
 	text = readline("heredoc> ");
 	if (!text)
@@ -38,17 +39,25 @@ int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 		ft_message(lim, vars);
 		return (fd);
 	}
+	aux = ft_cleanstring(text, 'c', vars);
+	if (!aux)
+		ft_exit(NULL, NULL, 1, vars);
 	while (ft_strcmp(lim, text) != 0 && g_signal != SIGINT)
 	{
-		ft_putstr_fd(text, fd);
+		ft_putstr_fd(aux, fd);
 		ft_putchar_fd('\n', fd);
+		free(aux);
 		text = readline("heredoc> ");
 		if (!text)
 		{
 			ft_message(lim, vars);
 			return (fd);
 		}
+		aux = ft_cleanstring(text, 'c', vars);//only variables
+		if (!aux)
+			ft_exit(NULL, NULL, 1, vars);
 	}
+	free(aux);
 	if (g_signal == SIGINT)
 		unlink(path);
 	ft_signal(WAIT);

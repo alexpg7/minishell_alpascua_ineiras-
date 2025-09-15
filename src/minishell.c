@@ -36,40 +36,6 @@ void	ft_newexit(t_vars *vars)
 	ft_export(vars, &com, 1);
 }
 
-/*void	ft_printcom(t_command *comm)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (comm[i].comm)
-	{
-		ft_printf("-PIPE %i:\n", i + 1);
-		j = 0;
-		while (comm[i].comm[j])
-		{
-			ft_printf("%s\n", comm[i].comm[j]);
-			j++;
-		}
-		ft_printf("-RED IN: %s, mode: %i\n", comm[i].infile, comm[i].hd);
-		ft_printf("-RED OUT: %s, mode: %i\n\n", comm[i].outfile, comm[i].ap);
-		i++;
-	}
-}
-
-void	ft_freecommand(t_command *command)/////////////////////////
-{
-	int	i;
-
-	i = 0;
-	while (command[i].comm)
-	{
-		free(command[i].comm);
-		i++;
-	}
-	free(command);
-}*/
-
 void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 {
 	int	i;
@@ -137,7 +103,7 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	}
 	input = readline(vars->prompt);
 	if (!input)
-		ft_exitbuiltin(input, NULL, vars->exit_status, vars);
+		ft_exitbuiltin(NULL, NULL, vars->exit_status, vars);
 	do_stuff(input, vars);
 	free(vars->prompt);
 	vars->prompt = NULL;
