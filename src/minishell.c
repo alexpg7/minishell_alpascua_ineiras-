@@ -123,7 +123,10 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	g_signal = 0;
 	prompt = getcwd(NULL, 0);
 	if (!prompt)
+	{
+		ft_putstr_fd("minishell: working directory not found\n", 2);
 		ft_exit(NULL, NULL, 1, vars);
+	}
 	vars->prompt = ft_strjoin(prompt, "-> ");
 	free(prompt);
 	if (!vars->prompt)
@@ -136,6 +139,7 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 		ft_exitbuiltin(input, NULL, vars->exit_status, vars);
 	do_stuff(input, vars);
 	free(vars->prompt);
+	vars->prompt = NULL;
 }
 
 int	main(int narg, char **argv, char **envp)
