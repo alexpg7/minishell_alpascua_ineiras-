@@ -58,9 +58,14 @@ static char	*ft_findpath2(char *comm2, char **envp, t_vars *vars)
 	int		ret;
 	char	*ptr;
 	char	**path;
+	char	*pathvar;
 
 	ret = 0;
-	path = ft_split(ft_path2(envp), ':');
+	pathvar = ft_path2(envp);
+	if (!pathvar)
+		path = ft_split(" ", 'c');
+	else
+		path = ft_split(pathvar, ':');
 	if (!path)
 		ft_exit(comm2, NULL, 1, vars);
 	ptr = ft_checkpath(path, comm2, &ret);
