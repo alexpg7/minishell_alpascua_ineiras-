@@ -125,6 +125,7 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	if (!prompt)
 	{
 		ft_putstr_fd("minishell: working directory not found\n", 2);
+		ft_putstr_fd("exiting minishell\n", 2);
 		ft_exit(NULL, NULL, 1, vars);
 	}
 	vars->prompt = ft_strjoin(prompt, "-> ");

@@ -58,6 +58,8 @@ void	ft_printexit(int ex, int index, t_vars *vars)
 		ft_printerr(ft_firstcom(vars->input[index]), "process interrupted.");
 	else if (ex == 131)
 		ft_printerr(ft_firstcom(vars->input[index]), "process quitted.");
+	else if (ex == 141)
+		ft_printerr(ft_firstcom(vars->input[index]), "sigpipe recieved.");
 	else if (ex != 0)
 		ft_printerr(ft_firstcom(vars->input[index]), "signal recieved.");
 }
