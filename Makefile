@@ -14,7 +14,7 @@ YEL = \033[0;33m
 GREEN = \033[0;32m
 NC = \033[0m
 
-INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h
+INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h Makefile
 
 # Library files
 LIBFT = $(LIBFT_PATH)/libft.a
