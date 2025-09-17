@@ -28,20 +28,27 @@ char	*ft_sufix(char *path, int tag)
 	return (path);
 }
 
+int	ft_firstwritefile(char *lim, char **text, char **aux, t_vars *vars)
+{
+	*text = readline("heredoc> ");
+	if (!text)
+	{
+		ft_message(lim, vars);
+		return (1);
+	}
+	*aux = ft_cleanheredoc(*text, 'c', vars);
+	if (!aux)
+		ft_exit(NULL, NULL, 1, vars);
+	return (0);
+}
+
 int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 {
 	char	*text;
 	char	*aux;
 
-	text = readline("heredoc> ");
-	if (!text)
-	{
-		ft_message(lim, vars);
+	if (ft_firstwritefile(lim, &text, &aux, vars) == 1)
 		return (fd);
-	}
-	aux = ft_cleanheredoc(text, 'c', vars);
-	if (!aux)
-		ft_exit(NULL, NULL, 1, vars);
 	while (ft_strcmp(lim, text) != 0 && g_signal != SIGINT)
 	{
 		ft_putstr_fd(aux, fd);
@@ -53,7 +60,7 @@ int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 			ft_message(lim, vars);
 			return (fd);
 		}
-		aux = ft_cleanheredoc(text, 'c', vars);//only variables
+		aux = ft_cleanheredoc(text, 'c', vars);
 		if (!aux)
 			ft_exit(NULL, NULL, 1, vars);
 	}
