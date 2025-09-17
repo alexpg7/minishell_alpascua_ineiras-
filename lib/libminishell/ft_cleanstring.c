@@ -119,6 +119,7 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 	}
 	lendiff = -2 * ft_countquotes(comm);
 	lendiff = ft_lenvars_clean(comm, vars);
+	ft_printf("LEN: %i\n", ft_lenvars_clean(comm, vars));
 	lendiff += -ft_countspecial(comm);
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1));
 	if (!ptr)

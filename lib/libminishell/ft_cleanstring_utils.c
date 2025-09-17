@@ -107,10 +107,7 @@ void	ft_copyvar(char **dest, char *src, int *i, t_vars *vars)
 	if (varlen)
 		ft_strlcpy(*dest, ft_searchvar(&src[*i + 1], len, vars), varlen + 1);
 	else
-	{
 		ft_strlcpy(*dest, "$", 2);
-		ft_printf("%i: %s\n", varlen, *dest);
-	}
 	*dest = *dest + varlen + (varlen == 0);
 	*i = *i + len + 1;
 }

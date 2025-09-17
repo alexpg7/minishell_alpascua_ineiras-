@@ -58,7 +58,7 @@ void	ft_init1(t_list **env, t_vars *vars, char **aux)
 {
 	vars->input = NULL;
 	vars->prompt = NULL;
-	*aux = ft_strjoin("\"=\"", "");
+	*aux = ft_strjoin("\"=\0", "");
 	if (!(*aux))
 		ft_exit(NULL, NULL, 1, vars);
 	*env = ft_lstnew(*aux);
