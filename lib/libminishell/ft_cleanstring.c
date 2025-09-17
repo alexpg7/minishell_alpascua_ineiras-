@@ -12,7 +12,7 @@
 
 #include "../../src/minishell.h"
 
-char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
+static char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
 {
 	if (ft_isquote(src[*i]) && src[*i - (*i != 0)] != '\\')
 	{
@@ -30,7 +30,7 @@ char	ft_unquoted(char **dest, char *src, int *i, t_vars *vars)
 	return ('0');
 }
 
-char	ft_quoted1(char **dest, char *src, int *i)
+static char	ft_quoted1(char **dest, char *src, int *i)
 {
 	if (src[*i] == '\'' && src[*i - (*i != 0)] != '\\')
 	{
@@ -52,7 +52,7 @@ char	ft_quoted1(char **dest, char *src, int *i)
 	return ('\'');
 }
 
-char	ft_quoted2(char **dest, char *src, int *i, t_vars *vars)
+static char	ft_quoted2(char **dest, char *src, int *i, t_vars *vars)
 {
 	if (src[*i] == '\"' && src[*i - (*i != 0)] != '\\')
 	{
@@ -76,7 +76,7 @@ char	ft_quoted2(char **dest, char *src, int *i, t_vars *vars)
 	return ('\"');
 }
 
-void	ft_copyclean(char *dest, char *src, t_vars *vars)
+static void	ft_copyclean(char *dest, char *src, t_vars *vars)
 {
 	int		i;
 	char	c;
@@ -119,7 +119,6 @@ char	*ft_cleanstring(char *comm, char token, t_vars *vars)
 	}
 	lendiff = -2 * ft_countquotes(comm);
 	lendiff = ft_lenvars_clean(comm, vars);
-	ft_printf("LEN: %i\n", ft_lenvars_clean(comm, vars));
 	lendiff += -ft_countspecial(comm);
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(comm) + lendiff + 1));
 	if (!ptr)

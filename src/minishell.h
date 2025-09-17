@@ -113,6 +113,7 @@ int			ft_comsize(char **comm);
 
 // CLEAN STRING
 char		*ft_cleanstring(char *comm, char token, t_vars *vars);
+char		*ft_cleanheredoc(char *comm, char token, t_vars *vars);
 void		ft_nextvar(char *comm, int *i);
 int			ft_strcmpvar(char *var, char *name, int len);
 int			ft_isvar_clean(char *comm, int len, t_vars *vars);

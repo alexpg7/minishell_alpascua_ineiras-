@@ -39,7 +39,7 @@ int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 		ft_message(lim, vars);
 		return (fd);
 	}
-	aux = ft_cleanstring(text, 'c', vars);
+	aux = ft_cleanheredoc(text, 'c', vars);
 	if (!aux)
 		ft_exit(NULL, NULL, 1, vars);
 	while (ft_strcmp(lim, text) != 0 && g_signal != SIGINT)
@@ -53,7 +53,7 @@ int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 			ft_message(lim, vars);
 			return (fd);
 		}
-		aux = ft_cleanstring(text, 'c', vars);//only variables
+		aux = ft_cleanheredoc(text, 'c', vars);//only variables
 		if (!aux)
 			ft_exit(NULL, NULL, 1, vars);
 	}
