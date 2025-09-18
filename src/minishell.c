@@ -122,10 +122,12 @@ int	main(int narg, char **argv, char **envp)
 
 	g_signal = PROMPT;
 	ft_signal(PROMPT);
-	ft_printf("Welcome to minishell\n");
+	ft_putstr_fd("Welcome to minishell\n", 2);
 	ft_init(&vars, envp);
 	prompt = NULL;
 	input = NULL;
+	if (narg > 1)
+		return (ft_1command(narg - 1, argv + 1, &vars));
 	while (narg == 1 && argv[0])
 		ft_main1(prompt, input, &vars);
 	return (0);

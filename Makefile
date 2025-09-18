@@ -20,6 +20,7 @@ INCLUDE = $(LIBFT_PATH)/libft.h src/minishell.h Makefile
 LIBFT = $(LIBFT_PATH)/libft.a
 
 SRC = src/minishell.c \
+	src/ft_1command.c \
 	src/ft_init.c \
 	src/ft_init2.c \
 	src/signals.c  \
