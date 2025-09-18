@@ -31,13 +31,13 @@ char	*ft_sufix(char *path, int tag)
 int	ft_firstwritefile(char *lim, char **text, char **aux, t_vars *vars)
 {
 	*text = readline("heredoc> ");
-	if (!text)
+	if (!(*text))
 	{
 		ft_message(lim, vars);
 		return (1);
 	}
 	*aux = ft_cleanheredoc(*text, 'c', vars);
-	if (!aux)
+	if (!(*aux))
 		ft_exit(NULL, NULL, 1, vars);
 	return (0);
 }
