@@ -34,6 +34,7 @@ void	ft_env_export(t_vars *vars)
 	}
 	vars->exit_status = 0;
 }*/
+
 void	ft_set_index(t_vars *vars)
 {
 	t_list	*lst;
@@ -61,6 +62,20 @@ int	ft_lst_counter(t_vars *vars)
 	return (i);
 }
 
+t_list	*ft_setmax(t_list *lst)
+{
+	t_list	*max;
+
+	max = lst;
+	while (lst)
+	{
+		if ((lst->index == -1) && (ft_strcmp((char*)max->content, (char*)lst->content) < 0))
+			max = lst;
+		lst = lst->next;
+	}
+	return (max);
+}
+
 void	ft_env_export(t_vars *vars)
 {
 	t_list	*lst;
@@ -71,7 +86,7 @@ void	ft_env_export(t_vars *vars)
 	ft_set_index(vars);
 	while (i > 0)
 	{
-		min = vars->env->next;
+		min = ft_setmax(vars->env->next);
 		lst = vars->env->next;
 		while (lst)
 		{
