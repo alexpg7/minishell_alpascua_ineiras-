@@ -39,12 +39,14 @@ static int	ft_lenvars_heredoc(char *comm, t_vars *vars)
 {
 	int		i;
 	int		len;
+	int		condition;
 
 	i = 0;
 	len = 0;
 	while (comm[i])
 	{
-		if (comm[i] == '$' && ft_isalnum2(comm[i + 1]))
+		condition = (ft_isalpha(comm[i + 1]) || comm[i + 1] == '_');
+		if (comm[i] == '$' && (condition || comm[i + 1] == '?'))
 		{
 			len += ft_varlen_clean(&comm[i + 1], vars) - 1;
 			ft_nextvar(comm, &i);
