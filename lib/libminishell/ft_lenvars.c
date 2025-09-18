@@ -39,14 +39,21 @@ int	ft_strcmpvar(char *var, char *name, int len)
 int	ft_isvar_clean(char *comm, int len, t_vars *vars)
 {
 	t_list	*env;
+	char	*str;
 
 	env = vars->env;
 	if (!ft_isalpha(comm[0]) && comm[0] != '_' && comm[0] != '?')
-		return (-1); //-1 means that the name is not valid
+		return (-1);
 	while (env)
 	{
 		if (ft_strcmpvar(env->content, comm, len) == 0)
-			return (ft_strlen(ft_strchr(env->content, '=') + 1));
+		{
+			str = ft_strchr(env->content, '=');
+			if (str)
+				return (ft_strlen(ft_strchr(env->content, '=') + 1));
+			else
+				return (0);
+		}
 		env = env->next;
 	}
 	return (0);

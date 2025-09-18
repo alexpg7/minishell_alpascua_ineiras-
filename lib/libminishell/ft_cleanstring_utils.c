@@ -75,12 +75,21 @@ int	ft_countquotes(char *comm)
 char	*ft_searchvar(char *comm, int len, t_vars *vars)
 {
 	t_list	*env;
+	char	*str;
 
 	env = vars->env;
 	while (env)
 	{
 		if (ft_strcmpvar(env->content, comm, len) == 0)
-			return (ft_strchr(env->content, '=') + 1);// core dumped for unsetted variables
+		{
+			str = ft_strchr(env->content, '=');
+			if (str)
+				return (str + 1);
+			else
+			{
+				return (ft_strchr(env->content, '\0'));//NOT SURE
+			}
+		}
 		env = env->next;
 	}
 	return (NULL);
