@@ -14,11 +14,13 @@
 
 int	g_signal;
 
-void	ft_newexit(t_vars *vars)
+void	ft_newexit(t_vars *vars, int n)
 {
 	char	*num;
 	char	*com;
 
+	if (n == 130)
+		vars->exit_status = 130;
 	if (vars->pip)
 	{
 		ft_freepip(vars->pip, vars->np, vars->np + 1);
@@ -34,6 +36,8 @@ void	ft_newexit(t_vars *vars)
 	if (!com)
 		ft_exit(NULL, NULL, 1, vars);
 	ft_export(vars, &com, 1);
+	vars->exit_status = 0;
+	g_signal = 0;
 }
 
 void	ft_freeinput(t_input ***input, int np, t_vars *vars)
@@ -80,13 +84,12 @@ void	do_stuff(char *str, t_vars *vars)
 	ft_execute2(input, vars);
 	if (input)
 		ft_freeinput(&input, vars->np, vars);
-	ft_newexit(vars);
+	ft_newexit(vars, 0);
 }
 
 static void	ft_main1(char *prompt, char *input, t_vars *vars)
 {
 	ft_signal(PROMPT);
-	g_signal = 0;
 	prompt = getcwd(NULL, 0);
 	if (!prompt)
 	{
@@ -104,6 +107,8 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 	input = readline(vars->prompt);
 	if (!input)
 		ft_exitbuiltin(NULL, NULL, vars->exit_status, vars);
+	if (g_signal == SIGINT)
+		ft_newexit(vars, 130);
 	do_stuff(input, vars);
 	free(vars->prompt);
 	vars->prompt = NULL;
