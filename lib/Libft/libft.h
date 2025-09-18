@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 14:43:02 by alpascua          #+#    #+#             */
-/*   Updated: 2025/07/30 17:50:43 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:33:53 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	int				index;
 }	t_list;
 
 char	*get_next_line(int fd);

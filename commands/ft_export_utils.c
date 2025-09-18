@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:02:36 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/08/30 18:04:36 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:59:03 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_printerror(t_vars *vars, char *arg)
 	vars->exit_status = 1;
 }
 
+/*
 void	ft_env_export(t_vars *vars)
 {
 	t_list	*lst;
@@ -30,6 +31,58 @@ void	ft_env_export(t_vars *vars)
 		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
 			ft_printf("%s\n", (char *)lst->content);
 		lst = lst->next;
+	}
+	vars->exit_status = 0;
+}*/
+void	ft_set_index(t_vars *vars)
+{
+	t_list	*lst;
+
+	lst = vars->env->next;
+	while (lst)
+	{
+		lst->index = -1;
+		lst = lst->next;
+	}
+}
+
+int	ft_lst_counter(t_vars *vars)
+{
+	int		i;
+	t_list	*lst;
+
+	i = 0;
+	lst = vars->env->next;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}
+
+void	ft_env_export(t_vars *vars)
+{
+	t_list	*lst;
+	t_list	*min;
+	int		i;
+
+	i = ft_lst_counter(vars);
+	ft_set_index(vars);
+	while (i > 0)
+	{
+		min = vars->env->next;
+		lst = vars->env->next;
+		while (lst)
+		{
+			if ((lst->index == -1) && (ft_strcmp((char*)min->content, (char*)lst->content) > 0))
+				min = lst;
+			lst = lst->next;
+		}
+		if ((ft_strncmp((char *)min->content, "?=", 2) != 0) && (ft_strncmp((char *)min->content, "_=", 2) != 0) && (min->index == -1))
+			ft_printf("%s\n", (char *)min->content);
+		min->index = 0;
+		i--;
 	}
 	vars->exit_status = 0;
 }
