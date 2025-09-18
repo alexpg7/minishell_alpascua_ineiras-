@@ -41,7 +41,7 @@ int	ft_isvar_clean(char *comm, int len, t_vars *vars)
 	t_list	*env;
 
 	env = vars->env;
-	if (!ft_isalpha(comm[0]) && comm[0] != '_')
+	if (!ft_isalpha(comm[0]) && comm[0] != '_' && comm[0] != '?')
 		return (-1); //-1 means that the name is not valid
 	while (env)
 	{

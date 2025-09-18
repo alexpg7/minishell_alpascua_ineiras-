@@ -80,7 +80,7 @@ char	*ft_searchvar(char *comm, int len, t_vars *vars)
 	while (env)
 	{
 		if (ft_strcmpvar(env->content, comm, len) == 0)
-			return (ft_strchr(env->content, '=') + 1);
+			return (ft_strchr(env->content, '=') + 1);// core dumped for unsetted variables
 		env = env->next;
 	}
 	return (NULL);
@@ -111,7 +111,7 @@ void	ft_copyvar(char **dest, char *src, int *i, t_vars *vars)
 	else if (varlen < 0)
 		ft_strlcpy(*dest, "$", 2);
 	else if (varlen == 0)
-		ft_strlcpy(*dest, "\0", 1);
-	*dest = *dest + varlen + (varlen == 0) + (varlen < 0) ;
+		ft_strlcpy(*dest, "", 1);
+	*dest = *dest + varlen + 0 * (varlen == 0) + 2 * (varlen < 0) ;
 	*i = *i + len + 1;
 }
