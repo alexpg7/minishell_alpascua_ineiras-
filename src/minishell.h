@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineiras- <ineiras-@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 19:56:17 by alpascua          #+#    #+#             */
-/*   Updated: 2025/09/07 11:15:35 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:02:24 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		ft_cd(t_vars *vars, char **argv);
 char		**ft_getenv(t_list *env);
 void		ft_unset(char **args, t_vars *vars);
 int			ft_strisalnum2(char *str);
+void	ft_printexport(char *str);
 
 // New CD COMMANDS
 void		ft_cd(t_vars *vars, char **argv);
