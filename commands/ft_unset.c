@@ -16,8 +16,8 @@ int	ft_strisalnum2(char *str)
 {
 	int	i;
 
-	i = 0;
-	if (ft_isalpha(str[0]) == 0 && str[0] != '_')
+	i = 1;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
 	while (str[i] && str[i] != '=')
 	{

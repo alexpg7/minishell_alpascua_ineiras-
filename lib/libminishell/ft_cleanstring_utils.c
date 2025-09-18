@@ -98,16 +98,20 @@ void	ft_copyvar(char **dest, char *src, int *i, t_vars *vars)
 		len = 0;
 		while (src[*i + 1 + len])
 		{
-			if (!ft_isalnum2(src[*i + 1 + len]))
+			if (!ft_isalpha(src[*i + 1]) && src[*i + 1] != '_')
+				break ;
+			else if (!ft_isalnum2(src[*i + 1 + len]))
 				break ;
 			len++;
 		}
 	}
 	varlen = ft_isvar_clean(&src[*i + 1], len, vars);
-	if (varlen)
+	if (varlen > 0)
 		ft_strlcpy(*dest, ft_searchvar(&src[*i + 1], len, vars), varlen + 1);
-	else
+	else if (varlen < 0)
 		ft_strlcpy(*dest, "$", 2);
-	*dest = *dest + varlen + (varlen == 0);
+	else if (varlen == 0)
+		ft_strlcpy(*dest, "\0", 1);
+	*dest = *dest + varlen + (varlen == 0) + (varlen < 0) ;
 	*i = *i + len + 1;
 }

@@ -41,6 +41,8 @@ int	ft_isvar_clean(char *comm, int len, t_vars *vars)
 	t_list	*env;
 
 	env = vars->env;
+	if (!ft_isalpha(comm[0]) && comm[0] != '_')
+		return (-1); //-1 means that the name is not valid
 	while (env)
 	{
 		if (ft_strcmpvar(env->content, comm, len) == 0)
@@ -79,7 +81,7 @@ int	ft_lenvars_clean(char *comm, t_vars *vars)
 	{
 		if (comm[i] == '\'' && c == '0' && comm[i - (i != 0)] != '\\')
 			ft_nextword2(comm, &i);
-		else if (comm[i] == '$' && ft_isalnum2(comm[i + 1]))
+		else if (comm[i] == '$' && (ft_isalpha(comm[i + 1]) || comm[i + 1] == '_'))
 		{
 			len += ft_varlen_clean(&comm[i + 1], vars) - 1;
 			ft_nextvar(comm, &i);
