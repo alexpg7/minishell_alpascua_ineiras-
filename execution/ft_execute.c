@@ -52,7 +52,7 @@ void	ft_waitall(t_input **input, int len, t_vars *vars)
 		ft_printexit(vars->exit_status, i, vars);
 		if (g_signal == SIGINT)
 			vars->exit_status = 130;
-		//g_signal = 0;
+		g_signal = 0;
 		i++;
 	}
 }
