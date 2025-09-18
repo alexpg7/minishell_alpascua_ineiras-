@@ -6,7 +6,7 @@
 /*   By: ineiras- <ineiras-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:02:36 by ineiras-          #+#    #+#             */
-/*   Updated: 2025/09/18 16:59:03 by ineiras-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:02:45 by ineiras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@ void	ft_printerror(t_vars *vars, char *arg)
 	ft_putchar_fd('\n', 2);
 	vars->exit_status = 1;
 }
-
-/*
-void	ft_env_export(t_vars *vars)
-{
-	t_list	*lst;
-
-	lst = vars->env->next;
-	while (lst)
-	{
-		if (ft_strncmp((char *)lst->content, "?=", 2) != 0)
-			ft_printf("%s\n", (char *)lst->content);
-		lst = lst->next;
-	}
-	vars->exit_status = 0;
-}*/
 
 void	ft_set_index(t_vars *vars)
 {
@@ -95,7 +80,7 @@ void	ft_env_export(t_vars *vars)
 			lst = lst->next;
 		}
 		if ((ft_strncmp((char *)min->content, "?=", 2) != 0) && (ft_strncmp((char *)min->content, "_=", 2) != 0) && (min->index == -1))
-			ft_printf("%s\n", (char *)min->content);
+			ft_printexport((char *)min->content);
 		min->index = 0;
 		i--;
 	}
