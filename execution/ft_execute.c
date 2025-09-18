@@ -50,6 +50,9 @@ void	ft_waitall(t_input **input, int len, t_vars *vars)
 		unlink(ft_sufix(vars->here, i));
 		vars->exit_status = exitstatus2(vars->exit_status);
 		ft_printexit(vars->exit_status, i, vars);
+		if (g_signal == SIGINT)
+			vars->exit_status = 130;
+		g_signal = 0;
 		i++;
 	}
 }

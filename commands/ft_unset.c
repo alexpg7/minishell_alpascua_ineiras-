@@ -55,8 +55,6 @@ static void	ft_delete_env2(char *var, t_vars *vars)
 
 static void	ft_delete_env(char *var, t_vars *vars)
 {
-	t_list	*env;
-
 	if (!ft_strisalnum2(var))
 	{
 		ft_putstr_fd("unset: ", 2);
@@ -64,7 +62,6 @@ static void	ft_delete_env(char *var, t_vars *vars)
 		ft_putstr_fd(": invalid parameter name.\n", 2);
 		return ;
 	}
-	env = vars->env;
 	ft_delete_env2(var, vars);
 }
 
