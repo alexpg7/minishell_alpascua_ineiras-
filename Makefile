@@ -21,6 +21,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 SRC = src/minishell.c \
 	src/ft_init.c \
+	src/ft_init2.c \
 	src/signals.c  \
 	src/signals2.c  \
 	commands/exit.c \

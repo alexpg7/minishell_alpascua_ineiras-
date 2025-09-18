@@ -35,6 +35,7 @@ void	ft_init2(t_vars *vars, t_list *env)
 	if (!new)
 		ft_lstclear(&vars->env, &free);
 	ft_lstadd_back(&vars->env, new);
+	ft_init3(vars);
 }
 
 char	*ft_shlvl(char *envp, t_vars *vars)

@@ -163,6 +163,7 @@ void		ft_set_both(t_vars *vars, char *pwd);
 
 // PROGRAMS
 void		ft_init(t_vars *vars, char **envp);
+void		ft_init3(t_vars *vars);
 
 // EXIT STATUS
 int			exitstatus2(int status);
