@@ -22,7 +22,7 @@ void	ft_printexport(char *str)
 	ft_putstr_fd("declare -x ", 1);
 	while (str[i])
 	{
-		if (str[i] == '=')
+		if (str[i] == '=' && flag == 0)
 		{
 			flag = 1;
 			ft_putstr_fd("=\"", 1);

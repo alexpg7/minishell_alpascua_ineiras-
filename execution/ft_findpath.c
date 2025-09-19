@@ -79,8 +79,19 @@ static char	*ft_findpath2(char *comm2, char **envp, t_vars *vars)
 int	ft_checkstat(char *path, t_vars *vars)
 {
 	struct stat	st;
+	int			flag;
 
-	stat(path, &st);
+	flag = 0;
+	if (stat(path, &st) == -1)
+		flag = 1;
+	if (flag == 1)
+	{
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": not a file or directory.\n", 2);
+		free(path);
+		vars->exit_status = 127;
+		return (1);
+	}
 	if (S_ISDIR(st.st_mode))
 	{
 		ft_putstr_fd(path, 2);
@@ -91,14 +102,6 @@ int	ft_checkstat(char *path, t_vars *vars)
 	}
 	else if (S_ISREG(st.st_mode))
 		return (0);
-	else
-	{
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": not a file or directory.\n", 2);
-		free(path);
-		vars->exit_status = 127;
-		return (1);
-	}
 	return (0);
 }
 
