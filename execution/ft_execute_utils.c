@@ -38,19 +38,14 @@ void	ft_set_redir_2(t_input *input, char *path, t_vars *vars)
 	input->last_out = -42;
 	while (input->word[i])
 	{
-		if (input->token[i] == 'i')
-			ft_read_in(input, vars, i + 1);
-		else
-			ft_openheredoc(path, input, i, vars);
-		i++;
-	}
-	i = 0;
-	while (input->word[i])
-	{
 		if (input->token[i] == 'o')
 			ft_write_out(input, vars, i + 1);
 		else if (input->token[i] == 'a')
 			ft_read_app(input, vars, i + 1);
+		else if (input->token[i] == 'i')
+			ft_read_in(input, vars, i + 1);
+		else if (input->token[i] == 'h')
+			ft_openheredoc(path, input, i, vars);
 		i++;
 	}
 }
