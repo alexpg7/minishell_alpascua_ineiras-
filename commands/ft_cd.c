@@ -110,11 +110,6 @@ void	ft_cd(t_vars *vars, char **argv)
 		ft_cd_not_args(vars);
 	else if (argc == 2)
 		ft_cd_two_arg(vars, argv);
-	else if (argc == 3)
-	{
-		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);// not sure, look tester
-		vars->exit_status = 1;
-	}
 	else
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
