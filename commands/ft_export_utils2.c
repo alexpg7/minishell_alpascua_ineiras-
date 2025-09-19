@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export_utils2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alpascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/19 16:38:26 by alpascua          #+#    #+#             */
+/*   Updated: 2025/09/19 16:38:28 by alpascua         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../src/minishell.h"
 
 void	ft_printexport(char *str)
@@ -8,7 +20,7 @@ void	ft_printexport(char *str)
 	i = 0;
 	flag = 0;
 	ft_putstr_fd("declare -x ", 1);
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '=')
 		{

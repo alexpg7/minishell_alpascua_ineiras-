@@ -145,7 +145,7 @@ void		ft_cd(t_vars *vars, char **argv);
 char		**ft_getenv(t_list *env);
 void		ft_unset(char **args, t_vars *vars);
 int			ft_strisalnum2(char *str);
-void	ft_printexport(char *str);
+void		ft_printexport(char *str);
 
 // New CD COMMANDS
 void		ft_cd(t_vars *vars, char **argv);

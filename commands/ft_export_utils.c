@@ -54,7 +54,8 @@ t_list	*ft_setmax(t_list *lst)
 	max = lst;
 	while (lst)
 	{
-		if ((lst->index == -1) && (ft_strcmp((char*)max->content, (char*)lst->content) < 0))
+		if ((lst->index == -1)
+			&& (ft_strcmp((char *)max->content, (char *)lst->content) < 0))
 			max = lst;
 		lst = lst->next;
 	}
@@ -75,11 +76,14 @@ void	ft_env_export(t_vars *vars)
 		lst = vars->env->next;
 		while (lst)
 		{
-			if ((lst->index == -1) && (ft_strcmp((char*)min->content, (char*)lst->content) > 0))
+			if ((lst->index == -1)
+				&& (ft_strcmp((char *)min->content, (char *)lst->content) > 0))
 				min = lst;
 			lst = lst->next;
 		}
-		if ((ft_strncmp((char *)min->content, "?=", 2) != 0) && (ft_strncmp((char *)min->content, "_=", 2) != 0) && (min->index == -1))
+		if ((ft_strncmp((char *)min->content, "?=", 2) != 0)
+			&& (ft_strncmp((char *)min->content, "_=", 2) != 0)
+			&& (min->index == -1))
 			ft_printexport((char *)min->content);
 		min->index = 0;
 		i--;

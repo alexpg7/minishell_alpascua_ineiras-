@@ -12,10 +12,12 @@
 
 #include "../src/minishell.h"
 
-void	ft_exit2(char *ptr, int ret, t_vars *vars)
+void	ft_exit2(char *str, char *ptr, int ret, t_vars *vars)
 {
 	int	i;
 
+	if (str)
+		ft_putstr_fd(str, 2);
 	rl_clear_history();
 	if (vars->prompt)
 		free(vars->prompt);
@@ -68,7 +70,7 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 	int	num;
 
 	if (args == NULL)
-		ft_exit2(ptr, ret, vars);
+		ft_exit2(NULL, ptr, ret, vars);
 	else if (args[0] != NULL)
 	{
 		if (args[1] == NULL)
@@ -76,13 +78,10 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 			if (ft_checknum(args[0]) == 1)
 			{
 				num = ft_atoi255(args[0]);
-				ft_exit2(ptr, num, vars);
+				ft_exit2(NULL, ptr, num, vars);
 			}
 			else
-			{
-				ft_putstr_fd("exit: not a valid argument.\n", 2);
-				ft_exit2(ptr, 2, vars);
-			}
+				ft_exit2("exit: not a valid argument.\n", ptr, 2, vars);
 		}
 		else
 		{
@@ -91,11 +90,11 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 		}
 	}
 	else
-		ft_exit2(ptr, ret, vars);
+		ft_exit2(NULL, ptr, ret, vars);
 }
 
 void	ft_exitbuiltin(char *ptr, char **args, int ret, t_vars *vars)
 {
-	//ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 2);
 	ft_exit(ptr, args, ret, vars);
 }
