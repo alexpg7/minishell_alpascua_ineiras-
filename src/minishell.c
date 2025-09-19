@@ -61,7 +61,7 @@ void	ft_freeinput(t_input ***input, int np, t_vars *vars)
 	vars->input = NULL;
 }
 
-void	do_stuff(char *str, t_vars *vars)
+void	do_stuff(char *str, int mode, t_vars *vars)
 {
 	char	**comm;
 	t_input	**input;
@@ -76,6 +76,8 @@ void	do_stuff(char *str, t_vars *vars)
 	if (comm[0] == NULL)
 		return ((void)free(comm));
 	add_history(str);
+	if (mode == 1)
+		free(str);
 	input = ft_inputstruct(comm, vars);
 	ft_freestrarr(&comm, 0);
 	if (!input)
@@ -109,7 +111,7 @@ static void	ft_main1(char *prompt, char *input, t_vars *vars)
 		ft_exitbuiltin(NULL, NULL, vars->exit_status, vars);
 	if (g_signal == SIGINT)
 		ft_newexit(vars, 130);
-	do_stuff(input, vars);
+	do_stuff(input, 0, vars);
 	free(vars->prompt);
 	vars->prompt = NULL;
 }
@@ -127,7 +129,7 @@ int	main(int narg, char **argv, char **envp)
 	input = NULL;
 	if (narg > 1)
 		return (ft_1command(narg - 1, argv + 1, &vars));
-	//ft_putstr_fd("Welcome to minishell\n", 2);
+	ft_putstr_fd("Welcome to minishell\n", 2);
 	while (narg == 1 && argv[0])
 		ft_main1(prompt, input, &vars);
 	return (0);

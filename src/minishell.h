@@ -87,7 +87,7 @@ extern int	g_signal;
 
 // 1 COMMAND FUNCTIONALITY
 int			ft_1command(int narg, char **argv, t_vars *vars);
-void		do_stuff(char *str, t_vars *vars);
+void		do_stuff(char *str, int mode, t_vars *vars);
 
 // TRSH LIST FUNCTIONS
 t_lst		*ft_lstnew_lst(void *content, void **content_p);
