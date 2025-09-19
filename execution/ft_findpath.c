@@ -76,6 +76,32 @@ static char	*ft_findpath2(char *comm2, char **envp, t_vars *vars)
 	return (ptr);
 }
 
+int	ft_checkstat(char *path, t_vars *vars)
+{
+	struct stat	st;
+
+	stat(path, &st);
+	if (S_ISDIR(st.st_mode))
+	{
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": is a directory.\n", 2);
+		vars->exit_status = 126;
+		free(path);
+		return (1);
+	}
+	else if (S_ISREG(st.st_mode))
+		return (0);
+	else
+	{
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": not a file or directory.\n", 2);
+		free(path);
+		vars->exit_status = 127;
+		return (1);
+	}
+	return (0);
+}
+
 char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 {
 	char	*comm2;
@@ -83,14 +109,22 @@ char	*ft_findpath(char *comm, char **envp, t_vars *vars)
 	comm2 = ft_strdup(comm);
 	if (!comm2)
 		ft_exit(NULL, NULL, 1, vars);
-	if (access(comm2, F_OK) == 0)
+	if (comm2[0] == '.' || comm2[0] == '/')
 	{
-		if (access(comm2, X_OK) == 0)
-			return (comm2);
+		if (ft_checkstat(comm2, vars) == 0)
+		{
+			if (access(comm2, F_OK) == 0)
+			{
+				if (access(comm2, X_OK) == 0)
+					return (comm2);
+				else
+					vars->exit_status = 126;
+				free(comm2);
+				return (NULL);
+			}
+		}
 		else
-			vars->exit_status = 126;
-		free(comm2);
-		return (NULL);
+			return (NULL);
 	}
 	return (ft_findpath2(comm2, envp, vars));
 }

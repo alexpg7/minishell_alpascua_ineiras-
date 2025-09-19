@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 
