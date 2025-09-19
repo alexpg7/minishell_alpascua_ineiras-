@@ -34,22 +34,30 @@ char	**ft_getenv(t_list *env)
 	int		size;
 	int		i;
 	char	**ptr;
+	t_list	*env2;
 
-	size = ft_lstsize(env);
-	ptr = (char **)malloc(sizeof(char *) * (size + 1));
+	env2 = env->next;
+	size = ft_lstsize(env2);
+	ptr = (char **)malloc(sizeof(char *) * (size));
 	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (env && i < size)
+	while (env2 && i < size)
 	{
-		ptr[i] = ft_strjoin(env->content, "");
+		if (ft_strncmp((char *)(env2->content), "?=", 2) == 0)
+		{
+			i++;
+			env2 = env2->next;
+			continue ;
+		}
+		ptr[i] = ft_strjoin(env2->content, "");
 		if (!ptr[i])
 		{
 			ft_free(ptr, i);
 			return (NULL);
 		}
 		i++;
-		env = env->next;
+		env2 = env2->next;
 	}
 	ptr[i] = NULL;
 	return (ptr);

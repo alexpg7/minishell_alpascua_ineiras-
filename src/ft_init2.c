@@ -35,8 +35,10 @@ void	ft_initpwd(char *str, t_vars *vars)
 
 void	ft_init3(t_vars *vars)
 {
-	if (!ft_searchvar("PWD", 5, vars))
+	if (!ft_searchvar("PWD", 3, vars))
 		ft_initpwd("PWD=", vars);
+	if (!ft_searchvar("OLDPWD", 5, vars))
+		ft_initexport("OLDPWD", vars);
 	if (!ft_searchvar("SHLVL", 5, vars))
 		ft_initexport("SHLVL=1", vars);
 }
