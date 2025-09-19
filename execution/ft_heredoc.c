@@ -30,7 +30,7 @@ char	*ft_sufix(char *path, int tag)
 
 int	ft_firstwritefile(char *lim, char **text, char **aux, t_vars *vars)
 {
-	*text = readline("heredoc> ");
+	*text = readline("> ");
 	if (!(*text))
 	{
 		ft_message(lim, vars);
@@ -54,7 +54,7 @@ int	ft_writefile(char *lim, char *path, int fd, t_vars *vars)
 		ft_putstr_fd(aux, fd);
 		ft_putchar_fd('\n', fd);
 		free(aux);
-		text = readline("heredoc> ");
+		text = readline("> ");
 		if (!text)
 		{
 			ft_message(lim, vars);
