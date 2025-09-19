@@ -29,6 +29,24 @@ void	ft_env(t_vars *vars)
 	vars->exit_status = 0;
 }
 
+int	ft_loop(t_list	**env, int *i, char **ptr)
+{
+	if (ft_strncmp((char *)((*env)->content), "?=", 2) == 0)
+	{
+		(*env) = (*env)->next;
+		return (1);
+	}
+	ptr[*i] = ft_strjoin((*env)->content, "");
+	if (!ptr[*i])
+	{
+		ft_free(ptr, *i);
+		return (0);
+	}
+	*i = *i + 1;
+	*env = (*env)->next;
+	return (1);
+}
+
 char	**ft_getenv(t_list *env)
 {
 	int		size;
@@ -37,27 +55,15 @@ char	**ft_getenv(t_list *env)
 	t_list	*env2;
 
 	env2 = env->next;
-	size = ft_lstsize(env2);
-	ptr = (char **)malloc(sizeof(char *) * (size));
+	size = ft_lstsize(env2) - 1;
+	ptr = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!ptr)
 		return (NULL);
 	i = 0;
 	while (env2 && i < size)
 	{
-		if (ft_strncmp((char *)(env2->content), "?=", 2) == 0)
-		{
-			i++;
-			env2 = env2->next;
-			continue ;
-		}
-		ptr[i] = ft_strjoin(env2->content, "");
-		if (!ptr[i])
-		{
-			ft_free(ptr, i);
+		if (ft_loop(&env2, &i, ptr) == 0)
 			return (NULL);
-		}
-		i++;
-		env2 = env2->next;
 	}
 	ptr[i] = NULL;
 	return (ptr);
