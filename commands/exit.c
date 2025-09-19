@@ -43,7 +43,7 @@ int	ft_checknum(char *str)
 	i = 0;
 	while (ft_isspace(str[i]))
 		i++;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i])
 	{
@@ -85,7 +85,10 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 			}
 		}
 		else
+		{
 			ft_putstr_fd("exit: too many arguments.\n", 2);
+			vars->exit_status = 1;
+		}
 	}
 	else
 		ft_exit2(ptr, ret, vars);
@@ -93,6 +96,6 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 
 void	ft_exitbuiltin(char *ptr, char **args, int ret, t_vars *vars)
 {
-	ft_putstr_fd("exit\n", 2);
+	//ft_putstr_fd("exit\n", 2);
 	ft_exit(ptr, args, ret, vars);
 }

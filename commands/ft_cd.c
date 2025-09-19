@@ -71,7 +71,10 @@ void	ft_cd_two_arg(t_vars *vars, char **argv)
 	else if (ft_strcmp(argv[1], "..") == 0)
 		ft_cd_double_point(vars);
 	else if (ft_cd_move_dir(vars, argv, path) == -1)
+	{
 		ft_putendl_fd2("cd: not such file or directory: ", 2, argv[1]);
+		vars->exit_status = 1;
+	}
 }
 
 void	ft_cd_not_args(t_vars *vars)
@@ -109,7 +112,7 @@ void	ft_cd(t_vars *vars, char **argv)
 		ft_cd_two_arg(vars, argv);
 	else if (argc == 3)
 	{
-		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);
+		ft_putendl_fd2("cd: string not in pwd: ", 2, argv[1]);// not sure, look tester
 		vars->exit_status = 1;
 	}
 	else
