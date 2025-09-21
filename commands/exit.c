@@ -37,16 +37,30 @@ void	ft_exit2(char *str, char *ptr, int ret, t_vars *vars)
 		ft_freepip(vars->pip, vars->np, vars->np + 1);
 	exit(ret);
 }
+/*	if (ft_strlen(str + i) > 10)
+		return (0);
+	if (ft_atoi(str + i) * ft_atoi(str + i - (flag == 1)) < 0)
+		return (0);*/
 
 int	ft_checknum(char *str)
 {
-	int	i;
+	int		i;
+	int		sign;
+	char	*orig;
 
 	i = 0;
+	sign = 1;
 	while (ft_isspace(str[i]))
 		i++;
+	if (str[i] == '-')
+		sign = -1;
+	orig = str + i;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
+	if (ft_strlen(str + i) > 10)
+		return (0);
+	if ((long)ft_atoi(orig) * (long)sign < 0)
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -81,7 +95,7 @@ void	ft_exit(char *ptr, char **args, int ret, t_vars *vars)
 				ft_exit2(NULL, ptr, num, vars);
 			}
 			else
-				ft_exit2("exit: not a valid argument.\n", ptr, 2, vars);
+				ft_exit2("exit: numeric argument required.\n", ptr, 2, vars);
 		}
 		else
 		{
