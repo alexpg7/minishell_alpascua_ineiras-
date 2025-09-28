@@ -36,7 +36,6 @@ void	ft_newexit(t_vars *vars, int n)
 	if (!com)
 		ft_exit(NULL, NULL, 1, vars);
 	ft_export(vars, &com, 1);
-	vars->exit_status = 0;
 	g_signal = 0;
 }
 
