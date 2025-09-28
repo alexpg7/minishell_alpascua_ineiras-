@@ -68,11 +68,8 @@ all: $(NAME)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_PATH)
 
-# Build the main program
-#$(NAME): $(OBJ) $(LIBFT) $(PRINTF)
-#	cc $(FLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(MINILIBX) -o $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(OBJ) $(FLAGS) $(LIBFT) -lreadline -o $(NAME)
 	@echo "😃 ${BGREEN}Compiled ${BYEL}$(NAME)${NC}"
 
