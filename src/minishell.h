@@ -24,16 +24,6 @@
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 
-// struct commands
-typedef struct s_command
-{
-	char	**comm;
-	char	*infile;
-	char	*outfile; //can also be HERE_DOC if hd = 1
-	int		hd; //here_doc
-	int		ap; //append mode
-}	t_command;
-
 typedef struct s_input
 {
 	char	**word; // word[i] = "echo"		word[i] = ">>"
@@ -52,24 +42,14 @@ typedef struct s_trash_lst
 	struct s_trash_lst	*next;
 }	t_lst;
 
-typedef struct s_dollar
-{
-	int		varlen;
-	int		vallen;
-	char	*value;
-}	t_dollar;
-
 typedef struct s_vars
 {
 	char		*prompt;
 	t_list		*env;
 	t_lst		*ts;
-	t_dollar	dollar;
 	t_input		**input;
-	t_command	*command;
 	int			np; //number of pipes
 	int			**pip; //pipes
-	//int			*pid;
 	int			exit_status;
 	char		**envp;
 	char		*here;
